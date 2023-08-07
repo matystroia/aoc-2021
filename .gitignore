@@ -33,3 +33,12 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# prettier
+.prettierignore
+.prettierrc.json
+
+# input files
+/app/input/data
+
+.vscode
