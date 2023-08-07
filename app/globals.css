@@ -11,15 +11,6 @@
     @apply overflow-hidden round-grid;
 }
 
-.aoc-glow {
-    color: #ffffff;
-    text-shadow: 0 0 5px #ffffff;
-}
-
-.center {
-    @apply flex justify-center items-center;
-}
-
 /* https://css-tricks.com/styling-cross-browser-compatible-range-inputs-css/ */
 input.crab-input[type="range"] {
     -webkit-appearance: none;

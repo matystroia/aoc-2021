@@ -43,8 +43,17 @@ module.exports = {
     plugins: [
         require("@tailwindcss/typography"),
         // TODO: Add 3D transform utility
-        plugin(function ({ addUtilities }) {
+        plugin(function ({ addUtilities, theme }) {
             addUtilities({
+                ".center": {
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                },
+                ".aoc-glow": {
+                    color: "#fff",
+                    textShadow: "0 0 5px #fff",
+                },
                 ".preserve-3d": {
                     transformStyle: "preserve-3d",
                 },

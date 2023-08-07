@@ -41,4 +41,4 @@ next-env.d.ts
 # input files
 /app/input/data
 
-.vscode
+.vscode/
