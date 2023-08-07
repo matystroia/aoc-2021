@@ -69,17 +69,17 @@ export default function Day1() {
     // TODO: Add zoom and pan
     return (
         <div className="flex flex-col h-full gap-4">
-            <div className="flex basis-1/4 gap-4">
-                <div className="round-grid flex-grow p-2">
-                    <h1 className="text-lg font-mono text-center">Part One</h1>
+            <div className="flex gap-4 basis-1/4">
+                <div className="flex-grow p-2 border-2 rounded-xl border-slate-500 bg-zinc-900">
+                    <h1 className="font-mono text-lg text-center">Part One</h1>
                     <ObjectInspector>
                         {{
                             increases,
                         }}
                     </ObjectInspector>
                 </div>
-                <div className="round-grid flex-grow p-2">
-                    <h1 className="text-lg font-mono text-center">Part Two</h1>
+                <div className="flex-grow p-2 border-2 rounded-xl border-slate-500 bg-zinc-900">
+                    <h1 className="font-mono text-lg text-center">Part Two</h1>
                     <ObjectInspector>
                         {{
                             windowIncreases,
@@ -87,8 +87,14 @@ export default function Day1() {
                     </ObjectInspector>
                 </div>
             </div>
-            <div ref={wrapperRef} className="flex-grow box-border overflow-hidden basis-3/4">
-                <canvas {...canvasProps} className="canvas-grid" />
+            <div ref={wrapperRef} className="box-border flex-grow overflow-hidden basis-3/4">
+                <canvas
+                    {...canvasProps}
+                    className="border-2 rounded-xl border-slate-500 bg-zinc-900"
+                    style={{
+                        backgroundImage: `url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32' width='32' height='32' fill='none' stroke='rgb(51 65 85 / 0.25)'%3e%3cpath d='M0 .5H31.5V32'/%3e%3c/svg%3e")`,
+                    }}
+                />
             </div>
         </div>
     );
