@@ -2,52 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-/* https://css-tricks.com/styling-cross-browser-compatible-range-inputs-css/ */
-input.crab-input[type="range"] {
-    -webkit-appearance: none;
-    background: transparent;
-}
-
-input.crab-input[type="range"]::-webkit-slider-thumb {
-    -webkit-appearance: none;
-}
-
-input.crab-input[type="range"]:focus {
-    outline: none;
-}
-
-input.crab-input[type="range"]::-ms-track {
-    cursor: pointer;
-
-    background: transparent;
-    border-color: transparent;
-    color: transparent;
-}
-
-input.crab-input[type="range"]::-webkit-slider-thumb {
-    @apply bg-slate-500 rounded-full border-2 border-slate-400;
-}
-
-input.crab-input[type="range"]::-moz-range-thumb {
-    @apply bg-slate-500 rounded-full border-2 border-slate-400 w-5 h-5 translate-x-0;
-}
-
-input.crab-input[type="range"]::-ms-thumb {
-    @apply bg-slate-500 rounded-full border-2 border-slate-400;
-}
-
-input.crab-input[type="range"]::-webkit-slider-runnable-track {
-    @apply bg-amber-500;
-}
-
-input.crab-input[type="range"]::-moz-range-track {
-    @apply border-0 border-t-2 border-slate-500 border-dashed h-5 translate-y-2.5;
-}
-
-input.crab-input[type="range"]::-ms-track {
-    @apply border-0 border-t-2 border-slate-500 border-dashed h-5 translate-y-2.5;
-}
-
 button.indent:active:enabled {
     transform: translateZ(-100px);
 }

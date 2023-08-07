@@ -3,5 +3,6 @@ module.exports = {
         "tailwindcss/nesting": {},
         tailwindcss: {},
         autoprefixer: {},
+        "postcss-input-range": {},
     },
 };

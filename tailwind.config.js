@@ -43,7 +43,7 @@ module.exports = {
     plugins: [
         require("@tailwindcss/typography"),
         // TODO: Add 3D transform utility
-        plugin(function ({ addUtilities, theme }) {
+        plugin(function ({ addUtilities, addComponents, theme }) {
             addUtilities({
                 ".center": {
                     display: "flex",
@@ -56,6 +56,32 @@ module.exports = {
                 },
                 ".preserve-3d": {
                     transformStyle: "preserve-3d",
+                },
+            });
+
+            // Day 7 range input
+            /* https://css-tricks.com/styling-cross-browser-compatible-range-inputs-css/ */
+            addComponents({
+                'input.crab-input[type="range"]': {
+                    appearance: "none",
+                    background: "transparent",
+
+                    "&::range-track": {
+                        height: "1.25rem",
+                        transform: "translateY(0.625rem)",
+                        borderTop: "2px dashed",
+                        borderColor: theme("colors.slate.500"),
+                    },
+
+                    "&::range-thumb": {
+                        backgroundColor: theme("colors.slate.500"),
+                        borderRadius: "9999px",
+                        border: "2px solid",
+                        borderColor: theme("colors.slate.400"),
+                        width: "1.25rem",
+                        height: "1.25rem",
+                        transform: "translate(0)",
+                    },
                 },
             });
         }),
