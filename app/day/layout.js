@@ -1,14 +1,15 @@
 import { ChallengeWrapper } from "./ChallengeWrapper";
 import { Navigation } from "./Navigation";
 
-// TODO: Add challenge name
 export default function DayLayout({ children }) {
     return (
-        <section className="flex flex-row h-screen bg-slate-800">
-            <Navigation />
-            <div className="overflow-hidden flex-grow">
-                <ChallengeWrapper>{children}</ChallengeWrapper>
-            </div>
+        <section className="flex flex-col h-screen bg-slate-800">
+            <section className="flex overflow-hidden">
+                <Navigation />
+                <div className="flex-grow overflow-hidden">
+                    <ChallengeWrapper>{children}</ChallengeWrapper>
+                </div>
+            </section>
         </section>
     );
 }
