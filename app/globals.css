@@ -2,12 +2,13 @@
 @tailwind components;
 @tailwind utilities;
 
-button.indent:active:enabled {
-    transform: translateZ(-100px);
-}
-
+/* TODO: Refactor */
 .terminal {
     text-shadow: 0 0 2px white;
+}
+
+body {
+  @apply text-zinc-100; 
 }
 
 @layer utilities {

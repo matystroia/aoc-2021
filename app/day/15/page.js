@@ -123,7 +123,7 @@ function NavButton({ position, onClick }) {
         <div className="flex justify-center -z-10" style={{ perspective: "800px" }}>
             <button
                 className={clsx(
-                    "bg-teal-500 center indent transition-all disabled:opacity-0",
+                    "bg-teal-500 center [transform:translateZ(-100px)] transition-all disabled:opacity-0",
                     className
                 )}
                 onClick={onClick}
@@ -175,7 +175,7 @@ function MatrixNavigation({
                 position="up"
                 onClick={!isPartOne && metaY > 0 && (() => setMetaY(metaY - 1))}
             />
-            <div className="flex items-center relative" style={{ perspective: "800px" }}>
+            <div className="relative flex items-center" style={{ perspective: "800px" }}>
                 <NavButton
                     position="left"
                     onClick={!isPartOne && metaX > 0 && (() => setMetaX(metaX - 1))}
@@ -300,7 +300,7 @@ export default function Day15() {
     if (!isExample) return <ObjectInspector>{{ minTotalRisk: ans }}</ObjectInspector>;
 
     return (
-        <div className="center h-full" style={{ perspective: "800px" }}>
+        <div className="h-full center" style={{ perspective: "800px" }}>
             <MatrixNavigation
                 key={isPartOne}
                 risk={bigRisk}
@@ -312,9 +312,9 @@ export default function Day15() {
                 showSolution={showSolution}
                 isPartOne={isPartOne}
             />
-            <div className="absolute bottom-1 right-1 flex gap-4 bg-zinc-600 p-4 rounded-xl">
+            <div className="absolute flex gap-4 p-4 bottom-1 right-1 bg-zinc-600 rounded-xl">
                 <button
-                    className="w-10 h-10 bg-emerald-500 rounded-md center"
+                    className="w-10 h-10 rounded-md bg-emerald-500 center"
                     onClick={() => setShowSolution(!showSolution)}
                 >
                     {showSolution ? (
@@ -324,7 +324,7 @@ export default function Day15() {
                     )}
                 </button>
                 <button
-                    className="w-10 h-10 bg-emerald-500 rounded-md center"
+                    className="w-10 h-10 rounded-md bg-emerald-500 center"
                     onClick={() => setShowValues(!showValues)}
                 >
                     {showValues ? (
