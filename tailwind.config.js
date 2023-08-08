@@ -42,8 +42,7 @@ module.exports = {
     },
     plugins: [
         require("@tailwindcss/typography"),
-        // TODO: Add 3D transform utility
-        plugin(function ({ addUtilities, addComponents, theme }) {
+        plugin(function ({ addUtilities, matchUtilities, addComponents, theme }) {
             addUtilities({
                 ".center": {
                     display: "flex",
@@ -58,6 +57,24 @@ module.exports = {
                     transformStyle: "preserve-3d",
                 },
             });
+
+            matchUtilities({
+                perspective: (value) => ({ perspective: value }),
+            });
+
+            matchUtilities(
+                {
+                    "rotate-x": (value) => ({ transform: `rotateX(${value}deg)` }),
+                },
+                { values: { 15: "15", 30: "30", 60: "60", 90: "90" }, supportsNegativeValues: true }
+            );
+
+            matchUtilities(
+                {
+                    "rotate-y": (value) => ({ transform: `rotateY(${value}deg)` }),
+                },
+                { values: { 15: "15", 30: "30", 60: "60", 90: "90" }, supportsNegativeValues: true }
+            );
 
             // Day 7 range input
             /* https://css-tricks.com/styling-cross-browser-compatible-range-inputs-css/ */
