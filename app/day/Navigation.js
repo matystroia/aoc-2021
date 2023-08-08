@@ -21,7 +21,7 @@ function DayLink({ day }) {
             )}
         >
             <div className="w-10 font-mono text-center shrink-0">{day}</div>
-            <div className="overflow-hidden text-xs text-center text-slate-300 text-ellipsis whitespace-nowrap">
+            <div className="overflow-hidden text-xs text-center transition-opacity opacity-0 text-slate-300 text-ellipsis whitespace-nowrap group-hover:opacity-100">
                 {name}
             </div>
         </Link>
@@ -32,7 +32,7 @@ export function Navigation() {
     const days = Array.from({ length: 25 }, (_, i) => i + 1);
 
     return (
-        <nav className="flex flex-col w-10 overflow-x-hidden overflow-y-auto bg-slate-700 hover:w-64 transition-[width]">
+        <nav className="flex flex-col w-10 overflow-x-hidden overflow-y-auto bg-slate-700 hover:w-64 transition-[width] group">
             {days.map((day) => (
                 <DayLink key={day} day={day} />
             ))}
