@@ -26,16 +26,8 @@ export class CanvasContext {
     }
 
     interpolatePoint({ x, y }) {
-        const {
-            minPointX,
-            maxPointX,
-            minPointY,
-            maxPointY,
-            minX,
-            maxX,
-            minY,
-            maxY,
-        } = this.extremePoints;
+        const { minPointX, maxPointX, minPointY, maxPointY, minX, maxX, minY, maxY } =
+            this.extremePoints;
 
         const [deltaX, deltaY] = [maxX - minX, maxY - minY];
         return {
@@ -79,7 +71,13 @@ export function Canvas({ onDraw, ...props }) {
 
     return (
         <div ref={wrapperRef} {...props}>
-            <canvas {...canvasProps} className="canvas-grid" />
+            <canvas
+                {...canvasProps}
+                className="overflow-hidden border-2 rounded-xl border-slate-500 bg-zinc-900"
+                style={{
+                    backgroundImage: `url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32' width='32' height='32' fill='none' stroke='rgb(51 65 85 / 0.25)'%3e%3cpath d='M0 .5H31.5V32'/%3e%3c/svg%3e")`,
+                }}
+            />
         </div>
     );
 }
