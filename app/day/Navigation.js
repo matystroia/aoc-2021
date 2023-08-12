@@ -8,7 +8,7 @@ import { ChallengeNames } from "../input/names";
 function DayLink({ day }) {
     const pathname = usePathname();
     const href = `/day/${day}`;
-    const isActive = pathname.startsWith(href);
+    const isActive = pathname === href;
     const name = ChallengeNames[day];
 
     return (

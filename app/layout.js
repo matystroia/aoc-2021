@@ -1,6 +1,5 @@
 import "./globals.css";
 import { Inter } from "next/font/google";
-import { enableMapSet } from "immer";
 import { ErrorBoundary } from "react-error-boundary";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -16,7 +15,7 @@ export default function RootLayout({ children }) {
             <body className={inter.className}>
                 <ErrorBoundary
                     fallback={
-                        <div className="h-screen center text-4xl italic font-serif text-zinc-200">
+                        <div className="h-screen font-serif text-4xl italic center text-zinc-200 bg-zinc-950">
                             fin
                         </div>
                     }
