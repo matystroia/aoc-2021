@@ -5,12 +5,12 @@ export function useMutationObserver(targetNode, attribute, onChange) {
         onChange();
     });
     useEffect(() => {
-        // console.log({ targetNode, callback, config });
         if (!targetNode) return;
 
         const observer = new MutationObserver(onMutation);
         observer.observe(targetNode, { attributeFilter: [attribute] });
 
         return () => observer.disconnect();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [targetNode, attribute]);
 }

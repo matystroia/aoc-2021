@@ -1,18 +1,23 @@
+import { forwardRef } from "react";
 import clsx from "clsx";
 import { clone } from "lodash";
 
 // Great article:
 // https://css-tricks.com/css-in-3d-learning-to-think-in-cubes-instead-of-boxes/
-export function Box({
-    depth = 10,
-    angle = 90,
-    borderWidth = 0,
-    children,
-    className,
-    style,
-    sideClass,
-    borderClass,
-}) {
+export const Box = forwardRef(function Box(
+    {
+        depth = 10,
+        angle = 90,
+        borderWidth = 0,
+        children,
+        className,
+        style,
+        sideClass,
+        borderClass,
+        baseClass,
+    },
+    ref
+) {
     const sideWidth = Math.floor(depth / Math.sin((angle * Math.PI) / 180));
 
     const extraWidth = Math.floor((2 * depth) / Math.tan((angle * Math.PI) / 180));
@@ -22,7 +27,7 @@ export function Box({
     wrapperStyle.transform += ` translateZ(${depth}px)`;
 
     return (
-        <div className={clsx("relative preserve-3d", className)} style={wrapperStyle}>
+        <div ref={ref} className={clsx("relative preserve-3d", className)} style={wrapperStyle}>
             {/* TOP */}
             <div
                 className={clsx("absolute top-0", borderClass)}
@@ -123,6 +128,21 @@ export function Box({
                     }}
                 ></div>
             </div>
+            {/* BASE */}
+            {baseClass && (
+                <div
+                    className={clsx("absolute", baseClass)}
+                    style={{
+                        top: -halfExtraWidth,
+                        left: -halfExtraWidth,
+                        width: `calc(100% + ${extraWidth}px)`,
+                        height: `calc(100% + ${extraWidth}px)`,
+                        // width: `calc(100% + ${extraWidth}px)`,
+                        // height: `calc(100% + ${extraWidth}px)`,
+                        transform: `translateZ(${-depth}px)`,
+                    }}
+                ></div>
+            )}
         </div>
     );
-}
+});
