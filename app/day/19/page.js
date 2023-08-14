@@ -95,7 +95,7 @@ const isMatch = (s1, s2) => {
 function Axes() {
     return (
         <div className="relative z-50 preserve-3d">
-            <div className="absolute w-32 h-1 rounded-lg bg-red-600">
+            <div className="absolute w-32 h-1 bg-red-600 rounded-lg">
                 <div className="absolute -right-4 -top-1.5 w-0 h-0 border-8 border-l-red-600 border-r-transparent border-y-transparent" />
             </div>
             <div className="absolute w-32 h-1 rounded-lg bg-green-600 [transform:rotateZ(90deg)translate(4rem,4rem)]">
@@ -142,7 +142,7 @@ function Cube({ x, y, z }) {
     //         sideClass="bg-red-500 group-hover:bg-amber-500"
     //         borderWidth={2}
     //         borderClass="bg-red-950 opacity-25 group-hover:bg-amber-950"
-    //         className="group select-none"
+    //         className="select-none group"
     //     >
     //         <div className="w-[50px] h-[50px] bg-red-500 border-2 border-red-950 opacity-25 group-hover:bg-amber-500" />
     //         <div className="absolute w-full h-full bg-red-500 border-2 border-red-950 left-0 top-0 [transform:translateZ(-50px)] opacity-25 group-hover:bg-amber-500" />
@@ -200,7 +200,7 @@ function ScannerCube({ scanner, width, animate = false, onClick, className }) {
             onClick={onClick}
         >
             <div
-                className="preserve-3d w-full h-full relative"
+                className="relative w-full h-full preserve-3d"
                 style={{
                     transform: `rotateX(75deg) rotateZ(${tick % 360}deg)`,
                 }}
@@ -352,13 +352,13 @@ export default function Day19() {
                         key={scanner.i}
                         scanner={scanner}
                         width={100}
-                        className="cursor-pointer transition-transform hover:scale-110"
+                        className="transition-transform cursor-pointer hover:scale-110"
                         onClick={() => setResultIds(resultIds.concat([scanner.i]))}
                     />
                 ))}
             </div>
 
-            <div className="mt-20 flex flex-wrap gap-4 preserve-3d">
+            <div className="flex flex-wrap gap-4 mt-20 preserve-3d">
                 {resultScanners.map((scanner) => (
                     <div
                         key={scanner.i}
@@ -370,15 +370,15 @@ export default function Day19() {
                 ))}
             </div>
 
-            <div className="absolute right-0 bottom-0 flex preserve-3d">
+            <div className="absolute bottom-0 right-0 flex preserve-3d">
                 <button
-                    className="bg-zinc-600 p-2 rounded-md"
+                    className="p-2 rounded-md bg-zinc-600"
                     onClick={() => setScannerIndex(scannerIndex - 1)}
                 >
                     Prev
                 </button>
                 <button
-                    className="bg-zinc-600 p-2 rounded-md"
+                    className="p-2 rounded-md bg-zinc-600"
                     onClick={() => setScannerIndex(scannerIndex + 1)}
                 >
                     Next
@@ -414,3 +414,7 @@ export default function Day19() {
         </div>
     );
 }
+
+export const config = {
+    exampleOnly: false,
+};

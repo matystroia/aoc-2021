@@ -143,9 +143,9 @@ export default function Day11() {
     }, [isForward]);
 
     return (
-        <div className="h-full flex flex-col center">
+        <div className="flex flex-col h-full center">
             <ObjectInspector>{{ ans: totalFlashes(octopuses, 100) }}</ObjectInspector>
-            <div className="w-fit flex flex-col border-2 border-slate-600 rounded-lg p-4">
+            <div className="flex flex-col p-4 border-2 rounded-lg w-fit border-slate-600">
                 <div className="flex flex-col gap-2">
                     {octopuses.map((row, i) => (
                         <div key={i} className="flex gap-2">
@@ -159,22 +159,22 @@ export default function Day11() {
                     <div className="font-mono">
                         Step {step} ({turnIndex + 1}/{stepTurns.length})
                     </div>
-                    <div className="flex ml-auto gap-2">
+                    <div className="flex gap-2 ml-auto">
                         <button
-                            className="w-10 h-10 bg-slate-500 rounded-lg center"
+                            className="w-10 h-10 rounded-lg bg-slate-500 center"
                             onClick={handleReset}
                         >
                             <ArrowUturnLeftIcon className="w-6 h-6" />
                         </button>
                         <button
-                            className="w-10 h-10 bg-slate-500 rounded-lg center"
+                            className="w-10 h-10 rounded-lg bg-slate-500 center"
                             onClick={handleNext}
                         >
                             <ArrowUturnRightIcon className="w-6 h-6" />
                         </button>
                         {!isPartOne && (
                             <button
-                                className="w-10 h-10 bg-slate-500 rounded-lg center"
+                                className="w-10 h-10 rounded-lg bg-slate-500 center"
                                 onClick={() => setIsForward(!isForward)}
                             >
                                 <ForwardIcon className="w-6 h-6" />
@@ -186,3 +186,7 @@ export default function Day11() {
         </div>
     );
 }
+
+export const config = {
+    exampleOnly: false,
+};

@@ -54,7 +54,7 @@ function Joystick({ onLeft, onRight, onUp, onDown }) {
     return (
         <div className="relative center preserve-3d">
             <div
-                className="absolute preserve-3d transition-transform"
+                className="absolute transition-transform preserve-3d"
                 style={{ transform, transformOrigin: "" }}
             >
                 <Box depth={60} angle={90} sideClass="bg-stone-900">
@@ -66,7 +66,7 @@ function Joystick({ onLeft, onRight, onUp, onDown }) {
                     </div>
                 </Box>
             </div>
-            <div className="w-8 h-8 bg-stone-950 border-2 border-stone-900 rounded-lg"></div>
+            <div className="w-8 h-8 border-2 rounded-lg bg-stone-950 border-stone-900"></div>
         </div>
     );
 }
@@ -120,9 +120,9 @@ function DPad({ onLeft, onRight, onUp, onDown }) {
     const borderWidth = 6;
 
     return (
-        <div className="preserve-3d relative center">
+        <div className="relative preserve-3d center">
             <div
-                className="flex flex-col items-center preserve-3d transition-transform"
+                className="flex flex-col items-center transition-transform preserve-3d"
                 style={{ transform }}
             >
                 <DPadButton direction="up" />
@@ -201,7 +201,7 @@ function Slider({ value, onChange, isVertical = false, className }) {
         >
             <Box
                 angle={75}
-                className="absolute cursor-pointer transition-transform m-0 p-0 h-fit w-fit"
+                className="absolute p-0 m-0 transition-transform cursor-pointer h-fit w-fit"
                 style={{
                     transform: `translate(${!isVertical ? value * 10 : 0}px, ${
                         isVertical ? value * 10 : 0
@@ -233,15 +233,15 @@ function Screen({ velocity, velocityIndex, velocityCount, className }) {
             )}
         >
             {!isPartOne && (
-                <div className="flex justify-center text-base mb-1">
+                <div className="flex justify-center mb-1 text-base">
                     {velocityIndex} / {velocityCount}
                 </div>
             )}
-            <div className="flex w-full justify-between px-6">
+            <div className="flex justify-between w-full px-6">
                 <span>X: </span>
                 <span>{velocity.x}</span>
             </div>
-            <div className="flex w-full justify-between px-6">
+            <div className="flex justify-between w-full px-6">
                 <span>Y: </span> {velocity.y}
             </div>
         </div>
@@ -293,9 +293,9 @@ function Controls({
     const { isPartOne } = useContext(ChallengeContext);
 
     return (
-        <div className="flex items-center justify-center border-4 py-8 border-stone-900 bg-stone-600 preserve-3d">
+        <div className="flex items-center justify-center py-8 border-4 border-stone-900 bg-stone-600 preserve-3d">
             {isPartOne ? (
-                <div className="flex flex-col preserve-3d gap-4">
+                <div className="flex flex-col gap-4 preserve-3d">
                     <Joystick
                         onLeft={() => onChangeVelocity({ x: velocity.x - 1, y: velocity.y })}
                         onRight={() => onChangeVelocity({ x: velocity.x + 1, y: velocity.y })}
@@ -329,7 +329,7 @@ function Controls({
                 velocityCount={velocities.length}
                 className="mx-12"
             />
-            <div className="preserve-3d relative center">
+            <div className="relative preserve-3d center">
                 {/* TODO: Add safety lid you pull back */}
                 <Box
                     depth={20}
@@ -341,7 +341,7 @@ function Controls({
                     style={{ transform: isActive ? "translateZ(-10px)" : "" }}
                 >
                     <button
-                        className="w-24 h-24 bg-rose-700 border-2 border-rose-950 font-mono block cell-shaded bg-gradient-radial"
+                        className="block w-24 h-24 font-mono border-2 bg-rose-700 border-rose-950 cell-shaded bg-gradient-radial"
                         onPointerDown={() => setIsActive(true)}
                         onPointerUp={() => setIsActive(false)}
                     ></button>
@@ -441,7 +441,7 @@ function Board({ velocity, viewOffset, targetX, targetY }) {
     positions.forEach(({ x, y }) => positionSet.add(`${x},${y}`));
 
     return (
-        <div className="p-2 bg-stone-800 border-4 border-stone-900">
+        <div className="p-2 border-4 bg-stone-800 border-stone-900">
             <div className="flex flex-col bg-stone-800">
                 {range(rows).map((i) => (
                     <div key={i} className="flex">
@@ -480,7 +480,7 @@ function Board({ velocity, viewOffset, targetX, targetY }) {
                                 >
                                     {!isOrigin && isPath && (
                                         <div
-                                            className="absolute h-full w-full z-50 rounded-full animate-ping"
+                                            className="absolute z-50 w-full h-full rounded-full animate-ping"
                                             style={{ backgroundColor }}
                                         ></div>
                                     )}
@@ -525,7 +525,7 @@ function Laptop({ x1, x2, y1, y2, velocities }) {
     return (
         <div
             ref={ref}
-            className="bg-zinc-500 p-24 rounded-full"
+            className="p-24 rounded-full bg-zinc-500"
             style={{ perspective: "800px", perspectiveOrigin: "center" }}
             onPointerMove={handleMove}
         >
@@ -570,8 +570,12 @@ export default function Day17() {
     const velocities = getAllVelocities([x1, x2], [y2, y1]);
 
     return (
-        <div className="h-full flex flex-col justify-center items-center">
+        <div className="flex flex-col items-center justify-center h-full">
             <Laptop x1={x1} x2={x2} y1={y1} y2={y2} velocities={velocities} />
         </div>
     );
 }
+
+export const config = {
+    exampleOnly: false,
+};

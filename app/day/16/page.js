@@ -179,7 +179,7 @@ function PacketOperatorContent({
 
 function PacketHeader({ version, typeId }) {
     return (
-        <div className="border-2 border-emerald-400 p-4 flex flex-col">
+        <div className="flex flex-col p-4 border-2 border-emerald-400">
             <div className="self-end">Header</div>
             <div>Version: {version}</div>
             <div>Type ID: {typeId}</div>
@@ -303,7 +303,7 @@ function Link({ fromWindowNode, toWindowNode, parentNode, className }) {
             {lines}
             {false && (
                 <div
-                    className="absolute border border-amber-500 border-dotted w-1"
+                    className="absolute w-1 border border-dotted border-amber-500"
                     style={{
                         height: deltaY,
                         transform: `translate(${top.x + top.width / 2}px, ${top.y}px)`,
@@ -312,7 +312,7 @@ function Link({ fromWindowNode, toWindowNode, parentNode, className }) {
             )}
             {false && (
                 <div
-                    className="absolute border border-teal-500 border-dotted h-1"
+                    className="absolute h-1 border border-teal-500 border-dotted"
                     style={{
                         width: deltaX,
                         transform: `translate(${left.x}px, ${bottom.y}px)`,
@@ -346,19 +346,19 @@ const TerminalWindow = forwardRef(function TerminalWindow(
     return (
         <div
             ref={ref}
-            className="border-4 border-neutral-900 bg-neutral-950 text-neutral-50 font-mono terminal flex flex-col absolute"
+            className="absolute flex flex-col font-mono border-4 border-neutral-900 bg-neutral-950 text-neutral-50 terminal"
             style={{ transform: `translate(${x}px, ${y}px)` }}
         >
             <div
-                className="flex bg-neutral-900 px-2 items-center h-6 select-none"
+                className="flex items-center h-6 px-2 select-none bg-neutral-900"
                 onPointerDown={handleDown}
             >
                 <div className="mr-4">{title}</div>
                 <span className="text-xs">{id}</span>
-                <div className="ml-auto flex gap-2">
+                <div className="flex gap-2 ml-auto">
                     <div className="w-4 h-3 bg-neutral-800"></div>
                     <button
-                        className="w-4 h-3 bg-neutral-600 hover:bg-red-600 cursor-pointer"
+                        className="w-4 h-3 cursor-pointer bg-neutral-600 hover:bg-red-600"
                         onClick={handleClose}
                     ></button>
                 </div>
@@ -465,7 +465,7 @@ function TerminalScreen({ children }) {
     return (
         <div
             ref={ref}
-            className="h-full bg-neutral-800 border-8 border-neutral-900 relative overflow-hidden"
+            className="relative h-full overflow-hidden border-8 bg-neutral-800 border-neutral-900"
             onPointerMove={handlePointerMove}
             onPointerUp={handleWindowUp}
         >
@@ -546,3 +546,7 @@ export default function Day16() {
         </div>
     );
 }
+
+export const config = {
+    exampleOnly: false,
+};

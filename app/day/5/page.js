@@ -101,9 +101,13 @@ export default function Day5() {
     };
 
     return (
-        <div className="w-full h-full flex flex-col gap-2">
+        <div className="flex flex-col w-full h-full gap-2">
             <ObjectInspector>{{ lines, pairs, vents, intersectionPoints }}</ObjectInspector>
             <Canvas className="flex-grow" onDraw={draw} />
         </div>
     );
 }
+
+export const config = {
+    exampleOnly: false,
+};

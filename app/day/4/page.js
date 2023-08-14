@@ -75,26 +75,26 @@ function Controls({ turn, turnsLength, isPlaying, onChangePlay, onChangeTurn }) 
     return (
         <div className="flex flex-row gap-2">
             <button
-                className="bg-cyan-500 w-10 h-10 rounded-lg flex items-center justify-center disabled:bg-slate-500"
+                className="flex items-center justify-center w-10 h-10 rounded-lg bg-cyan-500 disabled:bg-slate-500"
                 onClick={() => onChangeTurn(turn - 1)}
                 disabled={turn === 0}
             >
-                <ArrowUturnLeftIcon className="h-6 w-6" />
+                <ArrowUturnLeftIcon className="w-6 h-6" />
             </button>
 
             <button
-                className="w-10 h-10 bg-amber-500 rounded-lg flex items-center justify-center"
+                className="flex items-center justify-center w-10 h-10 rounded-lg bg-amber-500"
                 onClick={onChangePlay}
             >
-                {isPlaying ? <PauseIcon className="h-6 w-6" /> : <PlayIcon className="h-6 w-6" />}
+                {isPlaying ? <PauseIcon className="w-6 h-6" /> : <PlayIcon className="w-6 h-6" />}
             </button>
 
             <button
-                className="bg-cyan-500 w-10 h-10 rounded-lg flex items-center justify-center disabled:bg-slate-500"
+                className="flex items-center justify-center w-10 h-10 rounded-lg bg-cyan-500 disabled:bg-slate-500"
                 onClick={() => onChangeTurn(turn + 1)}
                 disabled={turn === turnsLength - 1}
             >
-                <ArrowUturnRightIcon className="h-6 w-6" />
+                <ArrowUturnRightIcon className="w-6 h-6" />
             </button>
         </div>
     );
@@ -150,7 +150,7 @@ export default function Day4() {
 
     return (
         <div className="">
-            <div className="absolute top-4 right-4 z-10">
+            <div className="absolute z-10 top-4 right-4">
                 <Controls
                     turn={turn}
                     turnsLength={turnsLength}
@@ -159,7 +159,7 @@ export default function Day4() {
                     onChangePlay={() => setIsPlaying(!isPlaying)}
                 />
             </div>
-            <div className="flex gap-6 flex-wrap items-start">
+            <div className="flex flex-wrap items-start gap-6">
                 {shownBoards.map((board, i) => (
                     <BingoBoard
                         key={i}
@@ -175,3 +175,7 @@ export default function Day4() {
         </div>
     );
 }
+
+export const config = {
+    exampleOnly: false,
+};

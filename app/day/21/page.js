@@ -23,7 +23,7 @@ function Pawn({ position, isPlayerTwo, isConflict }) {
     const [x, y] = coords(position);
     return (
         <div
-            className="absolute center preserve-3d transition-transform duration-75"
+            className="absolute transition-transform duration-75 center preserve-3d"
             style={{
                 transform: `translate(${x}px, ${y}px)${
                     isConflict ? `translateX(${25 * (isPlayerTwo ? -1 : 1)}px)` : ""
@@ -184,7 +184,7 @@ export default function Day21() {
     console.log(wins(positionOne, positionTwo, 0, 0, true));
 
     return (
-        <div className="h-full center flex flex-col" onClick={handleNextTurn}>
+        <div className="flex flex-col h-full center" onClick={handleNextTurn}>
             <div className="flex flex-col gap-4 items-center bg-zinc-800 px-6 py-4 border-zinc-950 border [perspective:500px]">
                 <div className="flex gap-6 preserve-3d">
                     <CustomDie delay={1} value={dice[0]} />
@@ -206,18 +206,22 @@ export default function Day21() {
                 </div>
             </div>
             <div
-                className="bg-zinc-800 border border-zinc-950 p-6 flex flex-col gap-4 font-mono text-xl"
+                className="flex flex-col gap-4 p-6 font-mono text-xl border bg-zinc-800 border-zinc-950"
                 onClick={() => setIsSkip(true)}
             >
                 <div className="flex items-center gap-4">
-                    <div className="w-10 h-10 bg-rose-600 rounded-full" />
+                    <div className="w-10 h-10 rounded-full bg-rose-600" />
                     <span>{scoreOne}</span>
                 </div>
                 <div className="flex items-center gap-4">
-                    <div className="w-10 h-10 bg-cyan-600 rounded-full" />
+                    <div className="w-10 h-10 rounded-full bg-cyan-600" />
                     <span>{scoreTwo}</span>
                 </div>
             </div>
         </div>
     );
 }
+
+export const config = {
+    exampleOnly: false,
+};

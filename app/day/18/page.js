@@ -205,14 +205,14 @@ function Addition({ a, b, onClose }) {
 
     return (
         <div className="flex flex-col gap-2">
-            <button className="text-zinc-700 self-end" onClick={onClose}>
+            <button className="self-end text-zinc-700" onClick={onClose}>
                 <XMarkIcon className="w-5 h-5" />
             </button>
-            <div className="flex flex-col gap-2 items-stretch p-2">
+            <div className="flex flex-col items-stretch gap-2 p-2">
                 <SnailfishNumber number={a} />
-                <span className="text-yellow-400 text-2xl self-center">+</span>
+                <span className="self-center text-2xl text-yellow-400">+</span>
                 <SnailfishNumber number={b} />
-                <hr className="my-4 border-yellow-400 border-2" />
+                <hr className="my-4 border-2 border-yellow-400" />
                 <div onClick={handleClick}>
                     <SnailfishNumber number={tentativeResults[index]} />
                 </div>
@@ -252,7 +252,7 @@ export default function Day18() {
 
     return (
         <div className="h-full center">
-            <div className="flex flex-col items-stretch p-6 gap-4 overflow-auto max-h-1/2 border border-zinc-600 bg-zinc-700 rounded-lg drop-shadow-xl">
+            <div className="flex flex-col items-stretch gap-4 p-6 overflow-auto border rounded-lg max-h-1/2 border-zinc-600 bg-zinc-700 drop-shadow-xl">
                 {numbers.map((number, i) => (
                     <SnailfishNumber
                         key={i}
@@ -264,7 +264,7 @@ export default function Day18() {
             </div>
             <dialog
                 ref={ref}
-                className="bg-zinc-950 rounded-lg backdrop:bg-zinc-900/50 backdrop:backdrop-blur"
+                className="rounded-lg bg-zinc-950 backdrop:bg-zinc-900/50 backdrop:backdrop-blur"
                 onClose={handleClose}
             >
                 {numberIndex !== null && (
@@ -278,3 +278,7 @@ export default function Day18() {
         </div>
     );
 }
+
+export const config = {
+    exampleOnly: false,
+};

@@ -136,7 +136,7 @@ function Element({ name, index, nextElement, rules }) {
     const result = rules.get(name + nextElement);
     return (
         <div className="relative">
-            <div className="font-mono text-4xl h-10 w-10 bg-stone-800 rounded-lg center border-2 border-stone-500 text-stone-300">
+            <div className="w-10 h-10 font-mono text-4xl border-2 rounded-lg bg-stone-800 center border-stone-500 text-stone-300">
                 {name}
             </div>
             {nextElement && result && <PairMarker odd={index % 2} result={result} />}
@@ -148,7 +148,7 @@ function Polymer({ polymer, rules }) {
     const elements = Array.from(polymer);
 
     return (
-        <div className="flex gap-4 items-center">
+        <div className="flex items-center gap-4">
             {elements.map((element, i) => (
                 <Element
                     key={i}
@@ -189,12 +189,12 @@ export default function Day14() {
                 return (
                     <div key={i} className="flex py-10">
                         <button
-                            className="center w-10 h-10 font-mono border-emerald-500 border-2 rounded-lg text-lg font-bold group mr-4"
+                            className="w-10 h-10 mr-4 font-mono text-lg font-bold border-2 rounded-lg center border-emerald-500 group"
                             onClick={isLast && handleNext}
                         >
                             <span>{i}</span>
                             {isLast && (
-                                <div className="w-10 h-10 absolute bg-emerald-700 border-emerald-500 border-2 rounded-lg invisible group-hover:visible center">
+                                <div className="absolute invisible w-10 h-10 border-2 rounded-lg bg-emerald-700 border-emerald-500 group-hover:visible center">
                                     <ArrowDownIcon className="w-6 h-6 bg-emerald-700" />
                                 </div>
                             )}
@@ -207,3 +207,7 @@ export default function Day14() {
         </div>
     );
 }
+
+export const config = {
+    exampleOnly: false,
+};

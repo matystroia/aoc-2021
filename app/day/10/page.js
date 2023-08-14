@@ -91,7 +91,7 @@ function ChunkLine({ line }) {
     }
 
     return (
-        <div className="border-2 border-slate-500 rounded-lg p-4 relative">
+        <div className="relative p-4 border-2 rounded-lg border-slate-500">
             <div className="flex items-center">
                 {characters.map((c, i) => {
                     const isHighlighted =
@@ -110,7 +110,7 @@ function ChunkLine({ line }) {
                     );
                 })}
                 {completion && (
-                    <div className="border-2 border-dashed border-slate-400 rounded-sm">
+                    <div className="border-2 border-dashed rounded-sm border-slate-400">
                         {completion.map((c, i) => {
                             const isHighlighted =
                                 hoverIndex === null ||
@@ -162,7 +162,7 @@ export default function Day10() {
 
     return (
         <div>
-            <div className="flex flex-col gap-4 items-center">
+            <div className="flex flex-col items-center gap-4">
                 {lines.map((line, i) => (
                     <ChunkLine key={i} line={line} />
                 ))}
@@ -170,3 +170,7 @@ export default function Day10() {
         </div>
     );
 }
+
+export const config = {
+    exampleOnly: false,
+};

@@ -1,15 +1,14 @@
 "use client";
 
 import { Canvas } from "app/components/Canvas";
-import { ObjectInspector } from "app/components/ObjectInspector";
-import { useFile } from "app/hooks/useFile";
 import { normalizePoints } from "app/utils";
-import { useCallback, useMemo } from "react";
+import { useCallback, useMemo, useContext } from "react";
+import { ChallengeContext } from "../ChallengeWrapper";
 
 const dirs = { forward: [1, 0], down: [0, 1], up: [0, -1] };
 
 export default function Day2() {
-    const { lines } = useFile("day2");
+    const { lines } = useContext(ChallengeContext);
 
     // Part 1
     const points1 = useMemo(() => {
@@ -87,9 +86,13 @@ export default function Day2() {
     );
 
     return (
-        <div className="flex flex-row h-full w-full">
+        <div className="flex flex-row w-full h-full">
             <Canvas className="flex-grow overflow-hidden" onDraw={drawPart1} />
             <Canvas className="flex-grow overflow-hidden" onDraw={drawPart2} />
         </div>
     );
 }
+
+export const config = {
+    exampleOnly: false,
+};

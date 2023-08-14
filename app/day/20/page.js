@@ -75,9 +75,13 @@ export default function Day20() {
             ))}
             <div className="font-mono text-2xl">{ans}</div>
             <button
-                className="absolute top-4 right-4 w-20 h-20 bg-amber-700 border-4 border-amber-800 rounded-lg hover:rotate-6 transition-transform"
+                className="absolute w-20 h-20 transition-transform border-4 rounded-lg top-4 right-4 bg-amber-700 border-amber-800 hover:rotate-6"
                 onClick={handleSharpen}
             />
         </div>
     );
 }
+
+export const config = {
+    exampleOnly: false,
+};

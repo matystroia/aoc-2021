@@ -35,9 +35,9 @@ function SegmentDisplay({ decoder, value }) {
     const [a, b, c, d, e, f, g] = decoder;
 
     return (
-        <div className="flex flex-col font-mono items-center w-24 border-2 border-slate-500 bg-slate-900 rounded-lg leading-4 p-4 text-slate-800">
+        <div className="flex flex-col items-center w-24 p-4 font-mono leading-4 border-2 rounded-lg border-slate-500 bg-slate-900 text-slate-800">
             <span className={clsx(value.includes(a) && "aoc-glow")}>{repeat(a, 4)}</span>
-            <div className="self-stretch flex justify-between">
+            <div className="flex self-stretch justify-between">
                 <span className={clsx(value.includes(b) && "aoc-glow")}>
                     {b}
                     <br />
@@ -50,7 +50,7 @@ function SegmentDisplay({ decoder, value }) {
                 </span>
             </div>
             <span className={clsx(value.includes(d) && "aoc-glow")}>{repeat(d, 4)}</span>
-            <div className="self-stretch flex justify-between">
+            <div className="flex self-stretch justify-between">
                 <span className={clsx(value.includes(e) && "aoc-glow")}>
                     {e}
                     <br />
@@ -83,12 +83,12 @@ function Display({ inputValues, outputValues }) {
     const output = toNumber(decoder, outputValues);
 
     return (
-        <div className="flex gap-4 justify-center items-center">
-            <div className="aoc-glow text-xl font-mono">{output}</div>
+        <div className="flex items-center justify-center gap-4">
+            <div className="font-mono text-xl aoc-glow">{output}</div>
             {outputValues.map((val, i) => (
                 <SegmentDisplay key={i} decoder={decoder} value={val} />
             ))}
-            <div className="aoc-glow text-xl font-mono">{output}</div>
+            <div className="font-mono text-xl aoc-glow">{output}</div>
         </div>
     );
 }
@@ -169,3 +169,7 @@ export default function Day8() {
         </div>
     );
 }
+
+export const config = {
+    exampleOnly: false,
+};

@@ -44,14 +44,14 @@ function Fish({ timer }) {
 
 function Controls({ turn, onReset, onNext }) {
     return (
-        <div className="flex gap-2 items-center">
-            <button className="w-10 h-10 bg-cyan-500 rounded-lg flex items-center justify-center">
+        <div className="flex items-center gap-2">
+            <button className="flex items-center justify-center w-10 h-10 rounded-lg bg-cyan-500">
                 <ArrowUturnLeftIcon className="w-6 h-6" onClick={onReset} />
             </button>
-            <div className="w-10 h-10 bg-cyan-500 rounded-lg flex items-center justify-center">
+            <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-cyan-500">
                 {turn}
             </div>
-            <button className="w-10 h-10 bg-cyan-500 rounded-lg flex items-center justify-center">
+            <button className="flex items-center justify-center w-10 h-10 rounded-lg bg-cyan-500">
                 <ArrowUturnRightIcon className="w-6 h-6" onClick={onNext} />
             </button>
         </div>
@@ -69,18 +69,18 @@ export default function Day6() {
     };
 
     const handleNext = () => {
-        // const nextFish = [];
-        // let newFish = 0;
-        // fish.forEach((t) => {
-        //     if (t - 1 < 0) {
-        //         nextFish.push(6);
-        //         newFish++;
-        //     } else nextFish.push(t - 1);
-        // });
-        // nextFish.push(...fill(Array(newFish), 8));
+        const nextFish = [];
+        let newFish = 0;
+        fish.forEach((t) => {
+            if (t - 1 < 0) {
+                nextFish.push(6);
+                newFish++;
+            } else nextFish.push(t - 1);
+        });
+        nextFish.push(...fill(Array(newFish), 8));
 
         setTurn(turn + 1);
-        // setFish(nextFish);
+        setFish(nextFish);
     };
 
     const ans = sum(fish.map((t) => countNewFish(t, 256))) + fish.length;
@@ -92,9 +92,9 @@ export default function Day6() {
                 <Controls turn={turn} onReset={handleReset} onNext={handleNext} />
             </div>
             <div className="flex flex-wrap gap-2">
-                {/* {fish.map((t, i) => (
+                {fish.map((t, i) => (
                     <Fish key={i} timer={t} />
-                ))} */}
+                ))}
             </div>
         </div>
     );
