@@ -1,3 +1,5 @@
+import { clone, merge } from "lodash";
+
 export const ChallengeNames = {
     1: "Sonar Sweep",
     2: "Dive!",
@@ -25,3 +27,13 @@ export const ChallengeNames = {
     24: "Arithmetic Logic Unit",
     25: "Sea Cucumber",
 };
+
+const defaultConfig = {
+    exampleOnly: true,
+};
+export const ChallengeConfig = Object.fromEntries(
+    Object.keys(ChallengeNames).map((day) => [
+        day,
+        merge(clone(defaultConfig), require(`../day/${day}/page`).config),
+    ])
+);
