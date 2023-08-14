@@ -2,7 +2,7 @@ import clsx from "clsx";
 import { AcademicCapIcon, BookOpenIcon } from "@heroicons/react/24/solid";
 import { useContext } from "react";
 import { ChallengeContext } from "./ChallengeWrapper";
-import { ChallengeNames } from "../input/names";
+import { ChallengeConfig } from "../input/names";
 
 function PartToggle({ onChangePart }) {
     const { isPartOne } = useContext(ChallengeContext);
@@ -30,12 +30,13 @@ function PartToggle({ onChangePart }) {
     );
 }
 
-function ExampleToggle({ onChangeExample }) {
+function ExampleToggle({ disabled, onChangeExample }) {
     const { isExample } = useContext(ChallengeContext);
     return (
         <button
+            disabled={disabled}
             className={clsx(
-                "w-10 h-10 rounded-lg flex justify-center items-center",
+                "w-10 h-10 rounded-lg flex justify-center items-center disabled:bg-emerald-700 disabled:text-emerald-500",
                 isExample ? "bg-emerald-500" : "border-2 border-emerald-500"
             )}
             onClick={() => onChangeExample(!isExample)}
@@ -54,7 +55,8 @@ function Notes() {
 }
 
 export function OptionsBar({ day, onChangePart, onChangeExample, className }) {
-    const name = ChallengeNames[day];
+    const { name, exampleOnly } = ChallengeConfig[day];
+
     return (
         <div className={clsx("p-2 flex items-center justify-between bg-slate-700", className)}>
             <PartToggle onChangePart={onChangePart} />
@@ -64,7 +66,7 @@ export function OptionsBar({ day, onChangePart, onChangeExample, className }) {
             </div>
             <div className="flex gap-2">
                 <Notes />
-                <ExampleToggle onChangeExample={onChangeExample} />
+                <ExampleToggle disabled={exampleOnly} onChangeExample={onChangeExample} />
             </div>
         </div>
     );

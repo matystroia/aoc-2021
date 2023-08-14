@@ -3,7 +3,7 @@
 import clsx from "clsx";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { ChallengeNames } from "../input/names";
+import { ChallengeConfig } from "../input/names";
 import { HomeIcon } from "@heroicons/react/24/solid";
 
 function NavLink({ icon, title, href, isActive }) {
@@ -38,7 +38,7 @@ export function Navigation() {
             {days.map((day) => {
                 const href = `/day/${day}`;
                 const isActive = pathname === href;
-                const name = ChallengeNames[day];
+                const name = ChallengeConfig[day].name;
                 return (
                     <NavLink key={day} icon={day} title={name} href={href} isActive={isActive} />
                 );

@@ -1,6 +1,6 @@
 import { clone, merge } from "lodash";
 
-export const ChallengeNames = {
+const names = {
     1: "Sonar Sweep",
     2: "Dive!",
     3: "Binary Diagnostic",
@@ -32,8 +32,8 @@ const defaultConfig = {
     exampleOnly: true,
 };
 export const ChallengeConfig = Object.fromEntries(
-    Object.keys(ChallengeNames).map((day) => [
+    Object.entries(names).map(([day, name]) => [
         day,
-        merge(clone(defaultConfig), require(`../day/${day}/page`).config),
+        merge(clone(defaultConfig), { name }, require(`../day/${day}/page`).config),
     ])
 );
