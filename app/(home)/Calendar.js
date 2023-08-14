@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ChallengeConfig } from "../input/names";
+import { ChallengeConfig } from "../input/config";
 import clsx from "clsx";
 import { motion } from "framer-motion";
 import { forwardRef } from "react";

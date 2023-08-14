@@ -3,7 +3,7 @@
 import clsx from "clsx";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { ChallengeConfig } from "../input/names";
+import { ChallengeConfig } from "../input/config";
 import { HomeIcon } from "@heroicons/react/24/solid";
 
 function NavLink({ icon, title, href, isActive }) {
