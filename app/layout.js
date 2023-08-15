@@ -4,12 +4,16 @@ import "./globals.css";
 import { Inter } from "next/font/google";
 import { ErrorBoundary } from "react-error-boundary";
 import { MobileFallback } from "./MobileFallback";
+import { useEffect } from "react";
 
 class MobileError extends Error {}
 
-function AssertDekstop() {
-    const mediaQuery = window.matchMedia("(min-width: 800px) and (min-height: 600px)");
-    if (!mediaQuery.matches) throw new MobileError();
+function AssertDesktop() {
+    useEffect(() => {
+        const mediaQuery = matchMedia("(min-width: 800px) and (min-height: 600px)");
+        if (!mediaQuery.matches) throw new MobileError();
+    }, []);
+    return "";
 }
 const inter = Inter({ subsets: ["latin"] });
 
@@ -32,7 +36,7 @@ export default function RootLayout({ children }) {
         <html lang="en">
             <body className={inter.className}>
                 <ErrorBoundary fallbackRender={fallbackRender}>
-                    <AssertDekstop />
+                    <AssertDesktop />
                     {children}
                 </ErrorBoundary>
             </body>
