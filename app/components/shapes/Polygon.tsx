@@ -52,7 +52,7 @@ export const Polygon = memo(
                         borderClass={topBorder.borderClass}
                         borderScaleX={(width - 2 * topBorder.width) / width}
                         borderScaleY={(height - 2 * topBorder.width) / height}
-                        className="absolute h-full w-full"
+                        className="absolute w-full h-full"
                         style={{
                             transform: `translateZ(${depth}px)`,
                             clipPath: `polygon(${polygonPath})`,
