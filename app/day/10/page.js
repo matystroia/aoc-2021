@@ -170,7 +170,3 @@ export default function Day10() {
         </div>
     );
 }
-
-export const config = {
-    exampleOnly: false,
-};

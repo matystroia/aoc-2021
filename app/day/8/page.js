@@ -169,7 +169,3 @@ export default function Day8() {
         </div>
     );
 }
-
-export const config = {
-    exampleOnly: false,
-};

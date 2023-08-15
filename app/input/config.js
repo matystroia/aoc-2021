@@ -1,39 +1,27 @@
-import { clone, merge } from "lodash";
-
-const names = {
-    1: "Sonar Sweep",
-    2: "Dive!",
-    3: "Binary Diagnostic",
-    4: "Giant Squid",
-    5: "Hydrothermal Venture",
-    6: "Lanternfish",
-    7: "The Treachery of Whales",
-    8: "Seven Segment Search",
-    9: "Smoke Basin",
-    10: "Syntax Scoring",
-    11: "Dumbo Octopus",
-    12: "Passage Pathing",
-    13: "Transparent Origami",
-    14: "Extended Polymerization",
-    15: "Chiton",
-    16: "Packet Decoder",
-    17: "Trick Shot",
-    18: "Snailfish",
-    19: "Beacon Scanner",
-    20: "Trench Map",
-    21: "Dirac Dice",
-    22: "Reactor Reboot",
-    23: "Amphipod",
-    24: "Arithmetic Logic Unit",
-    25: "Sea Cucumber",
+export const ChallengeConfig = {
+    1: { name: "Sonar Sweep", exampleOnly: false },
+    2: { name: "Dive!", exampleOnly: false },
+    3: { name: "Binary Diagnostic", exampleOnly: true },
+    4: { name: "Giant Squid", exampleOnly: false },
+    5: { name: "Hydrothermal Venture", exampleOnly: false },
+    6: { name: "Lanternfish", exampleOnly: true },
+    7: { name: "The Treachery of Whales", exampleOnly: true },
+    8: { name: "Seven Segment Search", exampleOnly: false },
+    9: { name: "Smoke Basin", exampleOnly: true },
+    10: { name: "Syntax Scoring", exampleOnly: false },
+    11: { name: "Dumbo Octopus", exampleOnly: false },
+    12: { name: "Passage Pathing", exampleOnly: false },
+    13: { name: "Transparent Origami", exampleOnly: true },
+    14: { name: "Extended Polymerization", exampleOnly: false },
+    15: { name: "Chiton", exampleOnly: true },
+    16: { name: "Packet Decoder", exampleOnly: false },
+    17: { name: "Trick Shot", exampleOnly: false },
+    18: { name: "Snailfish", exampleOnly: false },
+    19: { name: "Beacon Scanner", exampleOnly: false },
+    20: { name: "Trench Map", exampleOnly: false },
+    21: { name: "Dirac Dice", exampleOnly: false },
+    22: { name: "Reactor Reboot", exampleOnly: true },
+    23: { name: "Amphipod", exampleOnly: false },
+    24: { name: "Arithmetic Logic Unit", exampleOnly: false },
+    25: { name: "Sea Cucumber", exampleOnly: true },
 };
-
-const defaultConfig = {
-    exampleOnly: true,
-};
-export const ChallengeConfig = Object.fromEntries(
-    Object.entries(names).map(([day, name]) => [
-        day,
-        merge(clone(defaultConfig), { name }, require(`../day/${day}/page`).config),
-    ])
-);

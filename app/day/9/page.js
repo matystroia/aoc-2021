@@ -94,7 +94,7 @@ function Tile({ map, i, j }) {
             </div>
             {styleEast && (
                 <div
-                    className="h-10 bg-amber-700 absolute"
+                    className="absolute h-10 bg-amber-700"
                     style={{
                         ...styleEast,
                         top: `calc(${i} * 3.5rem + 0.5rem)`,
@@ -105,7 +105,7 @@ function Tile({ map, i, j }) {
             )}
             {styleSouth && (
                 <div
-                    className="w-10 bg-amber-600 absolute"
+                    className="absolute w-10 bg-amber-600"
                     style={{
                         ...styleSouth,
                         top: `calc(${i} * 3.5rem + 0.5rem)`,
@@ -152,7 +152,7 @@ function Plane({ map }) {
                         {row.map((height, j) => (
                             <div
                                 key={j}
-                                className="bg-slate-500 border-2 h-10 w-10 m-2 opacity-10"
+                                className="w-10 h-10 m-2 border-2 bg-slate-500 opacity-10"
                             ></div>
                         ))}
                     </div>
@@ -244,7 +244,7 @@ export default function Day9() {
         <div className="flex flex-col items-center">
             <ObjectInspector>{{ ans, ans2 }}</ObjectInspector>
             {isExample && <Plane map={map} />}
-            {/* <Canvas className="h-full w-full" onDraw={handleDraw} /> */}
+            {/* <Canvas className="w-full h-full" onDraw={handleDraw} /> */}
         </div>
     );
 }

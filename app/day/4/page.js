@@ -175,7 +175,3 @@ export default function Day4() {
         </div>
     );
 }
-
-export const config = {
-    exampleOnly: false,
-};

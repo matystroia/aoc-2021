@@ -221,7 +221,3 @@ export default function Day21() {
         </div>
     );
 }
-
-export const config = {
-    exampleOnly: false,
-};

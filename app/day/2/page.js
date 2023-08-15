@@ -92,7 +92,3 @@ export default function Day2() {
         </div>
     );
 }
-
-export const config = {
-    exampleOnly: false,
-};

@@ -278,7 +278,3 @@ export default function Day18() {
         </div>
     );
 }
-
-export const config = {
-    exampleOnly: false,
-};

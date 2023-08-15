@@ -400,7 +400,3 @@ export default function Day12() {
         </div>
     );
 }
-
-export const config = {
-    exampleOnly: false,
-};

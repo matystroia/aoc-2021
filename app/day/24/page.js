@@ -391,7 +391,3 @@ export default function Day24() {
         </div>
     );
 }
-
-export const config = {
-    exampleOnly: false,
-};
