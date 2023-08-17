@@ -175,3 +175,8 @@ export function pixelateFilter(radius) {
         radius / 2
     )}'/%3E%3C/filter%3E%3C/svg%3E#b")`;
 }
+
+export function parsePercent(p) {
+    if (!p.endsWith("%")) throw Error("Invalid percentage value");
+    return parseFloat(p.substring(0, p.length - 1)) / 100;
+}
