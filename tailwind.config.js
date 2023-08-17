@@ -66,14 +66,40 @@ module.exports = {
                 {
                     "rotate-x": (value) => ({ transform: `rotateX(${value}deg)` }),
                 },
-                { values: { 15: "15", 30: "30", 60: "60", 90: "90" }, supportsNegativeValues: true }
+                {
+                    values: { 15: "15", 30: "30", 45: "45", 60: "60", 90: "90" },
+                    supportsNegativeValues: true,
+                }
             );
 
             matchUtilities(
                 {
                     "rotate-y": (value) => ({ transform: `rotateY(${value}deg)` }),
                 },
-                { values: { 15: "15", 30: "30", 60: "60", 90: "90" }, supportsNegativeValues: true }
+                {
+                    values: { 15: "15", 30: "30", 45: "45", 60: "60", 90: "90" },
+                    supportsNegativeValues: true,
+                }
+            );
+
+            matchUtilities(
+                {
+                    "rotate-z": (value) => ({ transform: `rotateZ(${value}deg)` }),
+                },
+                {
+                    values: { 15: "15", 30: "30", 45: "45", 60: "60", 90: "90" },
+                    supportsNegativeValues: true,
+                }
+            );
+
+            matchUtilities(
+                {
+                    "translate-z": (value) => ({ transform: `translateZ(${value})` }),
+                },
+                {
+                    values: theme("spacing"),
+                    supportsNegativeValues: true,
+                }
             );
 
             // Day 7 range input
