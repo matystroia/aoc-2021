@@ -1,5 +1,7 @@
 "use client";
 
+import { ScannerDevice } from "./ScannerDevice";
+
 import { Box } from "app/components/shapes/Box";
 import { combinations, permutations, product, splitGroups } from "app/utils";
 import { cloneDeep, intersection, intersectionBy, isEqual, range, sortBy, uniq } from "lodash";
@@ -265,7 +267,6 @@ function ScannerCube({ scanner, width, animate = false, onClick, className }) {
 }
 
 function dfs(scanners, visited, i) {
-    console.log("Now at", i);
     visited.add(i);
     for (let j = 0; j < scanners.length; j++) {
         if (i === j || visited.has(j)) continue;
@@ -305,7 +306,6 @@ export default function Day19() {
                 const key = `${b.x},${b.y},${b.z}`;
                 beaconSet.add(key);
             }
-        console.log(beaconSet.size);
     }, [scanners]);
 
     const [viewAngle, setViewAngle] = useState({ x: 0, y: 0 });
@@ -357,6 +357,11 @@ export default function Day19() {
                     />
                 ))}
             </div>
+            <div className="flex gap-8 mt-48 preserve-3d">
+                {optionScanners.map((scanner) => (
+                    <ScannerDevice key={scanner.i} beacons={scanner.beacons} />
+                ))}
+            </div>
 
             <div className="flex flex-wrap gap-4 mt-20 preserve-3d">
                 {resultScanners.map((scanner) => (
@@ -370,20 +375,6 @@ export default function Day19() {
                 ))}
             </div>
 
-            <div className="absolute bottom-0 right-0 flex preserve-3d">
-                <button
-                    className="p-2 rounded-md bg-zinc-600"
-                    onClick={() => setScannerIndex(scannerIndex - 1)}
-                >
-                    Prev
-                </button>
-                <button
-                    className="p-2 rounded-md bg-zinc-600"
-                    onClick={() => setScannerIndex(scannerIndex + 1)}
-                >
-                    Next
-                </button>
-            </div>
             {/* <div
                 className="preserve-3d"
                 style={{
