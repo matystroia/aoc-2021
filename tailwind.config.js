@@ -127,6 +127,16 @@ module.exports = {
                     },
                 },
             });
+
+            // Polygon Kitchen Sink
+            addComponents({
+                'input.basic[type="number"]': {
+                    "&::appearance": "textfield",
+                    "&::-webkit-inner-spin-button": { appearance: "none" },
+                    "&::-webkit-outer-spin-button": { appearance: "none" },
+                    appearance: "textfield",
+                },
+            });
         }),
     ],
 };

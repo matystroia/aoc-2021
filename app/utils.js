@@ -180,3 +180,7 @@ export function parsePercent(p) {
     if (!p.endsWith("%")) throw Error("Invalid percentage value");
     return parseFloat(p.substring(0, p.length - 1)) / 100;
 }
+
+export function distance(p1, p2) {
+    return Math.sqrt((p1.x - p2.x) * (p1.x - p2.x) + (p1.y - p2.y) * (p1.y - p2.y));
+}
