@@ -20,7 +20,7 @@ export function PocketWatch({ onReset }) {
                 variants={{ closed: { rotateX: 15 }, open: { rotateX: 120 } }}
             >
                 <RegularPolygon
-                    edges={12}
+                    n={12}
                     width={175}
                     height={175}
                     topClass="bg-[#c57759]"
@@ -35,39 +35,48 @@ export function PocketWatch({ onReset }) {
             </motion.div>
             <motion.div className="absolute pointer-events-none preserve-3d">
                 <RegularPolygon
-                    edges={12}
+                    n={12}
                     width={175}
                     height={175}
                     topClass="bg-[#62332c]"
                     depth={30}
                     sideClass="bg-[#954839]"
-                    // topBorder={{ width: 2, borderClass: "bg-[#341816]" }}
                     sideBorder={{ width: 1, borderClass: "bg-[#793c33]" }}
                     renderBase={({ className, style }) => (
-                        <motion.div
+                        <div
                             className={clsx(className, "center")}
-                            style={{ ...style, z: 30 }}
-                            variants={{ closed: { rotate: 0 }, open: { rotate: 360 } }}
-                            transition={{ duration: 1, type: "spring" }}
+                            style={{ ...style, transform: "translateZ(30px)" }}
                         >
-                            {/* <ArrowPathIcon className="w-24 h-24 fill-[#341816]" /> */}
-                            <div className="w-full h-full scale-75 rounded-full flex justify-center bg-[#341816]">
+                            <div
+                                className="w-full h-full scale-[0.9] center bg-[#341816]"
+                                style={style}
+                            >
                                 <div
-                                    className="w-4 translate-y-2 border-4 border-transparent bg-rose-700 h-1/2"
-                                    style={{
-                                        clipPath:
-                                            "polygon(50% 0, 100% 80%, 50% 100%, 0 80%, 0 100%)",
-                                    }}
-                                />
-                                <div
-                                    className="absolute w-4 rotate-180 -translate-y-2 border-4 border-transparent bg-rose-200 h-1/2 top-1/2"
-                                    style={{
-                                        clipPath:
-                                            "polygon(50% 0, 100% 80%, 50% 100%, 0 80%, 0 100%)",
-                                    }}
-                                />
+                                    className="flex justify-center w-full h-full scale-75 bg-[#200e0d]"
+                                    style={style}
+                                >
+                                    <motion.div
+                                        variants={{ closed: { rotate: 0 }, open: { rotate: 360 } }}
+                                        transition={{ duration: 1, type: "spring" }}
+                                    >
+                                        <div
+                                            className="w-6 translate-y-2 border-4 border-transparent bg-rose-700 h-1/2"
+                                            style={{
+                                                clipPath:
+                                                    "polygon(50% 0, 100% 80%, 50% 100%, 0 80%)",
+                                            }}
+                                        />
+                                        <div
+                                            className="absolute w-6 rotate-180 -translate-y-2 border-4 border-transparent bg-rose-200 h-1/2 top-1/2"
+                                            style={{
+                                                clipPath:
+                                                    "polygon(50% 0, 100% 80%, 50% 100%, 0 80%)",
+                                            }}
+                                        />
+                                    </motion.div>
+                                </div>
                             </div>
-                        </motion.div>
+                        </div>
                     )}
                 />
             </motion.div>

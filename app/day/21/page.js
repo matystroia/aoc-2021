@@ -36,7 +36,7 @@ function Pawn({ position, isPlayerTwo, isConflict }) {
             />
             <RegularPolygon
                 className="absolute"
-                edges={5}
+                n={5}
                 angle={80}
                 width={30}
                 height={30}

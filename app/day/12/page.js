@@ -225,20 +225,23 @@ export default function Day12() {
                 className="absolute bottom-0 right-0 flex flex-col items-center w-24 gap-1 p-2 m-4 font-mono rounded-md bg-stone-700"
                 layout
             >
-                {currentPath.toReversed().map((node, i) => (
-                    <motion.div
-                        className={clsx(
-                            "w-full text-lg text-center rounded-sm",
-                            isBig(node) ? "bg-slate-500" : "bg-zinc-500"
-                        )}
-                        key={currentPath.length - i - 1}
-                        initial={{ x: 250 }}
-                        animate={{ x: 0 }}
-                        transition={{ type: "spring", damping: 15 }}
-                    >
-                        {node}
-                    </motion.div>
-                ))}
+                {currentPath
+                    .slice()
+                    .reverse()
+                    .map((node, i) => (
+                        <motion.div
+                            className={clsx(
+                                "w-full text-lg text-center rounded-sm",
+                                isBig(node) ? "bg-slate-500" : "bg-zinc-500"
+                            )}
+                            key={currentPath.length - i - 1}
+                            initial={{ x: 250 }}
+                            animate={{ x: 0 }}
+                            transition={{ type: "spring", damping: 15 }}
+                        >
+                            {node}
+                        </motion.div>
+                    ))}
             </motion.div>
 
             <PaperMap

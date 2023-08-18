@@ -249,6 +249,7 @@ function Screen({ velocity, velocityIndex, velocityCount, className }) {
 }
 
 function TriangleButton({ disabled, onClick, className }) {
+    // FIXME: Broken because of RegularPolygon
     return (
         <button
             disabled={disabled}
@@ -257,7 +258,7 @@ function TriangleButton({ disabled, onClick, className }) {
         >
             <div className="relative center preserve-3d transition-transform active:group-enabled:[transform:translateZ(-5px)]">
                 <RegularPolygon
-                    edges={3}
+                    n={3}
                     angle={75}
                     width={50}
                     depth={10}
