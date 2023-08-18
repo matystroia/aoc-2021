@@ -1,6 +1,12 @@
-import { flatMap, flatten } from "lodash";
+import { motion } from "framer-motion";
+import { flatMap, flatten, random } from "lodash";
 import { useLayoutEffect, useRef, useState } from "react";
+import { useSize } from "../hooks/useSize";
 import { ObjectInspector } from "./ObjectInspector";
+import { useImmer } from "use-immer";
+import { enableMapSet } from "immer";
+
+enableMapSet();
 
 function bfs(neighbors, node) {
     const ret = [[node]];
@@ -19,7 +25,6 @@ function bfs(neighbors, node) {
 
 function isIntersection(edge1, edge2) {
     const [[from1, to1], [from2, to2]] = [edge1, edge2];
-    console.log({ from1, to1, from2, to2 });
 
     const { x: x1, y: y1 } = from1;
     const { x: x2, y: y2 } = to1;
@@ -37,26 +42,31 @@ function isIntersection(edge1, edge2) {
     return (t >= 0 && t <= 1) || (u >= 0 && u <= 1);
 }
 
-function Node({ node, position }) {
+function Node({ node, position, container, onMove }) {
     return (
-        <div
-            className="absolute rounded-full bg-emerald-400 w-20 h-20 cursor-pointer select-none center"
+        <motion.div
+            className="absolute"
+            drag
+            dragConstraints={container}
+            dragElastic={false}
+            whileDrag={{ scale: 1.2 }}
+            dragMomentum={false}
+            onDrag={onMove}
             style={{
-                left: position.x,
-                top: position.y,
-                transform: "translate(-50%, -50%)",
+                x: position.x,
+                y: position.y,
             }}
         >
-            {node}
-        </div>
+            <div className="absolute w-20 h-20 -translate-x-1/2 -translate-y-1/2 rounded-full cursor-pointer select-none bg-emerald-400 center">
+                {node}
+            </div>
+        </motion.div>
     );
 }
 
-function Edge({ from, to, edges }) {
+function Edge({ from, to }) {
     const length = Math.sqrt((from.x - to.x) * (from.x - to.x) + (from.y - to.y) * (from.y - to.y));
     const angle = Math.atan((from.y - to.y) / (from.x - to.x)) + (to.x < from.x ? Math.PI : 0);
-
-    const intersected = edges.filter((e) => isIntersection([from, to], e));
 
     return (
         <div
@@ -66,9 +76,7 @@ function Edge({ from, to, edges }) {
                 transformOrigin: `left`,
                 transform: `translate(calc(${from.x}px), calc(${from.y}px)) rotate(${angle}rad)`,
             }}
-        >
-            <span className="text-red-500">{intersected.length}</span>
-        </div>
+        ></div>
     );
 }
 
@@ -80,33 +88,48 @@ export function Graph({ neighbors }) {
     const edges = flatMap(Array.from(neighbors.entries()), ([k, v]) => v.map((n) => [k, n]));
 
     const ref = useRef(null);
-    const [size, setSize] = useState({ width: 0, height: 0 });
-    useLayoutEffect(() => {
-        if (!ref.current) return;
-        const { width, height } = ref.current.getBoundingClientRect();
-        setSize({ width, height });
-    }, []);
+    const { width, height } = useSize(ref);
 
-    const nodePositions = new Map();
-    nodes.forEach((n) =>
-        nodePositions.set(n, { x: Math.random() * size.width, y: Math.random() * size.height })
-    );
-    nodePositions.set("start", { x: 40, y: size.height / 2 });
-    nodePositions.set("end", { x: size.width - 50, y: size.height / 2 });
+    const [nodePositions, updateNodePositions] = useImmer(() => {
+        const [w, h] = [width || 800, height || 200];
+        const map = new Map();
 
-    const edgesPos = edges.map(([from, to]) => [nodePositions.get(from), nodePositions.get(to)]);
+        nodes.forEach((n) => map.set(n, { x: Math.random() * w, y: Math.random() * h }));
+        map.set("start", { x: 40, y: height / 2 });
+        map.set("end", { x: width - 50, y: height / 2 });
+
+        return map;
+    });
+
+    const handleMove = (node, e) => {
+        const box = e.target.getBoundingClientRect();
+        const containerBox = ref.current.getBoundingClientRect();
+        const newPos = { x: box.x - containerBox.x, y: box.y - containerBox.y };
+        updateNodePositions((map) => map.set(node, newPos));
+    };
+
+    const edgePositions = edges.map(([from, to]) => [
+        nodePositions.get(from),
+        nodePositions.get(to),
+    ]);
 
     return (
-        <div className="relative bg-slate-900 h-full w-full border-4" ref={ref}>
+        <div className="relative w-full h-full border-4 bg-slate-900" ref={ref}>
             {nodes.map((node, i) => (
-                <Node key={i} node={node} position={nodePositions.get(node)} />
+                <Node
+                    key={i}
+                    node={node}
+                    position={nodePositions.get(node)}
+                    container={ref}
+                    onMove={(e) => handleMove(node, e)}
+                />
             ))}
             {edges.map(([from, to], i) => (
                 <Edge
                     key={i}
                     from={nodePositions.get(from)}
                     to={nodePositions.get(to)}
-                    edges={edgesPos}
+                    edges={edgePositions}
                 />
             ))}
         </div>

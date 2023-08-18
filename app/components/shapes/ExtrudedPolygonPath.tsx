@@ -1,5 +1,6 @@
 import clsx from "clsx";
 import { PolygonBorder } from "./PolygonBorder";
+import { PolygonBorder2 } from "./PolygonBorder2";
 import { memo } from "react";
 import { isEqual, isNumber } from "lodash";
 import { parsePercent } from "../../utils";
@@ -83,7 +84,6 @@ export const ExtrudedPolygonPath = memo(
         sideClass,
         topBorder = { width: 0 },
         sideBorder = { width: 0 },
-        offset = { x: 0, y: 0 },
         renderBase,
     }: {
         path: Point[];
@@ -96,11 +96,8 @@ export const ExtrudedPolygonPath = memo(
         sideClass: string;
         topBorder?: { width: number; borderClass?: string };
         sideBorder?: { width: number; borderClass?: string };
-        offset?: { x: number; y: number };
         renderBase?: ({ className, style }) => JSX.Element;
     }) {
-        // TODO: Offset!!!
-
         console.log("RERENDER");
 
         const polygonPoints = getPolygonPoints(path, width, height);
@@ -121,23 +118,20 @@ export const ExtrudedPolygonPath = memo(
         }
 
         const angleRad = (angle * Math.PI) / 180;
-        const sideLength = Math.floor(depth / Math.sin(angleRad));
-
-        console.log({ edges });
+        const sideHeight = Math.floor(depth / Math.sin(angleRad));
 
         return (
             <div className={clsx("preserve-3d relative", className)} style={{ width, height }}>
                 {topBorder.width ? (
-                    <PolygonBorder
+                    <PolygonBorder2
                         baseClass={topClass}
                         borderClass={topBorder.borderClass}
-                        borderScaleX={(width - 2 * topBorder.width) / width}
-                        borderScaleY={(height - 2 * topBorder.width) / height}
                         className="absolute w-full h-full"
                         style={{
                             transform: `translateZ(${depth}px)`,
-                            clipPath: polygonPath,
                         }}
+                        polygonPoints={polygonPoints}
+                        borderWidth={topBorder.width}
                     />
                 ) : (
                     <div
@@ -150,7 +144,9 @@ export const ExtrudedPolygonPath = memo(
                 )}
 
                 {edges.map((edge, i) => {
-                    let [left, right, polygonPath] = [0, 0, null];
+                    let sideWidth = edge.length;
+                    let xOffset = 0;
+                    let sidePolygon = null;
                     if (angle !== 90) {
                         const thisEdge = edges[i];
                         const prevEdge = edges.at(i - 1);
@@ -161,45 +157,66 @@ export const ExtrudedPolygonPath = memo(
 
                         const x = depth * Math.tan(Math.PI / 2 - angleRad);
 
-                        left = x / Math.tan(leftAngle);
-                        right = x / Math.tan(rightAngle);
+                        const left = x / Math.tan(leftAngle);
+                        const right = x / Math.tan(rightAngle);
+
+                        sideWidth = edge.length + Math.max(0, left) + Math.max(0, right);
+                        xOffset = -Math.max(right, 0);
 
                         if (angle > 90) {
-                            polygonPath = `${-left}px 0, calc(100% - ${-right}px) 0, 100% 100%, 0 100%`;
-                            left = 0;
-                            right = 0;
+                            sidePolygon = [
+                                { x: -right, y: 0 },
+                                { x: sideWidth + left, y: 0 },
+                                { x: sideWidth, y: sideHeight },
+                                { x: 0, y: sideHeight },
+                            ];
                         } else {
-                            polygonPath = `0 0, 100% 0, calc(100% - ${left}px) 100%, ${right}px 100%`;
+                            sidePolygon = [
+                                { x: 0, y: 0 },
+                                { x: sideWidth, y: 0 },
+                                { x: sideWidth - left, y: sideHeight },
+                                { x: right, y: sideHeight },
+                            ];
                         }
                     }
 
                     const style = {
-                        width: edge.length + left + right,
-                        height: sideLength,
-                        clipPath: polygonPath && `polygon(${polygonPath})`,
+                        width: sideWidth,
+                        height: sideHeight,
+                        clipPath: sidePolygon && getPolygonPath(sidePolygon),
                         transform:
-                            `translate3d(${edge.x + offset.x}px, ${
-                                edge.y + offset.y
-                            }px, ${depth}px)` +
+                            `translate3d(${edge.x}px, ${edge.y}px, ${depth}px)` +
                             `rotateZ(${edge.angle}rad) rotateX(${angle}deg)` +
-                            `translateX(${-right}px)` +
-                            `translateY(${-sideLength}px)`,
+                            `translateX(${xOffset}px)` +
+                            `translateY(${-sideHeight}px)`,
                     };
 
-                    return sideBorder.width ? (
-                        <PolygonBorder
+                    if (sideBorder.width === 0) {
+                        return (
+                            <div
+                                key={i}
+                                className={clsx("absolute origin-top-left", sideClass)}
+                                style={style}
+                            />
+                        );
+                    }
+
+                    sidePolygon = sidePolygon || [
+                        { x: 0, y: 0 },
+                        { x: sideWidth, y: 0 },
+                        { x: sideWidth, y: sideHeight },
+                        { x: 0, y: sideHeight },
+                    ];
+
+                    return (
+                        <PolygonBorder2
+                            key={i}
                             baseClass={sideClass}
-                            borderScaleX={(edge.length - 2 * sideBorder.width) / edge.length}
-                            borderScaleY={(sideLength - 2 * sideBorder.width) / sideLength}
                             borderClass={sideBorder.borderClass}
                             className="absolute origin-top-left"
                             style={style}
-                        />
-                    ) : (
-                        <div
-                            key={i}
-                            className={clsx("absolute origin-top-left", sideClass)}
-                            style={style}
+                            polygonPoints={sidePolygon}
+                            borderWidth={sideBorder.width}
                         />
                     );
                 })}

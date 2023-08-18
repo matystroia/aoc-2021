@@ -13,14 +13,11 @@ export function PolygonBorder({
 
     return (
         <div className={className} style={{ ...style, clipPath: undefined }}>
-            <div
-                style={{ clipPath }}
-                className={clsx("absolute left-0 top-0 w-full h-full", borderClass)}
-            ></div>
+            <div style={{ clipPath }} className={clsx("absolute inset-0", borderClass)} />
             <div
                 style={{ clipPath, transform: `scale(${borderScaleX}, ${borderScaleY})` }}
                 className={clsx("w-full h-full", baseClass)}
-            ></div>
+            />
         </div>
     );
     // <div className={clsx("center", className)}>

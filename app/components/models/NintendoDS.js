@@ -13,8 +13,9 @@ function Button({ value }) {
     return (
         <div className="preserve-3d center">
             <RegularPolygon
-                edges={10}
+                n={10}
                 width={40}
+                height={40}
                 depth={8}
                 topClass="bg-zinc-700"
                 topBorder={{ width: 2, borderClass: "bg-zinc-800" }}
@@ -109,7 +110,7 @@ function Top(className) {
     );
 
     return (
-        <div className="preserve-3d center relative">
+        <div className="relative preserve-3d center">
             <ShearedBox
                 shear={20}
                 width={600}
@@ -122,17 +123,17 @@ function Top(className) {
                 renderBase={renderBase}
             />
             <div className="absolute left-0 top-0 w-[600px] h-[320px] [transform:translateZ(30px)] flex justify-center items-center gap-8 preserve-3d">
-                <div className="flex flex-wrap basis-14 gap-4">
+                <div className="flex flex-wrap gap-4 basis-14">
                     {Array.from({ length: 6 }).map((_, i) => (
-                        <div key={i} className="w-2 h-2 bg-zinc-950 rounded-full" />
+                        <div key={i} className="w-2 h-2 rounded-full bg-zinc-950" />
                     ))}
                 </div>
                 <Screen>
                     {/* <img src="https://i.redd.it/konrs7f5wr011.png" className="w-full" /> */}
                 </Screen>
-                <div className="flex flex-wrap basis-14 gap-4">
+                <div className="flex flex-wrap gap-4 basis-14">
                     {Array.from({ length: 6 }).map((_, i) => (
-                        <div key={i} className="w-2 h-2 bg-zinc-950 rounded-full" />
+                        <div key={i} className="w-2 h-2 rounded-full bg-zinc-950" />
                     ))}
                 </div>
             </div>
@@ -142,7 +143,7 @@ function Top(className) {
 
 function Bottom({ className }) {
     return (
-        <div className="preserve-3d absolute center">
+        <div className="absolute preserve-3d center">
             <ShearedBox
                 shear={20}
                 width={600}
@@ -171,20 +172,20 @@ function Bottom({ className }) {
                     className=""
                     src="https://static.cinemagia.ro/img/resize/db/movie/01/21/31/baieti-buni-592050l-576x0-w-c19e5cb7.jpg"
                 >
-                    <div className="h-full w-full flex justify-center items-center gap-4">
+                    <div className="flex items-center justify-center w-full h-full gap-4">
                         <div className="flex flex-col items-center drop-shadow-lg">
-                            <div className="w-10 h-14 bg-zinc-300 border-4 border-zinc-700 rounded-md rounded-bl-2xl"></div>
+                            <div className="w-10 border-4 rounded-md h-14 bg-zinc-300 border-zinc-700 rounded-bl-2xl"></div>
                             <span className="font-mono">puya.jpg</span>
                         </div>
                         <div className="flex flex-col items-center drop-shadow-lg">
-                            <div className="w-10 h-14 bg-zinc-300 border-4 border-zinc-700 rounded-md rounded-bl-2xl"></div>
+                            <div className="w-10 border-4 rounded-md h-14 bg-zinc-300 border-zinc-700 rounded-bl-2xl"></div>
                             <span className="font-mono">cabral.jpg</span>
                         </div>
                     </div>
                 </Screen>
-                <div className="basis-32 flex flex-col preserve-3d justify-center items-center">
+                <div className="flex flex-col items-center justify-center basis-32 preserve-3d">
                     <Button value="X" />
-                    <div className="flex preserve-3d gap-8">
+                    <div className="flex gap-8 preserve-3d">
                         <Button value="Y" />
                         <Button value="A" />
                     </div>
@@ -204,7 +205,7 @@ function Stylus({ x, y, isDown, isHidden, className }) {
             {[0, 90].map((angle) => (
                 <div
                     key={angle}
-                    className="absolute transition-transform preserve-3d origin-left"
+                    className="absolute transition-transform origin-left preserve-3d"
                     style={{
                         transform: `rotateY(-${45 + (isDown && 5)}deg) ${
                             isDown ? "translateX(-50px)" : ""
@@ -241,7 +242,7 @@ function Stylus({ x, y, isDown, isHidden, className }) {
 function RotationCube() {
     return (
         <Box depth={40} sideClass="bg-zinc-300 border-2 border-zinc-400 rounded-md">
-            <div className="w-10 h-10 bg-zinc-300 border-2 border-zinc-400 rounded-md" />
+            <div className="w-10 h-10 border-2 rounded-md bg-zinc-300 border-zinc-400" />
         </Box>
     );
 }
@@ -296,7 +297,7 @@ export function NintendoDS() {
                 >
                     <Top />
                 </div>
-                <div className="preserve-3d origin-top relative">
+                <div className="relative origin-top preserve-3d">
                     <Bottom />
                 </div>
             </div>
