@@ -249,7 +249,6 @@ function Screen({ velocity, velocityIndex, velocityCount, className }) {
 }
 
 function TriangleButton({ disabled, onClick, className }) {
-    // FIXME: Broken because of RegularPolygon
     return (
         <button
             disabled={disabled}
@@ -258,12 +257,13 @@ function TriangleButton({ disabled, onClick, className }) {
         >
             <div className="relative center preserve-3d transition-transform active:group-enabled:[transform:translateZ(-5px)]">
                 <RegularPolygon
+                    className="rotate-z-90"
                     n={3}
                     angle={75}
                     width={50}
                     depth={10}
                     topClass={disabled ? "bg-zinc-600" : "bg-rose-600"}
-                    topBorder={{ width: 6, borderClass: disabled ? "bg-zinc-800" : "bg-rose-950" }}
+                    topBorder={{ width: 3, borderClass: disabled ? "bg-zinc-800" : "bg-rose-950" }}
                     sideClass={disabled ? "bg-zinc-800" : "bg-rose-950"}
                 />
                 {!disabled && (
@@ -315,12 +315,12 @@ function Controls({
                     <TriangleButton
                         disabled={velocityIndex === 0}
                         onClick={() => onChangeVelocityIndex(velocityIndex - 1)}
-                        className="[transform:rotateZ(90deg)]"
+                        className="rotate-z-90"
                     />
                     <TriangleButton
                         disabled={velocityIndex === velocities.length - 1}
                         onClick={() => onChangeVelocityIndex(velocityIndex + 1)}
-                        className="[transform:rotateZ(-90deg)]"
+                        className="-rotate-z-90"
                     />
                 </div>
             )}

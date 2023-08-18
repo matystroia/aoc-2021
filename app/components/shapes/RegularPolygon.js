@@ -38,7 +38,7 @@ import { memo } from "react";
 // });
 
 export const RegularPolygon = memo(function RegularPolygon({ n, ...props }) {
-    const { width, height } = props;
+    const { width, height = width } = props;
 
     const externalAngle = (2 * Math.PI) / n;
 
