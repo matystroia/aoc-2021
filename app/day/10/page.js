@@ -1,11 +1,12 @@
 "use client";
 
 import { useContext, useState } from "react";
-import { ChallengeContext } from "../ChallengeWrapper";
-import { ObjectInspector } from "app/components/ObjectInspector";
 import clsx from "clsx";
-import { divmod, randomColorPalette, randomHSL } from "app/utils";
 import { min, max, sortBy, sumBy } from "lodash";
+
+import { ObjectInspector } from "../../components/ObjectInspector";
+import { divmod, randomColorPalette, randomHSL } from "../../utils";
+import { ChallengeContext } from "../ChallengeWrapper";
 
 function parseChunk(chunk) {
     const pairIndex = Array(chunk.length);

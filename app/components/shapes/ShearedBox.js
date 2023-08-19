@@ -1,4 +1,5 @@
 import { memo } from "react";
+
 import { Polygon } from "./Polygon";
 
 export const ShearedBox = memo(function ShearedBox({ shear = 0, ...props }) {

@@ -1,8 +1,9 @@
 import { motion } from "framer-motion";
 import { useRef } from "react";
-import { useSize } from "../hooks/useSize";
 import { random } from "lodash";
 import clsx from "clsx";
+
+import { useSize } from "../hooks/useSize";
 
 function Star({ x, y, className }) {
     return (

@@ -15,8 +15,9 @@ import {
     uniq,
 } from "lodash";
 import { useContext } from "react";
+
+import { ObjectInspector } from "../../components/ObjectInspector";
 import { ChallengeContext } from "../ChallengeWrapper";
-import { ObjectInspector } from "app/components/ObjectInspector";
 
 const digitBySegments = {
     abcefg: 0,

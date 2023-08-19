@@ -1,8 +1,8 @@
 "use client";
 
-import { Canvas } from "app/components/Canvas";
-import { normalizePoints } from "app/utils";
-import { useCallback, useMemo, useContext } from "react";
+import { normalizeuseCallback, useMemo, useContext } from "react";
+
+import { Canvas } from "../../components/Canvas";
 import { ChallengeContext } from "../ChallengeWrapper";
 
 const dirs = { forward: [1, 0], down: [0, 1], up: [0, -1] };

@@ -1,10 +1,12 @@
 import { motion } from "framer-motion";
 import { flatMap, flatten, random } from "lodash";
 import { useLayoutEffect, useRef, useState } from "react";
-import { useSize } from "../hooks/useSize";
-import { ObjectInspector } from "./ObjectInspector";
 import { useImmer } from "use-immer";
 import { enableMapSet } from "immer";
+
+import { useSize } from "../hooks/useSize";
+
+import { ObjectInspector } from "./ObjectInspector";
 
 enableMapSet();
 

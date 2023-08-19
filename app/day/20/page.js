@@ -1,10 +1,12 @@
 "use client";
 
 import { useState, useContext } from "react";
-import { ChallengeContext } from "../ChallengeWrapper";
 import clsx from "clsx";
-import { product } from "../../utils";
 import { sumBy, inRange, times } from "lodash";
+
+import { ChallengeContext } from "../ChallengeWrapper";
+import { product } from "../../utils";
+
 
 function Tile({ isLight, className }) {
     return (

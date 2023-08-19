@@ -1,11 +1,12 @@
 "use client";
 
 import { useContext, useState } from "react";
-import { ChallengeContext } from "../ChallengeWrapper";
-import { ObjectInspector } from "app/components/ObjectInspector";
 import { ArrowUturnLeftIcon, ArrowUturnRightIcon } from "@heroicons/react/24/solid";
 import { fill, sum } from "lodash";
 import clsx from "clsx";
+
+import { ObjectInspector } from "../../components/ObjectInspector";
+import { ChallengeContext } from "../ChallengeWrapper";
 
 const memo = new Map();
 function countNewFish(timer, turn) {

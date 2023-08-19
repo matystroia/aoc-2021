@@ -1,8 +1,6 @@
 "use client";
 
 import { useContext, useState } from "react";
-import { ChallengeContext } from "../ChallengeWrapper";
-import { ObjectInspector } from "app/components/ObjectInspector";
 import { minBy, range } from "lodash";
 import {
     ArrowDownIcon,
@@ -13,8 +11,11 @@ import {
     EyeSlashIcon,
 } from "@heroicons/react/24/solid";
 import clsx from "clsx";
-import { PriorityQueue, divmod, product } from "app/utils";
 import FlatQueue from "flatqueue";
+
+import { PriorityQueue, divmod, product } from "../../utils";
+import { ObjectInspector } from "../../components/ObjectInspector";
+import { ChallengeContext } from "../ChallengeWrapper";
 
 class BigMatrix {
     constructor(height, width, n, m) {

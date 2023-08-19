@@ -1,9 +1,10 @@
 "use client";
 
 import { useEffect, useContext } from "react";
+
+import { useCanvas } from "../../hooks/useCanvas";
+import { ObjectInspector } from "../../components/ObjectInspector";
 import { Canvas, CanvasContext } from "../../components/Canvas";
-import { useCanvas } from "app/hooks/useCanvas";
-import { ObjectInspector } from "app/components/ObjectInspector";
 import { ChallengeContext } from "../ChallengeWrapper";
 
 function part1(values) {

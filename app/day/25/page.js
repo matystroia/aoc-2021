@@ -1,8 +1,9 @@
 "use client";
 
 import { useContext, useState } from "react";
-import { ChallengeContext } from "../ChallengeWrapper";
 import { cloneDeep } from "lodash";
+
+import { ChallengeContext } from "../ChallengeWrapper";
 
 const dirs = { 1: [0, 1], 2: [1, 0] };
 function move(cucumbers) {

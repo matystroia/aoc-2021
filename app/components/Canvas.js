@@ -1,6 +1,7 @@
 import { useEffect } from "react";
-import { useCanvas } from "../hooks/useCanvas";
 import { maxBy, minBy, noop } from "lodash";
+
+import { useCanvas } from "../hooks/useCanvas";
 
 export class CanvasContext {
     constructor(ctx, width, height) {

@@ -1,10 +1,12 @@
 "use client";
-import { useState } from "react";
-import { motion, useMotionValue } from "framer-motion";
+import { useState, useEffect } from "react";
+import { motion, useMotionValue, useAnimation } from "framer-motion";
+import clsx from "clsx";
 
 import { RegularPolygon } from "../../components/shapes/RegularPolygon";
 import { ExtrudedPolygonPath } from "../../components/shapes/ExtrudedPolygonPath";
-import clsx from "clsx";
+
+import { Axes } from "./Axes";
 
 function PolygonProp({ display, name, value, onChange, type }) {
     const handleChange = (e) => onChange(name, e.target.value);
@@ -71,11 +73,28 @@ function PolygonProps({ props, onChange }) {
 export default function PolygonKitchenSink() {
     const [type, setType] = useState("regular");
 
-    const offsetX = useMotionValue(0);
-    const offsetY = useMotionValue(0);
+    const panX = useMotionValue(0);
+    const panY = useMotionValue(0);
     const handlePan = (e, info) => {
-        offsetX.set(info.offset.x);
-        offsetY.set(info.offset.y);
+        panX.set(panX.get() + info.delta.x);
+        panY.set(panY.get() + info.delta.y);
+    };
+
+    const controls = useAnimation();
+    useEffect(() => {
+        controls.start(
+            { rotateX: 45, rotateZ: [null, panX.get() + 360] },
+            { rotateZ: { type: "tween", ease: "linear", duration: 10, repeat: Infinity } }
+        );
+    }, [panX, controls]);
+    const handlePanStart = () => {
+        controls.stop();
+    };
+    const handlePanEnd = () => {
+        controls.start(
+            { rotateZ: [null, panX.get() + 360] },
+            { type: "tween", ease: "linear", duration: 10, repeat: Infinity }
+        );
     };
 
     const Component = { regular: RegularPolygon, path: ExtrudedPolygonPath }[type];
@@ -88,8 +107,13 @@ export default function PolygonKitchenSink() {
             angle: 90,
             topClass: "bg-pink-500",
             sideClass: "bg-pink-600",
+            topBorder: { width: 2, borderClass: "bg-pink-950" },
+            sideBorder: { width: 2, borderClass: "bg-pink-950" },
         },
     }[type];
+
+    // const rotationX = useTransform();
+    // const rotationZ = useTransform();
 
     const [props, setProps] = useState(defaultProps);
 
@@ -126,23 +150,20 @@ export default function PolygonKitchenSink() {
                 </div>
                 <motion.div
                     onPan={handlePan}
+                    onPanStart={handlePanStart}
+                    onPanEnd={handlePanEnd}
                     className="border-4 border-l-0 rounded rounded-l-none bg-zinc-200 border-zinc-300 center perspective-[1000px] col-span-2"
                 >
                     <motion.div
-                        animate={{ rotateX: 45, rotateZ: [0, 360] }}
-                        style={{ rotateX: offsetY, rotateZ: offsetX }}
-                        transition={{
-                            rotateZ: {
-                                repeat: Infinity,
-                                type: "tween",
-                                ease: "linear",
-                                duration: 10,
-                            },
-                        }}
+                        animate={controls}
+                        style={{ rotateX: panY, rotateZ: panX }}
                         className="preserve-3d"
                     >
                         <Component {...props} />
                     </motion.div>
+                    <div className="absolute bottom-10 right-16 preserve-3d">
+                        {/* <Axes rotationX={rotationX} /> */}
+                    </div>
                 </motion.div>
             </div>
         </div>

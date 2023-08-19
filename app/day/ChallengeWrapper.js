@@ -1,11 +1,13 @@
 "use client";
 
-import { OptionsBar } from "./OptionsBar";
 import { Fragment, createContext, useMemo, useState } from "react";
-import { useFile } from "../hooks/useFile";
 import { useSelectedLayoutSegment } from "next/navigation";
 import clsx from "clsx";
 import { AcademicCapIcon, BookOpenIcon } from "@heroicons/react/24/solid";
+
+import { useFile } from "../hooks/useFile";
+
+import { OptionsBar } from "./OptionsBar";
 
 function PartToggle({ onClickOne, onClickTwo, isPartOne }) {
     return (

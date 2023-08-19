@@ -1,7 +1,8 @@
 import clsx from "clsx";
-import { PolygonBorder } from "./PolygonBorder";
 import { memo } from "react";
 import { isEqual } from "lodash";
+
+import { PolygonBorder } from "./PolygonBorder";
 
 // Harder than it looks. Thank you to Wikipedia:
 // https://en.wikipedia.org/wiki/Regular_polygon

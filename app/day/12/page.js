@@ -1,16 +1,17 @@
 "use client";
 
+import { useState, useContext, useRef, useEffect } from "react";
+import { motion, animate } from "framer-motion";
+import clsx from "clsx";
+import { ArrowPathIcon } from "@heroicons/react/24/solid";
+
+import { ChallengeContext } from "../ChallengeWrapper";
+
 import { Door } from "./Door";
 import { Wall, Floor } from "./Wall";
 import { PaperMap } from "./PaperMap";
 import { PocketWatch } from "./PocketWatch";
 import { getRandomPainting, Painting } from "./Painting";
-
-import { useState, useContext, useRef, useEffect } from "react";
-import { ChallengeContext } from "../ChallengeWrapper";
-import { motion, animate } from "framer-motion";
-import clsx from "clsx";
-import { ArrowPathIcon } from "@heroicons/react/24/solid";
 
 const addEdge = (edges, node, edge) => {
     if (!edges.has(node)) {

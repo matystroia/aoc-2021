@@ -1,8 +1,9 @@
 "use client";
 
 import clsx from "clsx";
-import { Box } from "../shapes/Box";
 import { useCallback, useEffect, useRef, useState } from "react";
+
+import { Box } from "../shapes/Box";
 import { RegularPolygon } from "../shapes/RegularPolygon";
 import { Polygon } from "../shapes/Polygon";
 import { ShearedBox } from "../shapes/ShearedBox";

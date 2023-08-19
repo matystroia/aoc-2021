@@ -1,6 +1,7 @@
 import { NoSymbolIcon } from "@heroicons/react/24/solid";
-import { Box } from "/app/components/shapes/Box";
 import { motion } from "framer-motion";
+
+import { Box } from "../../components/shapes/Box";
 
 export function Barrier() {
     return (

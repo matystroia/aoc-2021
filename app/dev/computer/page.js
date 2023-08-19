@@ -1,4 +1,4 @@
-import { OldComputer } from "/app/components/models/OldComputer";
+import { OldComputer } from "../../components/models/OldComputer";
 export default function Computer() {
     return (
         <div className="w-full h-full center">

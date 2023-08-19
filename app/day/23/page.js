@@ -1,10 +1,12 @@
 "use client";
 
 import { useContext, useState } from "react";
-import { ChallengeContext } from "../ChallengeWrapper";
 import clsx from "clsx";
 import { motion } from "framer-motion";
 import { useImmer } from "use-immer";
+
+import { ChallengeContext } from "../ChallengeWrapper";
+
 import { backtracking } from "./alt";
 
 // #############

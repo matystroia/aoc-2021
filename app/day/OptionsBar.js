@@ -1,8 +1,10 @@
 import clsx from "clsx";
 import { AcademicCapIcon, BookOpenIcon } from "@heroicons/react/24/solid";
 import { useContext } from "react";
-import { ChallengeContext } from "./ChallengeWrapper";
+
 import { ChallengeConfig } from "../input/config";
+
+import { ChallengeContext } from "./ChallengeWrapper";
 
 function PartToggle({ onChangePart }) {
     const { isPartOne } = useContext(ChallengeContext);

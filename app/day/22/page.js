@@ -1,10 +1,11 @@
 "use client";
 
-import { Cube } from "../../components/shapes/Cube";
 import { useContext, useEffect, useState } from "react";
+import { isEqual, sumBy } from "lodash";
+
+import { Cube } from "../../components/shapes/Cube";
 import { ChallengeContext } from "../ChallengeWrapper";
 import { product } from "../../utils";
-import { isEqual, sumBy } from "lodash";
 import { Box } from "../../components/shapes/Box";
 
 const intersect = ([a, b], [c, d]) => {

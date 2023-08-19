@@ -1,10 +1,6 @@
 "use client";
 
 import { useContext } from "react";
-import { ChallengeContext } from "../ChallengeWrapper";
-import { ObjectInspector } from "app/components/ObjectInspector";
-import { Canvas, CanvasContext } from "app/components/Canvas";
-import { normalizePoints, randomHSL } from "app/utils";
 import {
     chunk,
     flatMap,
@@ -19,6 +15,11 @@ import {
     filter,
     minBy,
 } from "lodash";
+
+import { normalizePoints, randomHSL } from "../../utils";
+import { Canvas, CanvasContext } from "../../components/Canvas";
+import { ObjectInspector } from "../../components/ObjectInspector";
+import { ChallengeContext } from "../ChallengeWrapper";
 
 function getLinePoints([from, to]) {
     if (from.x === to.x) {

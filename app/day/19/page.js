@@ -1,13 +1,14 @@
 "use client";
 
-import { ScannerDevice } from "./ScannerDevice";
-
-import { Box } from "app/components/shapes/Box";
-import { combinations, permutations, product, splitGroups } from "app/utils";
 import { cloneDeep, intersection, intersectionBy, isEqual, range, sortBy, uniq } from "lodash";
 import { useContext, useEffect, useMemo, useState } from "react";
-import { ChallengeContext } from "../ChallengeWrapper";
 import clsx from "clsx";
+
+import { combinations, permutations, product, splitGroups } from "../../utils";
+import { Box } from "../../components/shapes/Box";
+import { ChallengeContext } from "../ChallengeWrapper";
+
+import { ScannerDevice } from "./ScannerDevice";
 
 class Beacon {
     constructor(x, y, z) {

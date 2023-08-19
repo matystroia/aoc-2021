@@ -1,9 +1,11 @@
 "use client";
 
-import { useContext, useEffect, useState } from "react";
-import { experimental_useEffectEvent as useEffectEvent } from "react";
-import { ChallengeContext } from "../ChallengeWrapper";
-import { ObjectInspector } from "app/components/ObjectInspector";
+import {
+    useContext,
+    useEffect,
+    useState,
+    experimental_useEffectEvent as useEffectEvent,
+} from "react";
 import { ArrowUturnLeftIcon, ArrowUturnRightIcon, ForwardIcon } from "@heroicons/react/24/solid";
 import { useImmer } from "use-immer";
 import clsx from "clsx";
@@ -17,7 +19,10 @@ import {
     range,
     uniqWith,
 } from "lodash";
-import { product } from "app/utils";
+
+import { product } from "../../utils";
+import { ObjectInspector } from "../../components/ObjectInspector";
+import { ChallengeContext } from "../ChallengeWrapper";
 
 const positions = product(range(10), range(10));
 const directions = drop(product([0, 1, -1], [0, 1, -1]), 1);

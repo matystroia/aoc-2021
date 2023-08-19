@@ -1,7 +1,8 @@
 import clsx from "clsx";
+import { memo } from "react";
+
 import { Polygon } from "./Polygon";
 import { ExtrudedPolygonPath } from "./ExtrudedPolygonPath";
-import { memo } from "react";
 
 // Harder than it looks. Thank you to Wikipedia:
 // https://en.wikipedia.org/wiki/Regular_polygon

@@ -1,11 +1,7 @@
 "use client";
 
-import { Canvas } from "app/components/Canvas";
 import { useContext, useEffect, useState } from "react";
 import * as Zdog from "zdog";
-import { ChallengeContext } from "../ChallengeWrapper";
-import { ObjectInspector } from "app/components/ObjectInspector";
-import { randomHSL } from "app/utils";
 import {
     flatten,
     min,
@@ -21,6 +17,11 @@ import {
     takeRight,
 } from "lodash";
 import clsx from "clsx";
+
+import { randomHSL } from "../../utils";
+import { ObjectInspector } from "../../components/ObjectInspector";
+import { Canvas } from "../../components/Canvas";
+import { ChallengeContext } from "../ChallengeWrapper";
 
 const heightScale = 5;
 

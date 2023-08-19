@@ -1,9 +1,11 @@
 import clsx from "clsx";
-import { PolygonBorder } from "./PolygonBorder";
-import { PolygonBorder2 } from "./PolygonBorder2";
 import { memo } from "react";
 import { isEqual, isNumber } from "lodash";
+
 import { parsePercent } from "../../utils";
+
+import { PolygonBorder2 } from "./PolygonBorder2";
+import { PolygonBorder } from "./PolygonBorder";
 
 type Point = {
     x: number | string;

@@ -1,12 +1,13 @@
 "use client";
 
 import { useContext, useState } from "react";
-import { ChallengeContext } from "../ChallengeWrapper";
-import { divmod, mapDiff, mapSum, splitGroups } from "app/utils";
-import { ObjectInspector } from "app/components/ObjectInspector";
 import clsx from "clsx";
 import { ArrowDownIcon } from "@heroicons/react/24/solid";
 import { clone, compact, countBy, entries, flatten, maxBy, minBy, zip } from "lodash";
+
+import { ObjectInspector } from "../../components/ObjectInspector";
+import { divmod, mapDiff, mapSum, splitGroups } from "../../utils";
+import { ChallengeContext } from "../ChallengeWrapper";
 
 function nextPolymer(polymer, rules) {
     let ret = "";

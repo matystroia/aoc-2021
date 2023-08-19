@@ -1,7 +1,8 @@
 import Image from "next/image";
-import paintings from "/public/minecraft/paintings";
 import { random } from "lodash";
 import clsx from "clsx";
+
+import paintings from "../../../public/minecraft/paintings";
 
 export const getRandomPainting = () => {
     if (Math.random() > 0.5) return null;

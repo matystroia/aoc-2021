@@ -2,12 +2,13 @@
 
 import { Cog6ToothIcon } from "@heroicons/react/24/solid";
 import { motion, motionValue, useMotionValueEvent, useTime, useTransform } from "framer-motion";
-import { ObjectInspector } from "../../components/ObjectInspector";
 import { forwardRef, useEffect, useMemo, useRef, useState } from "react";
-import { useSize } from "../../hooks/useSize";
 import { maxBy, random } from "lodash";
 import { useImmer } from "use-immer";
 import clsx from "clsx";
+
+import { useSize } from "../../hooks/useSize";
+import { ObjectInspector } from "../../components/ObjectInspector";
 
 function SettingsGroup({ className, children }) {
     return (

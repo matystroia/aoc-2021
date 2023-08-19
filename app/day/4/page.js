@@ -1,11 +1,14 @@
 "use client";
 
-import { forwardRef, useContext, useEffect, useRef, useState } from "react";
-import { experimental_useEffectEvent as useEffectEvent } from "react";
-import { ChallengeContext } from "../ChallengeWrapper";
-import { ObjectInspector } from "app/components/ObjectInspector";
+import {
+    forwardRef,
+    useContext,
+    useEffect,
+    useRef,
+    useState,
+    experimental_useEffectEvent as useEffectEvent,
+} from "react";
 import { compact, every, filter, flatten, includes, range, sum } from "lodash";
-import { splitGroups } from "app/utils";
 import clsx from "clsx";
 import {
     ArrowUturnLeftIcon,
@@ -13,6 +16,10 @@ import {
     PlayIcon,
     PauseIcon,
 } from "@heroicons/react/24/solid";
+
+import { splitGroups } from "../../utils";
+import { ObjectInspector } from "../../components/ObjectInspector";
+import { ChallengeContext } from "../ChallengeWrapper";
 
 function isBingo(board, drawnNumbers) {
     // Rows

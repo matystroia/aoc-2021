@@ -1,11 +1,15 @@
-import { ExtrudedPolygonPath } from "/app/components/shapes/ExtrudedPolygonPath";
-import { Barrier } from "./Barrier";
-
 import { forwardRef } from "react";
 import { motion } from "framer-motion";
 import clsx from "clsx";
 import { noop } from "lodash";
-import { getPolygonPath, getPolygonPoints } from "../../components/shapes/ExtrudedPolygonPath";
+
+import {
+    ExtrudedPolygonPath,
+    getPolygonPath,
+    getPolygonPoints,
+} from "../../components/shapes/ExtrudedPolygonPath";
+
+import { Barrier } from "./Barrier";
 
 const Tape = ({ className }) => (
     <div

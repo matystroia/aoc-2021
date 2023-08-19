@@ -1,8 +1,9 @@
 import Link from "next/link";
-import { ChallengeConfig } from "../input/config";
 import clsx from "clsx";
 import { motion } from "framer-motion";
 import { forwardRef } from "react";
+
+import { ChallengeConfig } from "../input/config";
 
 const importantDays = [8, 11, 12, 16, 17, 19, 21];
 

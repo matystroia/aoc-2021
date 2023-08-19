@@ -1,7 +1,9 @@
 import { motion } from "framer-motion";
-import { ScannerCube } from "./ScannerCube";
-import { RegularPolygon } from "/app/components/shapes/RegularPolygon";
+
 import { ExtrudedPolygonPath } from "../../components/shapes/ExtrudedPolygonPath";
+import { RegularPolygon } from "../../components/shapes/RegularPolygon";
+
+import { ScannerCube } from "./ScannerCube";
 
 export function ScannerDevice({ beacons }) {
     return (

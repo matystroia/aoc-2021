@@ -1,10 +1,11 @@
 "use client";
 
 import { useContext, useState } from "react";
-import { ChallengeContext } from "../ChallengeWrapper";
 import clsx from "clsx";
 import { cloneDeep, isEqual, uniqWith } from "lodash";
 import { ArrowPathIcon } from "@heroicons/react/24/solid";
+
+import { ChallengeContext } from "../ChallengeWrapper";
 
 const Operator = {
     INPUT: 0,

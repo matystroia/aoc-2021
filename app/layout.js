@@ -3,8 +3,9 @@
 import "./globals.css";
 import { Inter } from "next/font/google";
 import { ErrorBoundary } from "react-error-boundary";
-import { MobileFallback } from "./MobileFallback";
 import { useEffect } from "react";
+
+import { MobileFallback } from "./MobileFallback";
 
 class MobileError extends Error {}
 

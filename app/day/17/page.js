@@ -1,16 +1,24 @@
 "use client";
 
-import { createContext, useContext, useEffect, useLayoutEffect, useRef, useState } from "react";
-import { experimental_useEffectEvent as useEffectEvent } from "react";
-import { ChallengeContext } from "../ChallengeWrapper";
-import { ObjectInspector } from "app/components/ObjectInspector";
+import {
+    createContext,
+    useContext,
+    useEffect,
+    useLayoutEffect,
+    useRef,
+    useState,
+    experimental_useEffectEvent as useEffectEvent,
+} from "react";
 import { clamp, flatMap, inRange, intersection, isEqual, range, uniqWith } from "lodash";
 import clsx from "clsx";
-import { Box } from "app/components/shapes/Box";
-import { useMovementAxis } from "app/hooks/useMovementAxis";
-import { RegularPolygon } from "app/components/shapes/RegularPolygon";
-import { product } from "app/utils";
-import { PolygonBorder } from "app/components/shapes/PolygonBorder";
+
+import { PolygonBorder } from "../../components/shapes/PolygonBorder";
+import { product } from "../../utils";
+import { RegularPolygon } from "../../components/shapes/RegularPolygon";
+import { useMovementAxis } from "../../hooks/useMovementAxis";
+import { Box } from "../../components/shapes/Box";
+import { ObjectInspector } from "../../components/ObjectInspector";
+import { ChallengeContext } from "../ChallengeWrapper";
 
 // Great work here:
 // https://stackoverflow.com/questions/45238194/how-can-i-create-pure-css-3-dimensional-spheres

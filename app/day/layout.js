@@ -1,6 +1,7 @@
 "use client";
 
 import { useSelectedLayoutSegment } from "next/navigation";
+
 import { ChallengeWrapper } from "./ChallengeWrapper";
 import { Navigation } from "./Navigation";
 

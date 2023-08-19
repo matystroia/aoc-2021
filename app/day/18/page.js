@@ -1,12 +1,13 @@
 "use client";
 
 import { useContext, useEffect, useRef, useState } from "react";
-import { ChallengeContext } from "../ChallengeWrapper";
 import { cloneDeep, isFinite, maxBy } from "lodash";
-import { product } from "app/utils";
 import clsx from "clsx";
 import { XMarkIcon } from "@heroicons/react/24/solid";
 import { useImmer } from "use-immer";
+
+import { product } from "../../utils";
+import { ChallengeContext } from "../ChallengeWrapper";
 
 class Snailfish {
     constructor(parent, value = null) {

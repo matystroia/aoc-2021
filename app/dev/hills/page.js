@@ -1,4 +1,4 @@
-import { Hills } from "/app/components/experiments/hills";
+import { Hills } from "../../components/experiments/hills";
 
 export default function HillsPage() {
     return (

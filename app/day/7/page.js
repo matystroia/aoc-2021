@@ -1,10 +1,11 @@
 "use client";
 
 import { useContext, useState } from "react";
-import { ChallengeContext } from "../ChallengeWrapper";
-import { ObjectInspector } from "app/components/ObjectInspector";
 import { min, max, range, sum, mean, minBy, sumBy } from "lodash";
 import clsx from "clsx";
+
+import { ObjectInspector } from "../../components/ObjectInspector";
+import { ChallengeContext } from "../ChallengeWrapper";
 
 function Range({ value, onChange, minValue, maxValue, className }) {
     const range = maxValue - minValue;

@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+
 import { getSegmentIntersection } from "../utils";
 
 const groundY = 0;

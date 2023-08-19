@@ -1,7 +1,8 @@
 import clsx from "clsx";
-import { ScannerDot } from "./ScannerDot";
 import { motion } from "framer-motion";
 import { forwardRef } from "react";
+
+import { ScannerDot } from "./ScannerDot";
 
 function CubeFace({ className, style }) {
     return (

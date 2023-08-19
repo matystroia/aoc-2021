@@ -1,7 +1,8 @@
 import { motion } from "framer-motion";
-import { RegularPolygon } from "../../components/shapes/RegularPolygon";
 import clsx from "clsx";
 import { ArrowPathIcon } from "@heroicons/react/24/solid";
+
+import { RegularPolygon } from "../../components/shapes/RegularPolygon";
 
 export function PocketWatch({ onReset }) {
     return (

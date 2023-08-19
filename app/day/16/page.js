@@ -11,15 +11,16 @@ import {
     useRef,
     useState,
 } from "react";
-import { ChallengeContext } from "../ChallengeWrapper";
-import { ObjectInspector } from "app/components/ObjectInspector";
 import { clone, flatMap, flatten, map, maxBy, minBy, random, reduce, sample, sumBy } from "lodash";
 import clsx from "clsx";
-import { useMouse } from "app/hooks/useMouse";
 import { useImmer } from "use-immer";
 import { v4 as uuid } from "uuid";
-import { getSegmentIntersection } from "app/utils";
-import { useMutationObserver } from "app/hooks/useMutationObserver";
+
+import { getSegmentIntersection } from "../../utils";
+import { useMutationObserver } from "../../hooks/useMutationObserver";
+import { useMouse } from "../../hooks/useMouse";
+import { ObjectInspector } from "../../components/ObjectInspector";
+import { ChallengeContext } from "../ChallengeWrapper";
 
 function hexToBits(hex) {
     return flatMap(Array.from(hex), (x) =>

@@ -6,11 +6,12 @@ import {
     useEffect,
     experimental_useEffectEvent as useEffectEvent,
 } from "react";
+import { range } from "lodash";
+import clsx from "clsx";
+
 import { ChallengeContext } from "../ChallengeWrapper";
 import { Sphere } from "../../components/shapes/Sphere";
 import { RegularPolygon } from "../../components/shapes/RegularPolygon";
-import { range } from "lodash";
-import clsx from "clsx";
 import { product } from "../../utils";
 import { CustomDie } from "../../components/models/Die";
 

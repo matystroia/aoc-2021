@@ -1,13 +1,14 @@
 "use client";
 
 import { useContext, useState } from "react";
-import { ChallengeContext } from "../ChallengeWrapper";
-import { ObjectInspector } from "app/components/ObjectInspector";
-import { splitGroups } from "app/utils";
 import { maxBy, range } from "lodash";
 import { PlayIcon } from "@heroicons/react/24/solid";
 import clsx from "clsx";
-import { Canvas } from "app/components/Canvas";
+
+import { splitGroups } from "../../utils";
+import { ObjectInspector } from "../../components/ObjectInspector";
+import { Canvas } from "../../components/Canvas";
+import { ChallengeContext } from "../ChallengeWrapper";
 
 function Square({ i, j, isDot, folds, animationState }) {
     let className = "bg-amber-200";
@@ -50,7 +51,7 @@ function Square({ i, j, isDot, folds, animationState }) {
                 )}
                 style={style}
             >
-                {isDot && <div className="w-3 h-3 bg-stone-900 rounded-full"></div>}
+                {isDot && <div className="w-3 h-3 rounded-full bg-stone-900"></div>}
             </div>
         </div>
     );
@@ -114,10 +115,10 @@ export default function Day13() {
     }
 
     return (
-        <div className="h-full center relative" style={{ perspective: "750px" }}>
+        <div className="relative h-full center" style={{ perspective: "750px" }}>
             {isExample && isPartOne ? (
                 <>
-                    <div className="flex flex-col relative">
+                    <div className="relative flex flex-col">
                         {range(maxY + 1).map((i) => (
                             <div key={i} className="flex">
                                 {range(maxX + 1).map((j) => (
@@ -136,7 +137,7 @@ export default function Day13() {
                         ))}
                     </div>
                     <button
-                        className="absolute right-0 bottom-0 w-10 h-10 bg-stone-900 center rounded-lg"
+                        className="absolute bottom-0 right-0 w-10 h-10 rounded-lg bg-stone-900 center"
                         onClick={handlePlay}
                         disabled={foldIndex > folds.length}
                     >
@@ -146,7 +147,7 @@ export default function Day13() {
                 </>
             ) : (
                 <Canvas
-                    className="h-full w-full"
+                    className="w-full h-full"
                     onDraw={(ctx) => {
                         shownDots.forEach(([x, y]) => {
                             ctx.fillRect(100 + x * 10, 100 + y * 10, 10, 10);

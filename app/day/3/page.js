@@ -1,11 +1,12 @@
 "use client";
 
-import { ObjectInspector } from "app/components/ObjectInspector";
 import { useContext } from "react";
-import { ChallengeContext } from "../ChallengeWrapper";
 import { useImmer } from "use-immer";
 import { filter } from "lodash";
 import clsx from "clsx";
+
+import { ObjectInspector } from "../../components/ObjectInspector";
+import { ChallengeContext } from "../ChallengeWrapper";
 
 function part1(numbers, length) {
     let mostCommon = 0;
@@ -109,7 +110,7 @@ function BinaryInspector({ initialNumbers, length }) {
                     onChange={(newNumber) => handleChange(i, newNumber)}
                 />
             ))}
-            <div className="w-full border-t-2 border-rose-500 border"></div>
+            <div className="w-full border border-t-2 border-rose-500"></div>
             <BinaryNumber number={mostCommon} isResult length={length} />
             <BinaryNumber number={leastCommon} isResult length={length} />
         </div>

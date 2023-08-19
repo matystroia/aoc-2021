@@ -1,4 +1,4 @@
-import { NintendoDS } from "/app/components/models/NintendoDS";
+import { NintendoDS } from "../../components/models/NintendoDS";
 export default function NintendoDSPage() {
     return <NintendoDS />;
 }
