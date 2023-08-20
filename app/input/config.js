@@ -17,7 +17,7 @@ export const ChallengeConfig = {
     16: { name: "Packet Decoder", exampleOnly: false },
     17: { name: "Trick Shot", exampleOnly: false },
     18: { name: "Snailfish", exampleOnly: false },
-    19: { name: "Beacon Scanner", exampleOnly: false },
+    19: { name: "Beacon Scanner", exampleOnly: true },
     20: { name: "Trench Map", exampleOnly: false },
     21: { name: "Dirac Dice", exampleOnly: false },
     22: { name: "Reactor Reboot", exampleOnly: true },

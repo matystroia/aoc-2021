@@ -38,7 +38,7 @@ import { ExtrudedPolygonPath } from "./ExtrudedPolygonPath";
 //     return <Polygon edges={sides} offset={{ x: xOffset, y: yOffset }} {...props} />;
 // });
 
-export const RegularPolygon = memo(function RegularPolygon({ n, ...props }) {
+export const RegularPolygon = memo(function RegularPolygon({ n, alpha = 0, ...props }) {
     const { width, height = width } = props;
 
     const externalAngle = (2 * Math.PI) / n;
@@ -46,8 +46,8 @@ export const RegularPolygon = memo(function RegularPolygon({ n, ...props }) {
     const path = [];
     for (let i = 0; i < n; i++) {
         path.push({
-            x: ((Math.cos(i * externalAngle) + 1) / 2) * width,
-            y: ((Math.sin(i * externalAngle) + 1) / 2) * height,
+            x: ((Math.cos(i * externalAngle + alpha) + 1) / 2) * width,
+            y: ((Math.sin(i * externalAngle + alpha) + 1) / 2) * height,
         });
     }
 

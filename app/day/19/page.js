@@ -46,6 +46,23 @@ class Scanner {
         return false;
     }
 
+    getIntersection(otherBeacons, delta) {
+        const ret = [[], []];
+        for (let i = 0; i < this.beacons.length; i++) {
+            const b1 = this.beacons[i];
+            const match = otherBeacons.findIndex((b2) =>
+                isEqual([b2.x, b2.y, b2.z], [b1.x + delta[0], b1.y + delta[1], b1.z + delta[2]])
+            );
+
+            if (match !== -1) {
+                ret[0].push(i);
+                ret[1].push(match);
+            }
+        }
+
+        return ret;
+    }
+
     translate(delta) {
         for (const b of this.beacons) b.translate(delta);
     }
@@ -80,14 +97,15 @@ const isMatch = (s1, s2) => {
                 const delta = ["x", "y", "z"].map((a) => rotatedBeacon[a] - b1[a]);
 
                 if (s1.isTranslation(rotatedBeacons, delta)) {
-                    s2.transform = transform;
-                    for (let i = 0; i < s2.beacons.length; i++) {
-                        s2.beacons[i].x = rotatedBeacons[i].x;
-                        s2.beacons[i].y = rotatedBeacons[i].y;
-                        s2.beacons[i].z = rotatedBeacons[i].z;
-                    }
-                    s2.translate(delta);
-                    return true;
+                    // s2.transform = transform;
+                    // for (let i = 0; i < s2.beacons.length; i++) {
+                    //     s2.beacons[i].x = rotatedBeacons[i].x;
+                    //     s2.beacons[i].y = rotatedBeacons[i].y;
+                    //     s2.beacons[i].z = rotatedBeacons[i].z;
+                    // }
+                    // s2.translate(delta);
+                    // return true;
+                    return s1.getIntersection(rotatedBeacons, delta);
                 }
             }
         }
@@ -339,6 +357,28 @@ export default function Day19() {
     const optionScanners = initialScanners.filter((s, i) => !resultIds.includes(i));
     const resultScanners = resultIds.map((i) => initialScanners[i]);
 
+    const [matchingIds, setMatchingIds] = useState([null, null]);
+    const handleMatch = (scannerIndex) => {
+        if (matchingIds.includes(scannerIndex)) {
+            setMatchingIds(matchingIds.map((i) => (i === scannerIndex ? null : i)));
+        } else if (matchingIds[0] === null) {
+            setMatchingIds([scannerIndex, matchingIds[1]]);
+        } else if (matchingIds[1] === null) {
+            setMatchingIds([matchingIds[0], scannerIndex]);
+        }
+    };
+
+    let matchingBeacons = [[], []];
+    if (matchingIds[0] !== null && matchingIds[1] !== null) {
+        const first = cloneDeep(scanners[matchingIds[0]]);
+        const second = cloneDeep(scanners[matchingIds[1]]);
+
+        const intersectionBeacons = isMatch(first, second);
+        if (intersectionBeacons) {
+            matchingBeacons = intersectionBeacons;
+        }
+    }
+
     return (
         <div
             className="h-full flex flex-col justify-center items-center preserve-3d [perspective:1000px]"
@@ -347,62 +387,22 @@ export default function Day19() {
             onPointerUp={() => setIsDown(false)}
             onPointerLeave={() => setIsDown(false)}
         >
-            <div className="flex flex-wrap gap-8 preserve-3d">
-                {optionScanners.map((scanner) => (
-                    <ScannerCube
-                        key={scanner.i}
-                        scanner={scanner}
-                        width={100}
-                        className="transition-transform cursor-pointer hover:scale-110"
-                        onClick={() => setResultIds(resultIds.concat([scanner.i]))}
-                    />
-                ))}
+            <div className="flex mt-[512px] gap-4 preserve-3d">
+                {optionScanners.map((scanner, i) => {
+                    let highlightedBeacons = [];
+                    if (scanner.i === matchingIds[0]) highlightedBeacons = matchingBeacons[0];
+                    else if (scanner.i === matchingIds[1]) highlightedBeacons = matchingBeacons[1];
+                    return (
+                        <ScannerDevice
+                            key={scanner.i}
+                            beacons={scanner.beacons}
+                            matchingBeacons={highlightedBeacons}
+                            onMatch={() => handleMatch(i)}
+                            isMatching={matchingIds.includes(i)}
+                        />
+                    );
+                })}
             </div>
-            <div className="flex gap-8 mt-48 preserve-3d">
-                {optionScanners.map((scanner) => (
-                    <ScannerDevice key={scanner.i} beacons={scanner.beacons} />
-                ))}
-            </div>
-
-            <div className="flex flex-wrap gap-4 mt-20 preserve-3d">
-                {resultScanners.map((scanner) => (
-                    <div
-                        key={scanner.i}
-                        className="preserve-3d"
-                        style={{ transform: `translate3d(})` }}
-                    >
-                        <ScannerCube scanner={scanner} width={150} />
-                    </div>
-                ))}
-            </div>
-
-            {/* <div
-                className="preserve-3d"
-                style={{
-                    transform: `translate3d(-145px, -145px, 0) rotateX(${-viewAngle.y}deg) rotateY(${
-                        viewAngle.x
-                    }deg)`,
-                    transformOrigin: "145px 145px 145px",
-                }}
-            >
-                <Axes />
-
-                {range(5).map((z) => (
-                    <div
-                        key={z}
-                        className="flex flex-col preserve-3d absolute gap-[10px]"
-                        style={{ transform: `translateZ(${z * 60}px)` }}
-                    >
-                        {range(5).map((y) => (
-                            <div key={y} className="flex preserve-3d gap-[10px]">
-                                {range(5).map((x) => (
-                                    <Cube key={x} x={x} y={y} z={z} />
-                                ))}
-                            </div>
-                        ))}
-                    </div>
-                ))}
-            </div> */}
         </div>
     );
 }

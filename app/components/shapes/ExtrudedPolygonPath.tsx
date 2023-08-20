@@ -14,6 +14,11 @@ type Point = {
     concave: boolean;
 };
 
+type Side = {
+    index: number;
+    side: JSX.Element;
+};
+
 const toAbsolute = (p: Point, width: number, height: number) => ({
     x: isNumber(p.x) ? p.x : parsePercent(p.x) * width,
     y: isNumber(p.y) ? p.y : parsePercent(p.y) * height,
@@ -87,6 +92,9 @@ export const ExtrudedPolygonPath = memo(
         topBorder = { width: 0 },
         sideBorder = { width: 0 },
         renderBase,
+        children,
+        side = null,
+        sides = [],
     }: {
         path: Point[];
         width: number;
@@ -99,6 +107,9 @@ export const ExtrudedPolygonPath = memo(
         topBorder?: { width: number; borderClass?: string };
         sideBorder?: { width: number; borderClass?: string };
         renderBase?: ({ className, style }) => JSX.Element;
+        children?: JSX.Element;
+        side: JSX.Element;
+        sides: Side[];
     }) {
         console.log("RERENDER");
 
@@ -122,28 +133,34 @@ export const ExtrudedPolygonPath = memo(
         const angleRad = (angle * Math.PI) / 180;
         const sideHeight = Math.floor(depth / Math.sin(angleRad));
 
+        const orderedSides = edges.map((_) => side);
+        sides.forEach(({ index, side }) => {
+            orderedSides[index] = side;
+        });
+
         return (
             <div className={clsx("preserve-3d relative", className)} style={{ width, height }}>
-                {topBorder.width ? (
-                    <PolygonBorder2
-                        baseClass={topClass}
-                        borderClass={topBorder.borderClass}
-                        className="absolute w-full h-full"
-                        style={{
-                            transform: `translateZ(${depth}px)`,
-                        }}
-                        polygonPoints={polygonPoints}
-                        borderWidth={topBorder.width}
-                    />
-                ) : (
-                    <div
-                        className={clsx("absolute h-full w-full", topClass)}
-                        style={{
-                            transform: `translateZ(${depth}px)`,
-                            clipPath: polygonPath,
-                        }}
-                    />
-                )}
+                {/* TODO: This should be separate component. Maybe move into PolygonBorder? */}
+                <div
+                    className="absolute w-full h-full preserve-3d"
+                    style={{ transform: `translateZ(${depth}px)` }}
+                >
+                    {topBorder.width ? (
+                        <PolygonBorder2
+                            baseClass={topClass}
+                            borderClass={topBorder.borderClass}
+                            style={{ clipPath: polygonPath }}
+                            polygonPoints={polygonPoints}
+                            borderWidth={topBorder.width}
+                        />
+                    ) : (
+                        <div
+                            className={clsx("absolute inset-0", topClass)}
+                            style={{ clipPath: polygonPath }}
+                        />
+                    )}
+                    {children}
+                </div>
 
                 {edges.map((edge, i) => {
                     let sideWidth = edge.length;
@@ -182,10 +199,10 @@ export const ExtrudedPolygonPath = memo(
                         }
                     }
 
+                    const clipPath = sidePolygon && getPolygonPath(sidePolygon);
                     const style = {
                         width: sideWidth,
                         height: sideHeight,
-                        clipPath: sidePolygon && getPolygonPath(sidePolygon),
                         transform:
                             `translate3d(${edge.x}px, ${edge.y}px, ${depth}px)` +
                             `rotateZ(${edge.angle}rad) rotateX(${angle}deg)` +
@@ -197,9 +214,15 @@ export const ExtrudedPolygonPath = memo(
                         return (
                             <div
                                 key={i}
-                                className={clsx("absolute origin-top-left", sideClass)}
+                                className="absolute origin-top-left preserve-3d"
                                 style={style}
-                            />
+                            >
+                                <div
+                                    className={clsx("absolute inset-0", sideClass)}
+                                    style={{ clipPath }}
+                                />
+                                {orderedSides[i]}
+                            </div>
                         );
                     }
 
@@ -211,15 +234,16 @@ export const ExtrudedPolygonPath = memo(
                     ];
 
                     return (
-                        <PolygonBorder2
-                            key={i}
-                            baseClass={sideClass}
-                            borderClass={sideBorder.borderClass}
-                            className="absolute origin-top-left"
-                            style={style}
-                            polygonPoints={sidePolygon}
-                            borderWidth={sideBorder.width}
-                        />
+                        <div key={i} className="absolute origin-top-left preserve-3d" style={style}>
+                            <PolygonBorder2
+                                baseClass={sideClass}
+                                borderClass={sideBorder.borderClass}
+                                className="absolute inset-0"
+                                polygonPoints={sidePolygon}
+                                borderWidth={sideBorder.width}
+                            />
+                            {orderedSides[i]}
+                        </div>
                     );
                 })}
 

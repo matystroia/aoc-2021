@@ -13,12 +13,12 @@ function CubeFace({ className, style }) {
     );
 }
 
-const width = 128;
-const getCoord = (x) => (x / 2000) * width;
 export const ScannerCube = motion(
-    forwardRef(function ScannerCube({ beacons }, ref) {
+    forwardRef(function ScannerCube({ width, beacons, matchingBeacons, style }, ref) {
+        const getCoord = (x) => (x / 2000) * width;
+
         return (
-            <div ref={ref} className="preserve-3d" style={{ width, height: width }}>
+            <div ref={ref} className="preserve-3d" style={{ width, height: width, ...style }}>
                 <CubeFace
                     className="w-full h-full"
                     style={{ transform: `translateZ(${width / 2}px)` }}
@@ -52,7 +52,11 @@ export const ScannerCube = motion(
                             x={getCoord(x)}
                             y={getCoord(y)}
                             z={getCoord(z)}
-                            className="bg-red-500"
+                            className={clsx(
+                                matchingBeacons.includes(i)
+                                    ? "bg-yellow-500 animate-flash"
+                                    : "bg-red-500"
+                            )}
                         />
                     ))}
                 </div>

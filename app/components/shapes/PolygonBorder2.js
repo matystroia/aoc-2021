@@ -8,14 +8,12 @@ import offsetPolygon from "offset-polygon";
 export function PolygonBorder2({
     baseClass,
     borderClass,
-    className,
-    style,
+    className = null,
+    style = {},
     polygonPoints,
     borderWidth,
 }) {
     const insetPoints = offsetPolygon(polygonPoints, -borderWidth);
-
-    console.log("Polygon Border Render");
 
     const borderPoints = polygonPoints.concat(
         polygonPoints[0],
