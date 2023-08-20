@@ -1,6 +1,7 @@
 import clsx from "clsx";
 import { AcademicCapIcon, BookOpenIcon } from "@heroicons/react/24/solid";
 import { useContext } from "react";
+import Link from "next/link";
 
 import { ChallengeConfig } from "../input/config";
 
@@ -64,7 +65,9 @@ export function OptionsBar({ day, onChangePart, onChangeExample, className }) {
             <PartToggle onChangePart={onChangePart} />
             <div className="flex flex-col items-center">
                 <div className="text-sm text-slate-300">Day {day}</div>
-                <div className="text-slate-100">{name}</div>
+                <div className="text-slate-100">
+                    <Link href={`https://adventofcode.com/2021/day/${day}`}>{name} </Link>
+                </div>
             </div>
             <div className="flex gap-2">
                 <Notes />
