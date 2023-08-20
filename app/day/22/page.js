@@ -1,7 +1,8 @@
 "use client";
-
+import { motion, useMotionValue } from "framer-motion";
 import { useContext, useEffect, useState } from "react";
 import { isEqual, sumBy } from "lodash";
+import clsx from "clsx";
 
 import { Cube } from "../../components/shapes/Cube";
 import { ChallengeContext } from "../ChallengeWrapper";
@@ -75,12 +76,15 @@ class Cuboid {
     }
 }
 
-function Button({ onClick, disabled, children }) {
+function Button({ isLeft, onClick, disabled, children }) {
     return (
         <button
             onClick={onClick}
             disabled={disabled}
-            className="relative block w-10 h-10 font-mono border disabled:opacity-50 disabled:before:hidden text-amber-700 bg-amber-500 border-amber-700 before:absolute before:bg-amber-700 before:h-full before:w-full before:-z-10 before:left-1 before:top-1"
+            className={clsx(
+                "relative block w-10 h-10 font-mono border disabled:opacity-50 disabled:before:hidden text-amber-700 bg-amber-500 border-amber-700 before:absolute before:bg-amber-700 before:h-full before:w-full before:-z-10 before:top-1",
+                isLeft ? "before:-left-1" : "before:left-1"
+            )}
         >
             {children}
         </button>
@@ -88,10 +92,7 @@ function Button({ onClick, disabled, children }) {
 }
 
 function VizCube({ x, y, z }) {
-    const unitWidth = 10;
-    const [xWidth, yWidth, zWidth] = [x[1] - x[0] + 1, y[1] - y[0] + 1, z[1] - z[0] + 1].map(
-        (w) => w * unitWidth
-    );
+    const [xWidth, yWidth, zWidth] = [x[1] - x[0] + 1, y[1] - y[0] + 1, z[1] - z[0] + 1];
 
     return (
         <div
@@ -113,6 +114,7 @@ function VizCube({ x, y, z }) {
         </div>
     );
 }
+
 function runSteps(steps) {
     let cubes = [];
     for (const step of steps) {
@@ -140,34 +142,54 @@ export default function Day22() {
     const [stepIndex, setStepIndex] = useState(0);
     const cubes = runSteps(steps.slice(0, stepIndex));
 
-    const [zoomLevel, setZoomLevel] = useState(10);
+    const [zoomLevel, setZoomLevel] = useState(2.5);
     const zoom = (x) => [x[0] * zoomLevel, x[1] * zoomLevel];
-    const zoomedCubes = cubes;
+    const zoomedCubes = cubes.map((c) => new Cuboid(zoom(c.x), zoom(c.y), zoom(c.z)));
 
-    const [tick, setTick] = useState(0);
-    useEffect(() => {
-        const interval = setInterval(() => setTick((t) => t + 1), 10);
-        return () => clearInterval(interval);
-    }, []);
+    const panX = useMotionValue(0);
+    const panY = useMotionValue(0);
+    const handlePan = (e, info) => {
+        panX.set(panX.get() + info.delta.x);
+        panY.set(panY.get() + info.delta.y);
+    };
 
     return (
-        <div className="relative h-full center [perspective:800px]">
-            <div className="relative preserve-3d" style={{ transform: `rotateY(${tick / 10}deg)` }}>
+        <motion.div className="relative h-full center [perspective:800px]" onPan={handlePan}>
+            <motion.div className="relative preserve-3d" style={{ rotateX: panY, rotateZ: panX }}>
                 {zoomedCubes.map((cube, i) => (
                     <VizCube key={i} x={cube.x} y={cube.y} z={cube.z} />
                 ))}
+            </motion.div>
+            <div className="absolute bottom-0 flex items-end -mb-4">
+                <div className="w-20 h-12 rounded-tl-lg center bg-amber-300 text-amber-700">
+                    {stepIndex} / {steps.length}
+                </div>
+                <div className="z-10 flex gap-8 p-6 rounded-t-lg bg-amber-200 drop-shadow-lg">
+                    <div className="flex gap-2 bottom-4 left-4">
+                        <Button
+                            isLeft
+                            disabled={stepIndex === 0}
+                            onClick={() => setStepIndex(stepIndex - 1)}
+                        >
+                            {"<"}
+                        </Button>
+                        <Button
+                            isLeft
+                            disabled={stepIndex === steps.length - 1}
+                            onClick={() => setStepIndex(stepIndex + 1)}
+                        >
+                            {">"}
+                        </Button>
+                    </div>
+                    <div className="flex gap-2 bottom-4 right-4">
+                        <Button onClick={() => setZoomLevel(zoomLevel - 0.1)}>{"-"}</Button>
+                        <Button onClick={() => setZoomLevel(zoomLevel + 0.1)}>{"+"}</Button>
+                    </div>
+                </div>
+                <div className="w-20 h-12 rounded-tr-lg center bg-amber-300 text-amber-700">
+                    {zoomLevel.toFixed(1)}
+                </div>
             </div>
-            <div className="absolute flex gap-2 bottom-4 left-4">
-                <Button disabled={stepIndex === 0} onClick={() => setStepIndex(stepIndex - 1)}>
-                    {"<"}
-                </Button>
-                <Button
-                    disabled={stepIndex === steps.length - 1}
-                    onClick={() => setStepIndex(stepIndex + 1)}
-                >
-                    {">"}
-                </Button>
-            </div>
-        </div>
+        </motion.div>
     );
 }
