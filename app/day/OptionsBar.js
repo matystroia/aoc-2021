@@ -1,6 +1,6 @@
 import clsx from "clsx";
 import { AcademicCapIcon, BookOpenIcon } from "@heroicons/react/24/solid";
-import { useContext } from "react";
+import { useContext, useRef } from "react";
 import Link from "next/link";
 
 import { ChallengeConfig } from "../input/config";
@@ -49,28 +49,35 @@ function ExampleToggle({ disabled, onChangeExample }) {
     );
 }
 
-function Notes() {
+function Notes({ disabled, onOpenNotes }) {
     return (
-        <button className="flex items-center justify-center w-10 h-10 border-2 rounded-lg border-amber-500">
-            <BookOpenIcon className="w-6 h-6" />
-        </button>
+        <>
+            <button
+                disabled={disabled}
+                className="flex items-center justify-center w-10 h-10 border-2 rounded-lg border-amber-500 group disabled:border-slate-500"
+                onClick={onOpenNotes}
+            >
+                <BookOpenIcon className="w-6 h-6 group-disabled:fill-slate-500" />
+            </button>
+        </>
     );
 }
 
-export function OptionsBar({ day, onChangePart, onChangeExample, className }) {
+export function OptionsBar({ day, onChangePart, onChangeExample, onOpenNotes, className }) {
     const { name, exampleOnly } = ChallengeConfig[day];
+    const { hasNotes } = useContext(ChallengeContext);
 
     return (
         <div className={clsx("p-2 flex items-center justify-between bg-slate-700", className)}>
             <PartToggle onChangePart={onChangePart} />
             <div className="flex flex-col items-center">
                 <div className="text-sm text-slate-300">Day {day}</div>
-                <div className="text-slate-100">
+                <div className="underline text-slate-100 decoration-slate-400">
                     <Link href={`https://adventofcode.com/2021/day/${day}`}>{name} </Link>
                 </div>
             </div>
             <div className="flex gap-2">
-                <Notes />
+                <Notes disabled={!hasNotes} onOpenNotes={onOpenNotes} />
                 <ExampleToggle disabled={exampleOnly} onChangeExample={onChangeExample} />
             </div>
         </div>

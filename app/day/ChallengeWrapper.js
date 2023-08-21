@@ -1,11 +1,14 @@
 "use client";
 
-import { Fragment, createContext, useMemo, useState } from "react";
+import { Fragment, createContext, useMemo, useEffect, useRef, useState } from "react";
 import { useSelectedLayoutSegment } from "next/navigation";
 import clsx from "clsx";
-import { AcademicCapIcon, BookOpenIcon } from "@heroicons/react/24/solid";
+import { AcademicCapIcon, BookOpenIcon, XMarkIcon } from "@heroicons/react/24/solid";
+import { dynamic } from "next/dynamic";
 
 import { useFile } from "../hooks/useFile";
+import { useNotes } from "../hooks/useNotes";
+import { ChallengeConfig } from "../input/config";
 
 import { OptionsBar } from "./OptionsBar";
 
@@ -57,7 +60,7 @@ function Notes() {
 }
 
 function Loading() {
-    return <div className="flex items-center justify-center h-full text-8xl animate-pulse">😪</div>;
+    return <div className="flex items-center justify-center h-full text-8xl animate-pulse">⌛</div>;
 }
 
 function Error({ error }) {
@@ -83,8 +86,20 @@ export function ChallengeWrapper({ children }) {
     const [isExampleToggled, setIsExampleToggled] = useState(true);
     const [isPartOne, setIsPartOne] = useState(true);
     const { rawText, lines, isExample, error, isLoading } = useFile(`day${day}`, isExampleToggled);
+    const { Component: NotesComponent } = useNotes(day);
 
-    const contextValue = { rawText, lines, isPartOne, isExample };
+    const contextValue = {
+        rawText,
+        lines,
+        isPartOne,
+        isExample,
+        hasNotes: Boolean(NotesComponent),
+    };
+
+    const ref = useRef();
+    const handleOpenNotes = () => {
+        ref.current.showModal();
+    };
 
     return (
         <div className="relative h-full">
@@ -99,9 +114,19 @@ export function ChallengeWrapper({ children }) {
                         day={day}
                         onChangePart={(part) => setIsPartOne(part === 1)}
                         onChangeExample={setIsExampleToggled}
+                        onOpenNotes={handleOpenNotes}
                     />
                 </ChallengeContext.Provider>
             </div>
+            <dialog
+                ref={ref}
+                className="p-10 pt-0 prose rounded-lg text-slate-200 bg-slate-950 backdrop:backdrop-blur-sm backdrop:bg-slate-900/25 prose-headings:text-amber-300 prose-strong:text-slate-50 prose-code:text-amber-300"
+            >
+                <button onClick={() => ref.current.close()} className="absolute right-4 top-4">
+                    <XMarkIcon className="w-6 h-6" />
+                </button>
+                {NotesComponent && <NotesComponent />}
+            </dialog>
         </div>
     );
 }
