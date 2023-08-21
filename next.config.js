@@ -1,3 +1,6 @@
+/* eslint-disable import/order */
+const rehypePrettyCode = require("rehype-pretty-code");
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
     webpack: (config) => {
@@ -6,10 +9,14 @@ const nextConfig = {
     },
     experimental: {
         serverActions: true,
-        mdxRs: true,
+        // mdxRs: true,
     },
 };
 
-const withMDX = require("@next/mdx")();
+const withMDX = require("@next/mdx")({
+    options: {
+        rehypePlugins: [[rehypePrettyCode, []]],
+    },
+});
 
 module.exports = withMDX(nextConfig);

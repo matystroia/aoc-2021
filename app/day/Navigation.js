@@ -29,7 +29,7 @@ export function Navigation() {
     const days = Array.from({ length: 25 }, (_, i) => i + 1);
 
     return (
-        <nav className="flex flex-col w-10 overflow-x-hidden overflow-y-auto bg-slate-700 hover:w-64 transition-[width] group">
+        <nav className="flex flex-col w-10 overflow-x-hidden overflow-y-auto bg-slate-700 hover:w-64 transition-[width] group shrink-0">
             <NavLink
                 icon={<HomeIcon className="inline-block w-5 h-5" />}
                 title="Home"

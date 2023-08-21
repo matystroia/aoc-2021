@@ -1,9 +1,10 @@
 "use client";
 
-import { normalizeuseCallback, useMemo, useContext } from "react";
+import { useMemo, useContext, useCallback } from "react";
 
 import { Canvas } from "../../components/Canvas";
 import { ChallengeContext } from "../ChallengeWrapper";
+import { normalizePoints } from "../../utils";
 
 const dirs = { forward: [1, 0], down: [0, 1], up: [0, -1] };
 
