@@ -90,7 +90,7 @@ export default function Page() {
     useEffect(() => {
         const interval = setInterval(async () => {
             await animate(scope.current, { x: random(-500, 500) });
-            await animate(scope.current, { y: random(0, 100) });
+            await animate(scope.current, { y: random(25, 100) });
             await animate(scope.current, { scaleX: Math.random() > 0.5 ? 1 : -1 });
             await animate(scope.current, { y: 250 }, { delay: 1 });
         }, 5000);
@@ -129,7 +129,7 @@ export default function Page() {
                         ))}
                     </div>
 
-                    <Periscope ref={scope} className="absolute bottom-48" />
+                    <Periscope ref={scope} className="absolute bottom-48" initial={{ y: 250 }} />
                 </Waves>
             </div>
 

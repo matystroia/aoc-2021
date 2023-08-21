@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { useRef } from "react";
+import { useMemo, useRef } from "react";
 import { random } from "lodash";
 import clsx from "clsx";
 
@@ -31,6 +31,17 @@ export function Stars({ className }) {
     const ref = useRef();
     const { width, height } = useSize(ref);
 
+    const points = useMemo(
+        () =>
+            [...Array(50).keys()].map((i) => {
+                const silverRatio = 0.618;
+                const x = ((silverRatio * i * width) % width) + random(-10, 10);
+                const y = Math.random() * height;
+                return { x, y };
+            }),
+        [height, width]
+    );
+
     return (
         <motion.div
             ref={ref}
@@ -39,10 +50,8 @@ export function Stars({ className }) {
             animate="visible"
             transition={{ staggerChildren: 0.05 }}
         >
-            {[...Array(50).keys()].map((i) => {
-                const silverRatio = 0.618;
-                const x = (silverRatio * i * width) % width;
-                return <Star key={i} x={x + random(-10, 10)} y={Math.random() * height} />;
+            {points.map(({ x, y }, i) => {
+                return <Star key={i} x={x} y={y} />;
             })}
         </motion.div>
     );
