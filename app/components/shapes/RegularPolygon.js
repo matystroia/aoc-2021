@@ -38,6 +38,20 @@ import { ExtrudedPolygonPath } from "./ExtrudedPolygonPath";
 //     return <Polygon edges={sides} offset={{ x: xOffset, y: yOffset }} {...props} />;
 // });
 
+export function getPolygonPoints(n, width, height, alpha = 0) {
+    const externalAngle = (2 * Math.PI) / n;
+
+    const path = [];
+    for (let i = 0; i < n; i++) {
+        path.push({
+            x: ((Math.cos(i * externalAngle + alpha) + 1) / 2) * width,
+            y: ((Math.sin(i * externalAngle + alpha) + 1) / 2) * height,
+        });
+    }
+
+    return path;
+}
+
 export const RegularPolygon = memo(function RegularPolygon({ n, alpha = 0, ...props }) {
     const { width, height = width } = props;
 

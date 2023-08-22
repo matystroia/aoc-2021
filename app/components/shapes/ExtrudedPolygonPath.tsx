@@ -87,6 +87,7 @@ export const ExtrudedPolygonPath = memo(
         depth,
         angle = 90,
         className,
+        style,
         topClass,
         sideClass,
         topBorder = { width: 0 },
@@ -102,6 +103,7 @@ export const ExtrudedPolygonPath = memo(
         depth: number;
         angle?: number;
         className?: string;
+        style?: object;
         topClass: string;
         sideClass: string;
         topBorder?: { width: number; borderClass?: string };
@@ -139,7 +141,10 @@ export const ExtrudedPolygonPath = memo(
         });
 
         return (
-            <div className={clsx("preserve-3d relative", className)} style={{ width, height }}>
+            <div
+                className={clsx("preserve-3d relative", className)}
+                style={{ width, height, ...style }}
+            >
                 {/* TODO: This should be separate component. Maybe move into PolygonBorder? */}
                 <div
                     className="absolute w-full h-full preserve-3d"
