@@ -1,5 +1,6 @@
 import clsx from "clsx";
-import { useEffect, useState } from "react";
+import { motion } from "framer-motion";
+import { useEffect, useState, forwardRef } from "react";
 
 function Dot({ className }) {
     return <div className={clsx("w-3 h-3 bg-zinc-900 rounded-full", className)} />;
@@ -7,16 +8,25 @@ function Dot({ className }) {
 
 function DieFace({ className, children }) {
     return (
-        <div className="w-[100px] h-[100px] bg-zinc-300 font-mono text-zinc-900 text-2xl">
+        <motion.div
+            variants={{ invisible: { opacity: 0 }, visible: { opacity: 1 } }}
+            className="w-16 h-16 font-mono text-xl bg-zinc-300 text-zinc-900"
+        >
             <div
                 className={clsx(
-                    "w-full h-full center border-4 bg-zinc-200 border-zinc-300 rounded-xl p-3",
+                    "relative w-full h-full center border-4 bg-zinc-200 border-zinc-300 rounded-xl p-3",
                     className
                 )}
             >
+                <motion.div
+                    variants={{ valueShown: { opacity: 0 } }}
+                    className="absolute inset-0 bg-zinc-200 center"
+                >
+                    ???
+                </motion.div>
                 {children}
             </div>
-        </div>
+        </motion.div>
     );
 }
 
@@ -74,48 +84,27 @@ export function Die() {
     );
 }
 
-export function CustomDie({ delay, value }) {
-    const [shownValue, setShownValue] = useState(value);
-    const [isSpinning, setIsSpinning] = useState(false);
-
-    useEffect(() => {
-        setIsSpinning(true);
-        const handle = setTimeout(() => {
-            setShownValue(value);
-            setIsSpinning(false);
-        }, delay * 1000);
-
-        return () => {
-            setShownValue(value);
-            setIsSpinning(false);
-            clearTimeout(handle);
-        };
-    }, [delay, value]);
-
-    return (
-        <div
-            className={clsx(
-                "relative preserve-3d origin-[50%_50%_-50px]",
-                isSpinning && "animate-spin-die"
-            )}
-            style={{ transform: `` }}
-        >
-            <DieFace>{isSpinning ? "?" : shownValue}</DieFace>
-            <div className="absolute inset-0 origin-top [transform:rotateX(-90deg)]">
-                <DieFace>{isSpinning && "?"}</DieFace>
+export const CustomDie = motion(
+    forwardRef(function CustomDie({ value }, ref) {
+        return (
+            <div ref={ref} className={clsx("absolute preserve-3d origin-[50%_50%_-32px]")}>
+                <DieFace>{value}</DieFace>
+                <div className="absolute inset-0 origin-top [transform:rotateX(-90deg)]">
+                    <DieFace></DieFace>
+                </div>
+                <div className="absolute inset-0 origin-bottom [transform:rotateX(90deg)]">
+                    <DieFace></DieFace>
+                </div>
+                <div className="absolute inset-0 origin-left [transform:rotateY(90deg)]">
+                    <DieFace></DieFace>
+                </div>
+                <div className="absolute inset-0 origin-right [transform:rotateY(-90deg)]">
+                    <DieFace></DieFace>
+                </div>
+                <div className="absolute inset-0 [transform:translateZ(-64px)]">
+                    <DieFace></DieFace>
+                </div>
             </div>
-            <div className="absolute inset-0 origin-bottom [transform:rotateX(90deg)]">
-                <DieFace>{isSpinning && "?"}</DieFace>
-            </div>
-            <div className="absolute inset-0 origin-left [transform:rotateY(90deg)]">
-                <DieFace></DieFace>
-            </div>
-            <div className="absolute inset-0 origin-right [transform:rotateY(-90deg)]">
-                <DieFace></DieFace>
-            </div>
-            <div className="absolute inset-0 [transform:translateZ(-100px)]">
-                <DieFace>{isSpinning && "?"}</DieFace>
-            </div>
-        </div>
-    );
-}
+        );
+    })
+);
