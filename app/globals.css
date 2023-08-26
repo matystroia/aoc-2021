@@ -12,29 +12,19 @@ body {
 }
 
 .cell-shaded {
-  --base: "#e11d48";
-  --shade: "#881337";
-  --shine: "#fb7185";
-  --length: 20px;
+    --base: theme(colors.rose.600);
+    --shade: theme(colors.rose.900);
+    --shine: theme(colors.rose.400);
+    --length: 20px;
 
-  background:
-  /* linear-gradient(
-          to bottom left,
-          transparent 0 20px,
-          var(--shine) 21px 40px,
-          transparent 41px 49px,
-          var(--shine) 50px 55px,
-          transparent 56px 80%,
-          var(--shine) calc(80% + 1px) calc(80% + 15px),
-          transparent calc(80% + 16px)
-      ), */
-      repeating-linear-gradient(
-          to bottom right,
-          var(--base) 0 var(--length),
-          var(--shade) calc(var(--length) + 1px) calc(2 * var(--length) + 1px)
-      ),
-      var(--base);
-  /* background-blend-mode: normal, normal; */
+    background:
+        repeating-linear-gradient(
+            to bottom right,
+            var(--base) 0 var(--length),
+            var(--shade) calc(var(--length) + 1px) calc(2 * var(--length) + 1px)
+        ),
+        var(--base);
+    background-blend-mode: normal, normal;
 }
 
 /* http://aleclownes.com/2017/02/01/crt-display.html */
