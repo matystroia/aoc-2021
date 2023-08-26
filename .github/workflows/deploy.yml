@@ -1,0 +1,11 @@
+on:
+  push:
+    branches: [main]
+jobs:
+  deploy:
+    runs-on: [self-hosted, linux]
+    steps:
+      - uses: digitalocean/action-doctl@v2
+        with:
+          token: ${{ secrets.DIGITAL_OCEAN_TOKEN }}
+      - run: doctl compute ssh strigoi@strigoi-dev
