@@ -109,14 +109,16 @@ module.exports = {
                     appearance: "none",
                     background: "transparent",
 
-                    "&:range-track": {
+                    "&::range-track": {
+                        appearance: "none",
                         height: "1.25rem",
                         transform: "translateY(0.625rem)",
                         borderTop: "2px dashed",
                         borderColor: theme("colors.slate.500"),
                     },
 
-                    "&:range-thumb": {
+                    "&::range-thumb": {
+                        appearance: "none",
                         backgroundColor: theme("colors.slate.500"),
                         borderRadius: "9999px",
                         border: "2px solid",
