@@ -77,7 +77,7 @@ export function OptionsBar({ day, onChangePart, onChangeExample, onOpenNotes, cl
                 </div>
             </div>
             <div className="flex gap-2">
-                <Notes disabled={!hasNotes} onOpenNotes={onOpenNotes} />
+                <Notes disabled={true} onOpenNotes={onOpenNotes} />
                 <ExampleToggle disabled={exampleOnly} onChangeExample={onChangeExample} />
             </div>
         </div>
