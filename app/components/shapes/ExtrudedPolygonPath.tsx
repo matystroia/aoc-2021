@@ -154,7 +154,6 @@ export const ExtrudedPolygonPath = memo(
                         <PolygonBorder2
                             baseClass={topClass}
                             borderClass={topBorder.borderClass}
-                            style={{ clipPath: polygonPath }}
                             polygonPoints={polygonPoints}
                             borderWidth={topBorder.width}
                         />

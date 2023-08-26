@@ -10,4 +10,4 @@ jobs:
           host: ${{ secrets.HOST }}
           username: strigoi
           key: ${{ secrets.STRIGOI_PRIVATE_KEY }}
-      - run: echo "Hello, world!"
+          script: cd ~/git/aoc-2021 && git pull && pm2 restart 0
