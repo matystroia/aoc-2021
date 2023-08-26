@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "build-and-start": "npm install && next build && next start"
   },
   "dependencies": {
     "@heroicons/react": "^2.0.18",
