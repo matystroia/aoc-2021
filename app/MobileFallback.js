@@ -15,8 +15,7 @@ export function MobileFallback() {
             </div>
             <div className="max-w-md p-8 m-8 mt-0 prose rounded-lg opacity-25 bg-slate-900 prose-p:text-slate-300">
                 <p>
-                    For <i>transparency</i>, here&apos; the (terrible) media query I&apos;m using to
-                    display this fallback:
+                    Here&apos; the (terrible) media query I&apos;m using to display this fallback:
                 </p>
                 <pre className="text-slate-400">
                     (min-width: 800px) and <br />
