@@ -102,21 +102,21 @@ module.exports = {
                 }
             );
 
-            // Day 7 range input
+            // // Day 7 range input
             /* https://css-tricks.com/styling-cross-browser-compatible-range-inputs-css/ */
             addComponents({
                 'input.crab-input[type="range"]': {
                     appearance: "none",
                     background: "transparent",
 
-                    "&::range-track": {
+                    "&:range-track": {
                         height: "1.25rem",
                         transform: "translateY(0.625rem)",
                         borderTop: "2px dashed",
                         borderColor: theme("colors.slate.500"),
                     },
 
-                    "&::range-thumb": {
+                    "&:range-thumb": {
                         backgroundColor: theme("colors.slate.500"),
                         borderRadius: "9999px",
                         border: "2px solid",
@@ -128,12 +128,15 @@ module.exports = {
                 },
             });
 
-            // Polygon Kitchen Sink
+            // // Polygon Kitchen Sink
             addComponents({
                 'input.basic[type="number"]': {
-                    "&::appearance": "textfield",
-                    "&::-webkit-inner-spin-button": { appearance: "none" },
-                    "&::-webkit-outer-spin-button": { appearance: "none" },
+                    "&:-webkit-inner-spin-button": {
+                        appearance: "none",
+                    },
+                    "&:-webkit-outer-spin-button": {
+                        appearance: "none",
+                    },
                     appearance: "textfield",
                 },
             });

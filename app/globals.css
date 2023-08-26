@@ -1,3 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 /* TODO: Refactor */
 .terminal {
     text-shadow: 0 0 2px white;
