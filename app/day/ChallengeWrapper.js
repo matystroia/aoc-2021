@@ -120,7 +120,7 @@ export function ChallengeWrapper({ children }) {
             </div>
             <dialog
                 ref={ref}
-                className="p-10 pt-0 prose rounded-lg text-slate-200 bg-slate-950 backdrop:backdrop-blur-sm backdrop:bg-slate-900/25 prose-headings:text-amber-300 prose-strong:text-slate-50 prose-a:text-amber-300 prose-code:text-amber-300"
+                className="p-10 pt-0 prose rounded-lg text-slate-200 bg-slate-950 backdrop:backdrop-blur-sm backdrop:bg-slate-900/25 prose-headings:text-amber-300 prose-strong:text-slate-50 prose-a:text-amber-300 prose-code:text-amber-300 prose-blockquote:text-amber-200"
             >
                 <button onClick={() => ref.current.close()} className="absolute right-4 top-4">
                     <XMarkIcon className="w-6 h-6" />

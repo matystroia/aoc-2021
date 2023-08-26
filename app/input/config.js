@@ -11,7 +11,7 @@ export const ChallengeConfig = {
     10: { name: "Syntax Scoring", exampleOnly: false },
     11: { name: "Dumbo Octopus", exampleOnly: false },
     12: { name: "Passage Pathing", exampleOnly: false },
-    13: { name: "Transparent Origami", exampleOnly: true },
+    13: { name: "Transparent Origami", exampleOnly: false },
     14: { name: "Extended Polymerization", exampleOnly: false },
     15: { name: "Chiton", exampleOnly: true },
     16: { name: "Packet Decoder", exampleOnly: false },

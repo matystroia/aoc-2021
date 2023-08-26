@@ -66,7 +66,7 @@ export function Canvas({ onDraw, ...props }) {
         const ctx = canvasNode.getContext("2d");
         const size = { width: canvasProps.width, height: canvasProps.height };
         // TODO: Might as well pass an instance of CanvasContext here
-        onDraw(ctx, size);
+        onDraw(ctx, size, new CanvasContext(ctx, size.width, size.height));
         return () => ctx.reset();
     });
 

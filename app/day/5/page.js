@@ -72,20 +72,25 @@ export default function Day5() {
         vents = vents.filter(([from, to]) => from.x === to.x || from.y === to.y);
     }
 
-    const pointMap = new Map();
-    vents.forEach((vent) => {
+    const pointSet = new Set();
+    const intersectionSet = new Set();
+    for (const vent of vents) {
         const linePoints = getLinePoints(vent);
-        linePoints.forEach((p) => {
-            const v = pointMap.get(`${p.x},${p.y}`) ?? 0;
-            pointMap.set(`${p.x},${p.y}`, v + 1);
-        });
-    });
-    const intersectionPoints = [...pointMap.entries()]
-        .filter(([_, v]) => v > 1)
-        .map(([k, _]) => {
-            const [x, y] = k.split(",");
-            return { x: parseInt(x), y: parseInt(y) };
-        });
+        for (const p of linePoints) {
+            const key = `${p.x},${p.y}`;
+            if (pointSet.has(key)) {
+                intersectionSet.add(key);
+            } else {
+                pointSet.add(key);
+            }
+        }
+    }
+
+    const intersectionPoints = [];
+    for (const s of intersectionSet.values()) {
+        const [x, y] = s.split(",");
+        intersectionPoints.push({ x: parseInt(x), y: parseInt(y) });
+    }
 
     const draw = (ctx, { width, height }) => {
         const canvasContext = new CanvasContext(ctx, width, height);
@@ -97,7 +102,7 @@ export default function Day5() {
 
         intersectionPoints.forEach((p) => {
             canvasContext.ctx.fillStyle = "red";
-            canvasContext.circle(p, 3);
+            canvasContext.circle(p, 2);
         });
     };
 

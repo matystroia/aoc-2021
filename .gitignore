@@ -38,7 +38,4 @@ next-env.d.ts
 .prettierignore
 .prettierrc.json
 
-# input files
-/app/input/data
-
 .vscode/

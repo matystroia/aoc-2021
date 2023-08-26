@@ -2,7 +2,7 @@
 
 import { useContext, useState } from "react";
 import { maxBy, range } from "lodash";
-import { PlayIcon } from "@heroicons/react/24/solid";
+import { ArrowPathRoundedSquareIcon, PlayIcon } from "@heroicons/react/24/solid";
 import clsx from "clsx";
 
 import { splitGroups } from "../../utils";
@@ -79,6 +79,11 @@ export default function Day13() {
     const [foldIndex, setFoldIndex] = useState(0);
 
     const handlePlay = () => {
+        if (!isPartOne || !isExample) {
+            setFoldIndex(foldIndex + 1);
+            return;
+        }
+
         if (animationState === State.Fold) {
             setFoldIndex(foldIndex + 1);
             setAnimationState(State.Highlight);
@@ -87,7 +92,10 @@ export default function Day13() {
         }
     };
 
-    const foldsSlice = folds.slice(0, foldIndex + 1);
+    const handleReset = () => {
+        setFoldIndex(0);
+        setAnimationState(0);
+    };
 
     const applyFold = (dots, fold) => {
         const ret = new Set();
@@ -99,20 +107,11 @@ export default function Day13() {
                 else ret.add(`${x},${fold.index - (y - fold.index)}`);
             }
         });
-        console.log({ maxX, maxY });
         return Array.from(ret.keys()).map((s) => s.split(",").map((s) => parseInt(s)));
     };
 
-    let shownDots = dots;
-    if (!isPartOne) {
-        let foldedDots = dots;
-        folds.forEach((fold) => {
-            foldedDots = applyFold(foldedDots, fold);
-        });
-
-        shownDots = foldedDots;
-        [maxX, maxY] = [maxBy(dots, (d) => d[0])[0], maxBy(dots, (d) => d[1])[1]];
-    }
+    let dotsSlice = dots.slice();
+    for (const fold of folds.slice(0, foldIndex)) dotsSlice = applyFold(dotsSlice, fold);
 
     return (
         <div className="relative h-full center" style={{ perspective: "750px" }}>
@@ -126,35 +125,44 @@ export default function Day13() {
                                         key={j}
                                         i={i}
                                         j={j}
-                                        isDot={Boolean(
-                                            shownDots.find(([x, y]) => i === y && j === x)
-                                        )}
-                                        folds={foldsSlice}
+                                        isDot={Boolean(dots.find(([x, y]) => i === y && j === x))}
+                                        folds={folds.slice(0, foldIndex + 1)}
                                         animationState={animationState}
                                     />
                                 ))}
                             </div>
                         ))}
                     </div>
-                    <button
-                        className="absolute bottom-0 right-0 w-10 h-10 rounded-lg bg-stone-900 center"
-                        onClick={handlePlay}
-                        disabled={foldIndex > folds.length}
-                    >
-                        {foldIndex}
-                        <PlayIcon className="w-6 h-6" />
-                    </button>
                 </>
             ) : (
                 <Canvas
                     className="w-full h-full"
-                    onDraw={(ctx) => {
-                        shownDots.forEach(([x, y]) => {
-                            ctx.fillRect(100 + x * 10, 100 + y * 10, 10, 10);
-                        });
+                    onDraw={(ctx, size, wrapper) => {
+                        const initialPoints = dots.map(([x, y]) => ({ x, y }));
+                        wrapper.fit(initialPoints, 50);
+                        wrapper.ctx.fillStyle = "yellow";
+                        for (const [x, y] of dotsSlice) {
+                            wrapper.circle({ x, y }, 1);
+                        }
                     }}
                 />
             )}
+
+            <div className="absolute bottom-0 right-0 flex gap-4 p-5 -m-4 bg-yellow-200 rounded-tl-lg">
+                <button
+                    className="w-10 h-10 bg-yellow-500 rounded-lg center drop-shadow"
+                    onClick={handleReset}
+                >
+                    <ArrowPathRoundedSquareIcon className="w-6 h-6 fill-amber-700" />
+                </button>
+                <button
+                    className="w-10 h-10 bg-yellow-500 rounded-lg center drop-shadow disabled:bg-stone-500 group"
+                    onClick={handlePlay}
+                    disabled={foldIndex * 3 + animationState + 1 >= folds.length * 3}
+                >
+                    <PlayIcon className="w-6 h-6 fill-amber-700 group-disabled:fill-stone-700" />
+                </button>
+            </div>
         </div>
     );
 }

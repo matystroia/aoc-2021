@@ -154,7 +154,6 @@ export default function Day8() {
 
     return (
         <div>
-            <ObjectInspector>{{ ans }}</ObjectInspector>
             <div className="flex flex-col gap-6">
                 {lines.map((line, i) => {
                     const [inputValues, outputValues] = line.split(" | ");

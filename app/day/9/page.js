@@ -242,8 +242,7 @@ export default function Day9() {
         .reduce((a, b) => a * b);
 
     return (
-        <div className="flex flex-col items-center">
-            <ObjectInspector>{{ ans, ans2 }}</ObjectInspector>
+        <div className="w-full h-full center">
             {isExample && <Plane map={map} />}
             {/* <Canvas className="w-full h-full" onDraw={handleDraw} /> */}
         </div>

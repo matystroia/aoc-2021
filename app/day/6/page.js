@@ -5,7 +5,6 @@ import { ArrowUturnLeftIcon, ArrowUturnRightIcon } from "@heroicons/react/24/sol
 import { fill, sum } from "lodash";
 import clsx from "clsx";
 
-import { ObjectInspector } from "../../components/ObjectInspector";
 import { ChallengeContext } from "../ChallengeWrapper";
 
 const memo = new Map();
@@ -33,7 +32,7 @@ function Fish({ timer }) {
     return (
         <div
             className={clsx(
-                "flex flex-col items-center rounded-lg border-2 border-slate-500 text-lg",
+                "flex flex-col items-center rounded-lg border-2 border-slate-500 text-lg bg-slate-900",
                 timer === 0 && "animate-grow"
             )}
         >
@@ -88,8 +87,7 @@ export default function Day6() {
 
     return (
         <div>
-            <ObjectInspector>{{ lines, ans }}</ObjectInspector>
-            <div className="absolute top-2 right-2">
+            <div className="absolute top-2 right-2 z-20">
                 <Controls turn={turn} onReset={handleReset} onNext={handleNext} />
             </div>
             <div className="flex flex-wrap gap-2">
@@ -97,6 +95,7 @@ export default function Day6() {
                     <Fish key={i} timer={t} />
                 ))}
             </div>
+            {fish.length}
         </div>
     );
 }

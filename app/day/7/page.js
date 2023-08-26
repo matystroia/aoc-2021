@@ -104,10 +104,5 @@ export default function Day7() {
     const ans = minBy(range(minCrab, maxCrab + 1), (meet) => sumBy(crabs, (x) => cost(meet, x)));
     const costSum = sumBy(crabs, (x) => cost(ans, x));
 
-    return (
-        <div>
-            <ObjectInspector>{{ lines, crabs, ans, costSum }}</ObjectInspector>
-            {isExample && <Crabs crabs={crabs} />}
-        </div>
-    );
+    return <div>{isExample && <Crabs crabs={crabs} />}</div>;
 }

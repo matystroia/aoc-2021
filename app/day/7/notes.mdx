@@ -1,0 +1,10 @@
+### On styling \<input\>
+
+I feel like some parts of the web are a bit behind the curve when it comes to styling options. On the one hand, both `flex-box` and `grid` are supported across the board. You also have 3D transforms and SVG filters working in all major browsers. On the other hand, however, you can't style a (conceptually) simple element like a range or number input without having to include a _--webkit-billion_ _--moz-vendor-prefixes_.
+
+Here's the default range input (for your browser):
+
+<input type="range" className="w-full" />
+
+And here's my custom one:
+<input type="range" className="crab-input w-full" />

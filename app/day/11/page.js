@@ -149,7 +149,6 @@ export default function Day11() {
 
     return (
         <div className="flex flex-col h-full center">
-            <ObjectInspector>{{ ans: totalFlashes(octopuses, 100) }}</ObjectInspector>
             <div className="flex flex-col p-4 border-2 rounded-lg w-fit border-slate-600">
                 <div className="flex flex-col gap-2">
                     {octopuses.map((row, i) => (
