@@ -1,5 +1,4 @@
 "use client";
-
 import {
     animate,
     motion,
@@ -18,6 +17,7 @@ import Link from "next/link";
 import githubLogo from "../../public/github-mark-white.svg";
 import { useSize } from "../hooks/useSize";
 
+import Foreword from "./foreword.mdx";
 import { Calendar } from "./Calendar";
 import { Waves } from "./Waves";
 import { Stars } from "./Stars";
@@ -138,64 +138,8 @@ export default function Page() {
                     className="my-8 -mt-16 prose prose-a:text-slate-400"
                     initial={{ opacity: 1 }}
                 >
-                    <div className="relative p-4 border-2 text-slate-200 bg-slate-900 border-slate-800 before:absolute before:w-full before:h-full before:bg-slate-800 before:left-1.5 before:top-1.5 before:-z-10">
-                        <p className="relative p-4 border border-slate-700">
-                            <span className="absolute font-bold left-2 -top-3 bg-slate-900">
-                                TL;DR
-                            </span>
-                            My attempt at solving Advent of Code 2021 in JS as well as providing{" "}
-                            <span className="text-slate-400">(sometimes)</span> interesting and{" "}
-                            <span className="text-slate-400">(hopefully)</span> unique visuals with
-                            React. I&apos;ve marked what I think is my best work in the calendar{" "}
-                            <a href="#calendar">below</a>.
-                        </p>
-                        <p className="italic text-center text-slate-400">
-                            &ldquo;You&apos;re minding your own business on a ship at sea when the
-                            overboard alarm goes off! You rush to see if you can help. Apparently,
-                            one of the Elves tripped and accidentally sent the sleigh keys flying
-                            into the ocean!&rdquo;
-                        </p>
-                        <p>
-                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Quidem, nobis
-                            eveniet quas veniam blanditiis expedita magni hic, at ea laudantium nisi
-                            iure labore asperiores sunt! Expedita, doloribus enim? Repudiandae,
-                            nisi. Eligendi vitae doloribus aliquid dolorem minus sint dolor
-                            perferendis non labore vero et consectetur aliquam inventore quam
-                            quaerat facilis tempora, explicabo neque adipisci facere quae. Deserunt
-                            qui minus repudiandae odit? Beatae porro nostrum
-                        </p>
-                        <p>
-                            A <span className="text-lg font-bold">huge</span> thank you to the
-                            projects that made this
-                        </p>
-                        <ul>
-                            <li>
-                                <a href="">Lodash</a> for all the tiny utilities I didn&apos;t have
-                                to write myself
-                            </li>
-                            <li>
-                                <a href="">Tailwind</a> for . When used right this will shoot your
-                                iteration speed through the roof. I have also never seen more
-                                complete docs. I cannot recommend it enough!
-                            </li>
-                            <li>
-                                <a href="">MDN Docs</a> for teaching me things I thought I already
-                                knew. Would go here for a high level discussion before going to SO
-                                for the quick copy-paste
-                            </li>
-                            <li>
-                                <a href="">Framer Motion</a> for
-                            </li>
-                            And last but not least
-                            <li>
-                                <a href="">Eric Wastl</a> for putting together these puzzles. At
-                                times both frustrating and fun, all of this would have meant
-                                nothing. As I&apos;ve said before the whole process gave me an
-                                increased sense of confidence and a joy for coding that I thought
-                                lost gone. For that I am extremely grateful.
-                            </li>
-                        </ul>
-                        <p></p>
+                    <div className="prose-strong:text-slate-50 relative p-4 border-2 text-slate-200 bg-slate-900 border-slate-800 before:absolute before:w-full before:h-full before:bg-slate-800 before:left-1.5 before:top-1.5 before:-z-10">
+                        <Foreword />
                     </div>
                 </motion.article>
 
@@ -223,7 +167,7 @@ export default function Page() {
 
             <div className="flex items-center justify-end w-full h-16">
                 <div className="font-mono text-slate-400">By Matei Stroia</div>
-                <Link href="" className="mx-8">
+                <Link href="https://www.github.com/matystroia/aoc-2021" className="mx-8">
                     <Image src={githubLogo} alt="GitHub Logo" className="w-10 h-10" />
                 </Link>
             </div>
