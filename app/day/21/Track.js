@@ -1,7 +1,10 @@
 import clsx from "clsx";
 import { range } from "lodash";
 
-import { coords } from "./page";
+export const coords = (i) => [
+    Math.cos(((2 * Math.PI) / 10) * i) * 150,
+    Math.sin(((2 * Math.PI) / 10) * i) * 150,
+];
 
 export function Track({ positionOne, positionTwo }) {
     return (

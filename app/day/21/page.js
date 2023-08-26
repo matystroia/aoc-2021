@@ -6,21 +6,14 @@ import {
     useEffect,
     experimental_useEffectEvent as useEffectEvent,
 } from "react";
-import { range } from "lodash";
-import clsx from "clsx";
 
 import { ChallengeContext } from "../ChallengeWrapper";
 import { product } from "../../utils";
 
 import { CloseUp } from "./CloseUp";
 import { Pawn } from "./Pawn";
-import { Track } from "./Track";
+import { Track, coords } from "./Track";
 import { Buttons } from "./Buttons";
-
-export const coords = (i) => [
-    Math.cos(((2 * Math.PI) / 10) * i) * 150,
-    Math.sin(((2 * Math.PI) / 10) * i) * 150,
-];
 
 const map = new Map();
 function wins(i1, i2, s1, s2, isOne) {
