@@ -11,7 +11,7 @@ const fetcher = async ([url, isExample]) => {
 
 export function useFile(filePath, example = false) {
     const { data, error, isLoading } = useSWR(
-        ["/input/" + filePath + (example ? "example" : ""), example],
+        ["/aoc/input/" + filePath + (example ? "example" : ""), example],
         fetcher
     );
 
