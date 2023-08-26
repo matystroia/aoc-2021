@@ -11,6 +11,7 @@ const nextConfig = {
         serverActions: true,
         // mdxRs: true,
     },
+    basePath: "/aoc",
 };
 
 const withMDX = require("@next/mdx")({
