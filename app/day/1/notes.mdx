@@ -1,20 +1,19 @@
 ## Here we go
 
-It seems like **forever** ago that I started this project. Was still just getting my feet wet regarding Tailwind. Was also trying (and failing) to anticipate the kinds of components I would need going forward.
+It seems like **forever** ago that I started this. At this point I was still just getting my feet wet with Tailwind. Was also trying to anticipate the kinds of components I would need going forward.
 
-### On debugging
-I *believe* I actually wrote the `ObjectInspector` that you're seeing at the top before starting on the actual challenges themselves. I remember looking at the developer console in Chrome and Firefox and trying to come up with a design that took inspiration from both.
+### On `ObjectInspector`
+I actually wrote the `ObjectInspector` that you're seeing at the top before starting on the actual challenges themselves. I remember looking at the developer console in Chrome and Firefox and trying to come up with a design that took inspiration from both.
 
-In hindsight it was **not** the best use of my time as I hardly used going forward. However, it _was_ cooler to use than the boring `console.log()`. I also never added support for displaying boolean values.
+In hindsight it was **not** the best use of my time as I didn't use it as much as I thought I would. That's mainly because I chose to focus on making the challenges **visually interesting** instead of just displaying the answer and calling it a day.
 
 Actually, since I'm writing these notes in MDX, I think I can just use it here:
+
 <ObjectInspector  >
 {{a: 'Hello World!', b: 42, c: [1, 2, 3], d: {nested1: {nested2: [0]}}}}
 </ObjectInspector>
 
 Pretty cool, right?
 
-### On layout
+### On the challenge layout
 Maybe you've also noticed that the buttons that are supposed to toggle between the first and second parts don't do anything. That's because this was before I added the overlay (the one you just used to open this dialog). I sort of naively thought that I would just include the answers for both parts on the same page.
-
-Kind of works early on but it just doesn't make sense for some of the later challenges.

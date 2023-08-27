@@ -4,7 +4,7 @@ export const ChallengeConfig = {
     3: { name: "Binary Diagnostic", exampleOnly: true },
     4: { name: "Giant Squid", exampleOnly: false },
     5: { name: "Hydrothermal Venture", exampleOnly: false },
-    6: { name: "Lanternfish", exampleOnly: true },
+    6: { name: "Lanternfish", exampleOnly: false },
     7: { name: "The Treachery of Whales", exampleOnly: true },
     8: { name: "Seven Segment Search", exampleOnly: false },
     9: { name: "Smoke Basin", exampleOnly: true },

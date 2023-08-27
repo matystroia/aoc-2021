@@ -83,7 +83,7 @@ export function OptionsBar({ day, onChangePart, onChangeExample, onOpenNotes, cl
             </div>
             <div className="flex gap-2">
                 <Tooltip description="Show notes" position="topLeft">
-                    <Notes disabled={true} onOpenNotes={onOpenNotes} />
+                    <Notes disabled={!hasNotes} onOpenNotes={onOpenNotes} />
                 </Tooltip>
                 <Tooltip description="Toggle example data" position="topLeft">
                     <ExampleToggle disabled={exampleOnly} onChangeExample={onChangeExample} />

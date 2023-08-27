@@ -1,23 +1,13 @@
 ## Canvas Conundrum
 
-Still under the illusion that I'm going to do most of these challenges using `canvas` elements, I press onward.
+This is a good time to remind you to switch to the real input data by using the buttom in the bottom right, whenever possbile. The reason it's disabled on some days is because using the real data would be too resource intensive.
 
-### More like "can't"vas
+Here I was still under the illusion that I was going to do most of these challenges using `canvas` elements.
 
-I think this is around the time that I figured, "surely the canvas API will be the main driver for transforming the Advent of Code challenges into front-end exercises".
+### On abstracting early
 
-Because how else are you supposed to represent (sometimes) large sets of data? It's obviously better than just showing the result (and some interim values) in an `ObjectInspector`. 
+You write a piece of code one time. You write a slightly different version of it. By the third iteration you figure you're better off abstracting away the functionality. This makes your previous code more convoluted. And then you never need the functionality again. 
 
-I suppose you _can_ provide some sort of (meaningful) visualization for most of these puzzles using only an HTML canvas. However, I also came to find that there are **many** other ways of _"front-ending"_ some of them. 
+This was my experience with trying to create a more general Canvas component. I have the luxury of hindsight now, but back then I genuinely thought the canvas would be my main driving force behind these.
 
-With that being said, this particular challenge molded itself extremely well to a canvas approach. Just look at that graph!
-
-### On pointless abstractions
-
-Story as old as time. You write a piece of code one time. You write it a slightly different version of it. By the third iteration you figure you're better off abstracting away the common denominator. 
-
-This implicitly makes all three versions more convoluted. But that's a small price to pay for adding a shiny new tool to your belt, ready to be used whenever you need it again. Except it never happens.
-
-On the other hand, the `ChallengeWrapper` I use to provide input data to the page components proved to be an extremely useful abstraction that saved me **a lot** of time and that I hardly had to update as time went on.
-
-I have the luxury of hindsight now, but back then I had no way of knowing what would be a worthwhile use of my time. With that in mind, I think the lesson here is to postpone abstractions until the need for one is glaringly obvious. 
+Still, you'll see it twice more; in Day 5 and Day 13

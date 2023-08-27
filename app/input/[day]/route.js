@@ -5,12 +5,11 @@ import { NextResponse } from "next/server";
 
 export async function GET(request) {
     const filename = new URL(request.url).pathname.split("/").at(-1);
+    if (filename.includes(".")) throw new Error("Nice try");
 
     try {
-        const file = await fs.readFile(
-            path.join(process.cwd(), "app", "input", "data", `${filename}.txt`),
-            "utf8"
-        );
+        const fullPath = path.join(process.cwd(), "app", "input", "data", `${filename}.txt`);
+        const file = await fs.readFile(fullPath, "utf8");
         const rawText = file.trim();
 
         return NextResponse.json({ rawText });

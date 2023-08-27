@@ -78,31 +78,38 @@ const BingoBoard = forwardRef(function BingoBoard({ board, drawnNumbers }, ref) 
     );
 });
 
-function Controls({ turn, turnsLength, isPlaying, onChangePlay, onChangeTurn }) {
+function Controls({ turn, turnsLength, isPlaying, onChangePlay, onChangeTurn, lastDrawn }) {
     return (
-        <div className="flex flex-row gap-2">
-            <button
-                className="flex items-center justify-center w-10 h-10 rounded-lg bg-cyan-500 disabled:bg-slate-500"
-                onClick={() => onChangeTurn(turn - 1)}
-                disabled={turn === 0}
-            >
-                <ArrowUturnLeftIcon className="w-6 h-6" />
-            </button>
+        <div className="flex flex-col items-center">
+            <div className="flex flex-row gap-2">
+                <button
+                    className="flex items-center justify-center w-10 h-10 rounded-lg bg-cyan-500 disabled:bg-slate-500"
+                    onClick={() => onChangeTurn(turn - 1)}
+                    disabled={turn === 0}
+                >
+                    <ArrowUturnLeftIcon className="w-6 h-6" />
+                </button>
 
-            <button
-                className="flex items-center justify-center w-10 h-10 rounded-lg bg-amber-500"
-                onClick={onChangePlay}
-            >
-                {isPlaying ? <PauseIcon className="w-6 h-6" /> : <PlayIcon className="w-6 h-6" />}
-            </button>
+                <button
+                    className="flex items-center justify-center w-10 h-10 rounded-lg bg-amber-500"
+                    onClick={onChangePlay}
+                >
+                    {isPlaying ? (
+                        <PauseIcon className="w-6 h-6" />
+                    ) : (
+                        <PlayIcon className="w-6 h-6" />
+                    )}
+                </button>
 
-            <button
-                className="flex items-center justify-center w-10 h-10 rounded-lg bg-cyan-500 disabled:bg-slate-500"
-                onClick={() => onChangeTurn(turn + 1)}
-                disabled={turn === turnsLength - 1}
-            >
-                <ArrowUturnRightIcon className="w-6 h-6" />
-            </button>
+                <button
+                    className="flex items-center justify-center w-10 h-10 rounded-lg bg-cyan-500 disabled:bg-slate-500"
+                    onClick={() => onChangeTurn(turn + 1)}
+                    disabled={turn === turnsLength - 1}
+                >
+                    <ArrowUturnRightIcon className="w-6 h-6" />
+                </button>
+            </div>
+            {lastDrawn}
         </div>
     );
 }
@@ -164,6 +171,7 @@ export default function Day4() {
                     onChangeTurn={(newTurn) => setTurn(newTurn)}
                     isPlaying={isPlaying}
                     onChangePlay={() => setIsPlaying(!isPlaying)}
+                    lastDrawn={drawnNumbersSlice.at(-1)}
                 />
             </div>
             <div className="flex flex-wrap items-start gap-6">
