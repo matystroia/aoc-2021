@@ -4,9 +4,9 @@ import { useContext, useState } from "react";
 import clsx from "clsx";
 import { min, max, sortBy, sumBy } from "lodash";
 
-import { ObjectInspector } from "../../components/ObjectInspector";
 import { divmod, randomColorPalette, randomHSL } from "../../utils";
 import { ChallengeContext } from "../ChallengeWrapper";
+import { ObjectInspector } from "../../components/ObjectInspector";
 
 function parseChunk(chunk) {
     const pairIndex = Array(chunk.length);
@@ -17,7 +17,7 @@ function parseChunk(chunk) {
 
         if (closed) {
             const [openType, openIndex] = stack.at(-1);
-            if (type !== openType) return i;
+            if (type !== openType) throw Error(i);
             stack.pop();
 
             pairIndex[i] = openIndex;
@@ -39,13 +39,22 @@ function completeChunk(chunk) {
     return stack.map((t) => ")]}>"[t]);
 }
 
-function ChunkCharacter({ character, className, isIllegal, color, onEnter, onLeave }) {
+function ChunkCharacter({
+    character,
+    isHighlighted,
+    isHidden,
+    isIllegal,
+    color,
+    onEnter,
+    onLeave,
+}) {
     return (
         <span
             className={clsx(
-                "font-mono w-3 text-xl cursor-pointer text-slate-400",
-                isIllegal && "border-b-rose-700 border-b-2",
-                className
+                "font-mono w-3 text-xl font-black cursor-pointer",
+                isIllegal ? "text-rose-600 scale-125" : "text-slate-400",
+                isHidden && "opacity-25",
+                isHighlighted && "scale-150"
             )}
             style={{ color }}
             onMouseEnter={onEnter}
@@ -61,14 +70,28 @@ const randomColors = randomColorPalette(100, 75, 60);
 function ChunkLine({ line }) {
     const characters = Array.from(line);
 
-    let [pairIndex, illegalIndex] = [Array(characters.length), null];
-    const ret = parseChunk(line);
-    if (Array.isArray(ret)) pairIndex = ret;
-    else illegalIndex = ret;
+    // Parse line
+    let pairIndex = Array(characters.length);
+    let illegalIndex = null;
+    try {
+        pairIndex = parseChunk(line);
+    } catch (e) {
+        illegalIndex = parseInt(e.message);
+    }
 
-    const colors = Array(characters.length);
+    // If part 2, complete line
+    const { isPartOne } = useContext(ChallengeContext);
+    let completedCharacters = characters.slice();
+    if (illegalIndex === null && !isPartOne) {
+        completedCharacters.push(...completeChunk(line));
+        pairIndex = parseChunk(completedCharacters.join(""));
+    }
+    const numCompleted = completedCharacters.length - characters.length;
+
+    // Color pairs
+    const colors = Array(completedCharacters);
     if (pairIndex) {
-        for (let i = 0; i < characters.length; i++) {
+        for (let i = 0; i < completedCharacters.length; i++) {
             if (pairIndex[i] === undefined || colors[i]) continue;
             const color = randomColors[i % 100];
 
@@ -77,13 +100,8 @@ function ChunkLine({ line }) {
         }
     }
 
-    // TODO: Fix pair highlighting on completion
-    const { isPartOne } = useContext(ChallengeContext);
-    let completion;
-    if (!illegalIndex && !isPartOne) completion = completeChunk(line);
-
+    // Hightlight pair on hover
     const [hoverIndex, setHoverIndex] = useState(null);
-
     let left, right, width;
     if (hoverIndex !== null) {
         left = min([hoverIndex, pairIndex[hoverIndex]]);
@@ -92,47 +110,28 @@ function ChunkLine({ line }) {
     }
 
     return (
-        <div className="relative p-4 border-2 rounded-lg border-slate-500">
+        <div className="relative px-2 py-4 rounded-lg bg-slate-900">
             <div className="flex items-center">
-                {characters.map((c, i) => {
-                    const isHighlighted =
-                        hoverIndex === null || hoverIndex === i || hoverIndex === pairIndex[i];
+                {completedCharacters.map((c, i) => {
+                    const isHighlighted = hoverIndex === i || hoverIndex === pairIndex[i];
+                    const isHidden = hoverIndex !== null && !isHighlighted;
 
                     return (
                         <ChunkCharacter
                             key={i}
                             character={c}
                             isIllegal={illegalIndex === i}
+                            isHighlighted={isHighlighted}
+                            isHidden={isHidden}
                             color={colors[i]}
-                            className={clsx(!isHighlighted && "opacity-25")}
                             onEnter={() => setHoverIndex(i)}
                             onLeave={() => setHoverIndex(null)}
                         />
                     );
                 })}
-                {completion && (
-                    <div className="border-2 border-dashed rounded-sm border-slate-400">
-                        {completion.map((c, i) => {
-                            const isHighlighted =
-                                hoverIndex === null ||
-                                hoverIndex === i ||
-                                hoverIndex === pairIndex[i];
-
-                            return (
-                                <ChunkCharacter
-                                    key={i}
-                                    character={c}
-                                    isIllegal={illegalIndex === i}
-                                    color={colors[i]}
-                                    className={clsx(!isHighlighted && "opacity-25")}
-                                    onEnter={() => setHoverIndex(i)}
-                                    onLeave={() => setHoverIndex(null)}
-                                />
-                            );
-                        })}
-                    </div>
-                )}
             </div>
+
+            {/* Pair indicator */}
             {hoverIndex !== null && width > 1 && (
                 <div
                     className="h-2 mt-2 border-2 border-t-0"
@@ -140,6 +139,25 @@ function ChunkLine({ line }) {
                         width: `calc(0.75rem * ${width})`,
                         marginLeft: `calc(0.75rem * ${left})`,
                         borderColor: colors[hoverIndex],
+                    }}
+                />
+            )}
+
+            {/* Borders */}
+            <div
+                className={clsx(
+                    "absolute top-0 left-0 h-full border-2 rounded-lg pointer-events-none border-emerald-600",
+                    numCompleted && "border-r-0 rounded-r-none"
+                )}
+                style={{
+                    width: `calc(0.75rem * ${characters.length + Number(!numCompleted) * 1.25})`,
+                }}
+            />
+            {numCompleted > 0 && (
+                <div
+                    className="absolute top-0 right-0 h-full border-2 border-l-0 border-dashed rounded-r-lg pointer-events-none border-emerald-600"
+                    style={{
+                        width: `calc(0.75rem * ${numCompleted})`,
                     }}
                 />
             )}
@@ -151,14 +169,24 @@ export default function Day10() {
     const { lines } = useContext(ChallengeContext);
 
     const ans = sumBy(lines, (s) => {
-        const ret = parseChunk(s);
-        if (Array.isArray(ret)) return 0;
-        return { ")": 3, "]": 57, "}": 1197, ">": 25137 }[s[ret]];
+        try {
+            parseChunk(s);
+            return 0;
+        } catch (e) {
+            return { ")": 3, "]": 57, "}": 1197, ">": 25137 }[s[parseInt(e.message)]];
+        }
     });
 
     const lineScores = lines
-        .filter((s) => parseChunk(s) === null)
+
+        .filter((s) => {
+            try {
+                parseChunk(s);
+                return true;
+            } catch (e) {}
+        })
         .map((s) => completeChunk(s).reduce((acc, c) => acc * 5 + ")]}>".indexOf(c) + 1, 0));
+
     const ans2 = sortBy(lineScores)[Math.floor(lineScores.length / 2)];
 
     return (
