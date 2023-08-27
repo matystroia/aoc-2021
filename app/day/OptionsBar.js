@@ -3,6 +3,7 @@ import { AcademicCapIcon, BookOpenIcon } from "@heroicons/react/24/solid";
 import { useContext, useRef } from "react";
 import Link from "next/link";
 
+import { Tooltip } from "../components/Tooltip";
 import { ChallengeConfig } from "../input/config";
 
 import { ChallengeContext } from "./ChallengeWrapper";
@@ -11,24 +12,28 @@ function PartToggle({ onChangePart }) {
     const { isPartOne } = useContext(ChallengeContext);
     return (
         <div className="flex flex-row items-center h-10 gap-2">
-            <button
-                className={clsx(
-                    "h-10 w-10 rounded-lg border-2 items-center justify-center",
-                    isPartOne ? "border-amber-500" : "text-slate-500 border-slate-500"
-                )}
-                onClick={() => onChangePart(1)}
-            >
-                1
-            </button>
-            <button
-                className={clsx(
-                    "h-10 w-10 rounded-lg border-2 items-center justify-center",
-                    isPartOne ? "text-slate-500 border-slate-500" : "border-amber-500"
-                )}
-                onClick={() => onChangePart(2)}
-            >
-                2
-            </button>
+            <Tooltip description="Part One" position="topRight">
+                <button
+                    className={clsx(
+                        "h-10 w-10 rounded-lg border-2 items-center justify-center",
+                        isPartOne ? "border-amber-500" : "text-slate-500 border-slate-500"
+                    )}
+                    onClick={() => onChangePart(1)}
+                >
+                    1
+                </button>
+            </Tooltip>
+            <Tooltip description="Part Two" position="topRight">
+                <button
+                    className={clsx(
+                        "h-10 w-10 rounded-lg border-2 items-center justify-center",
+                        isPartOne ? "text-slate-500 border-slate-500" : "border-amber-500"
+                    )}
+                    onClick={() => onChangePart(2)}
+                >
+                    2
+                </button>
+            </Tooltip>
         </div>
     );
 }
@@ -77,8 +82,12 @@ export function OptionsBar({ day, onChangePart, onChangeExample, onOpenNotes, cl
                 </div>
             </div>
             <div className="flex gap-2">
-                <Notes disabled={true} onOpenNotes={onOpenNotes} />
-                <ExampleToggle disabled={exampleOnly} onChangeExample={onChangeExample} />
+                <Tooltip description="Show notes" position="topLeft">
+                    <Notes disabled={true} onOpenNotes={onOpenNotes} />
+                </Tooltip>
+                <Tooltip description="Toggle example data" position="topLeft">
+                    <ExampleToggle disabled={exampleOnly} onChangeExample={onChangeExample} />
+                </Tooltip>
             </div>
         </div>
     );
