@@ -1,0 +1,28 @@
+## Technically WebAssembly
+
+<Tutorial>
+You can step over the instructions with the "next" button. To view the values of the registers expand the top element.
+</Tutorial>
+
+This challenge only makes sense if you use the real data, as the examples are other types of programs. I've grouped the instructions into blocks of equal length, and I've highlighted the ones that vary between blocks.
+
+If you spend some time and work it out in a notebook, you'll (sooner or later) figure it out. Pseudocode goes something like this:
+
+<div className="[&_code>span:nth-child(5)]:bg-yellow-500/20 [&_code>span:nth-child(8)]:bg-yellow-500/20">
+```python
+for i in input:
+    w <- i 
+    x <- z % 26
+    if v1 < 0:
+        z <- z / 26
+    x <- x + v1
+    if x != w:
+        z <- z * 26
+        z <- z + w + v2
+```
+</div>
+Where `v1` and `v2` are arbitrary values that are different for each block. For z to be 0 by the time the program ends, the number of multiplications with 26 must be less than or equal to the number of divisions by 26. And since `v1 < 0` is true for half of the groups, that means we must ensure that the condition `x != w` is `false` for those indices.
+
+And since we can compute `i` for half of the positions, we must try all possiblities for the other half, such that `i` is always between 1 and 9.
+
+It sounds a lot more confusing than it actually is, so I encourage you to look at the backtracking algorithm in the source code!

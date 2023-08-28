@@ -1,5 +1,3 @@
-from itertools import product
-
 a = [
     10, 12, 13, 13, 14,
     -2, 11, -15, -10, 10,

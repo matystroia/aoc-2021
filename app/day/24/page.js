@@ -19,41 +19,6 @@ const Operator = {
 const operatorSymbols = [null, "+", "*", "/", "%", "=="];
 class Value {
     constructor() {}
-
-    // add(other) {
-    //     if (typeof this.s === "number" && typeof other.s === "number") {
-    //         return new Value(this.s + other.s);
-    //     }
-    //     return new Value(`(${this.s} + ${other.s})`);
-    // }
-    // mul(other) {
-    //     if (typeof this.s === "number" && typeof other.s === "number") {
-    //         return new Value(this.s * other.s);
-    //     }
-    //     return new Value(`(${this.s} * ${other.s})`);
-    // }
-    // div(other) {
-    //     if (typeof this.s === "number" && typeof other.s === "number") {
-    //         return new Value(
-    //             Math.floor(Math.abs(this.s / other.s)) * (this.s / other.s < 0 ? -1 : 1)
-    //         );
-    //     }
-    //     return new Value(`(${this.s} / ${other.s})`);
-    // }
-    // mod(other) {
-    //     if (typeof this.s === "number" && typeof other.s === "number") {
-    //         return new Value(this.s % other.s);
-    //     }
-    //     return new Value(`(${this.s} % ${other.s})`);
-    // }
-    // eql(other) {
-    //     if (typeof this.s === "number" && typeof other.s === "number") {
-    //         return new Value(Number(this.s === other.s));
-    //     }
-    //     return new Value(`(${this.s} == ${other.s})`);
-    // }
-
-    // toString() {}
 }
 
 class LiteralValue extends Value {
@@ -154,7 +119,6 @@ class OperationValue extends Value {
             result: () => new LiteralValue(0),
         },
     ];
-    // static templates = [];
 
     static run(op, arg1, arg2) {
         if (arg1 instanceof LiteralValue && arg2 instanceof LiteralValue) {
@@ -273,11 +237,16 @@ const registerClass = {
     w: "bg-pink-500 border-pink-700",
 };
 
-function OperationLine({ op, args }) {
+function OperationLine({ op, args, className }) {
     const operatorName = operatorNames[op];
     return (
-        <div className="flex items-center gap-2 px-6 py-2 font-mono border-b-[6px] border-zinc-950 bg-zinc-900">
-            <div className="w-12 text-xl font-bold text-zinc-400">{operatorName}</div>
+        <div
+            className={clsx(
+                "flex items-center gap-2 px-6 py-2 font-mono border-b-[6px]",
+                className
+            )}
+        >
+            <div className="w-12 text-xl font-bold text-zinc-50">{operatorName}</div>
             {args.map((arg, i) => (
                 <div
                     className={clsx(
@@ -293,11 +262,29 @@ function OperationLine({ op, args }) {
     );
 }
 
+const a = [10, 12, 13, 13, 14, -2, 11, -15, -10, 10, -10, -4, -1, -1];
+const b = [0, 6, 4, 2, 9, 1, 10, 6, 4, 6, 3, 9, 15, 5];
+function bt(digits, i, z) {
+    if (i === 14) {
+        if (z === 0) console.log(digits);
+        return;
+    }
+
+    if (a[i] < 0) {
+        const digit = (z % 26) + a[i];
+        if (digit >= 1 && digit <= 9) {
+            bt(digits.concat(digit), i + 1, Math.floor(z / 26));
+        }
+    } else {
+        for (const digit of [1, 2, 3, 4, 5, 6, 7, 8, 9]) {
+            bt(digits.concat(digit), i + 1, z * 26 + digit + b[i]);
+        }
+    }
+}
+
 export default function Day24() {
     const { lines, isExample } = useContext(ChallengeContext);
     const operations = lines.map((line) => Operation.fromLine(line));
-
-    console.log(operations.map((o) => o.toString()));
 
     let blocks;
     if (isExample) blocks = [operations];
@@ -350,43 +337,46 @@ export default function Day24() {
                     </div>
                     <div className="flex items-center gap-4">
                         <div className={clsx(registerClass.w, "border-b-4 w-8 center")}>w</div>
-                        {state.x.toString()}
+                        {state.w.toString()}
                     </div>
                 </div>
             </details>
-            <div className="flex flex-wrap gap-4 p-4 overflow-auto border-2">
+            <div className="flex flex-wrap gap-4 p-4 overflow-auto border-2 rounded-lg border-zinc-500">
                 {blocks.map((block, iBlock) => (
-                    <div key={iBlock} className="flex flex-col gap-1 border-4 border-zinc-200">
+                    <div
+                        key={iBlock}
+                        className="flex flex-col gap-1 border rounded-lg border-zinc-600"
+                    >
                         {block.map((operation, i) => (
-                            <div
-                                key={i}
-                                className={clsx(
-                                    "flex items-center gap-2",
-                                    diffLines.includes(i) && "bg-amber-500/50"
-                                )}
-                            >
+                            <div key={i} className={clsx("flex items-center gap-2")}>
                                 <div className="w-6 h-6 font-bold center text-zinc-100">
                                     {iBlock * 18 + i === index && "▶"}
                                 </div>
-                                <OperationLine {...operation} />
+                                <OperationLine
+                                    {...operation}
+                                    className={clsx(
+                                        diffLines.includes(i)
+                                            ? "bg-orange-400 border-orange-600"
+                                            : "bg-zinc-900 border-zinc-950"
+                                    )}
+                                />
                             </div>
                         ))}
                     </div>
                 ))}
             </div>
-            <div className="z-20 flex justify-between gap-2 basis-14 shrink-0">
-                <button
-                    onClick={handleNext}
-                    className="relative h-full border-2 basis-64 shrink-0 bg-emerald-500 before:absolute before:w-full before:h-full before:bg-emerald-800 before:left-1.5 before:top-1.5 before:-z-10 border-emerald-800"
-                >
-                    {/* <span className="font-mono text-xl text-emerald-950">{"Run"}</span> */}
-                </button>
+            <div className="z-20 flex gap-2 basis-14 shrink-0">
                 <button
                     onClick={() => setIndex(0)}
-                    className="relative h-full px-2 border-2 center w-14 bg-emerald-500 before:absolute before:w-full before:h-full before:bg-emerald-800 before:left-1.5 before:top-1.5 before:-z-10 border-emerald-800"
+                    className="relative h-full px-2 border-b-8 center w-14 bg-emerald-500 border-emerald-800"
                 >
                     <ArrowPathIcon className="w-8 h-8 fill-emerald-800" />
-                    {/* <span className="font-mono text-xl text-emerald-950">{"Reset"}</span> */}
+                </button>
+                <button
+                    onClick={handleNext}
+                    className="relative h-full border-b-8 basis-48 shrink-0 bg-emerald-500 border-emerald-800"
+                >
+                    <span className="font-mono text-xl text-emerald-800">NEXT</span>
                 </button>
             </div>
         </div>
