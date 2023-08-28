@@ -2,6 +2,7 @@
 
 import { useContext, useState } from "react";
 import { cloneDeep } from "lodash";
+import { ArrowPathIcon, ArrowUturnRightIcon } from "@heroicons/react/24/solid";
 
 import { ChallengeContext } from "../ChallengeWrapper";
 
@@ -30,14 +31,25 @@ function move(cucumbers) {
         prevCucumbers = nextCucumbers;
     }
 
-    if (!isMove) return null;
-    return prevCucumbers;
+    return [isMove, prevCucumbers];
+}
+
+function solve(cucumbers) {
+    let i = 0;
+    let [isMove, c] = [true, cucumbers];
+
+    while (isMove) {
+        [isMove, c] = move(c);
+        i++;
+    }
+
+    return i;
 }
 
 function Cucumber({ type }) {
     const char = { null: ".", 1: ">", 2: "v" }[type];
     return (
-        <div className="w-6 h-6 font-mono text-lg bg-green-600 border-2 border-green-500 center">
+        <div className="w-8 h-8 font-mono text-xl font-bold text-green-200 bg-green-700 rounded center">
             {char}
         </div>
     );
@@ -50,22 +62,13 @@ export default function Day25() {
     );
 
     const [turn, setTurn] = useState(0);
-
-    let c = cucumbers;
-    let i = 0;
-    while (c) {
-        c = move(c);
-        i++;
-    }
-    console.log(i);
-
     let lastCucumbers = cloneDeep(cucumbers);
-    // for (let t = 0; t < turn; t++) {
-    //     lastCucumbers = move(lastCucumbers);
-    // }
+    for (let t = 0; t < turn; t++) {
+        lastCucumbers = move(lastCucumbers)[1];
+    }
 
     return (
-        <div className="flex flex-col h-full gap-1 center">
+        <div className="relative flex flex-col h-full gap-1 center">
             {lastCucumbers.map((row, i) => (
                 <div key={i} className="flex gap-1">
                     {row.map((c, j) => (
@@ -73,11 +76,22 @@ export default function Day25() {
                     ))}
                 </div>
             ))}
-            <div className="absolute w-12 h-12 top-6 left-6">
+            <div className="absolute flex items-center gap-4 p-4 bg-violet-500 -top-4 rounded-b-md drop-shadow-md">
                 <button
-                    className="w-12 h-12 bg-pink-500 border-4"
+                    className="w-10 h-10 transition-transform border rounded-md hover:scale-105 center bg-violet-600 border-violet-800 drop-shadow-md"
+                    onClick={() => setTurn(0)}
+                >
+                    <ArrowPathIcon className="w-6 h-6 fill-violet-200" />
+                </button>
+                <div className="w-10 h-10 mt-3 border rounded-md center bg-violet-600 border-violet-800 text-violet-200">
+                    {turn}
+                </div>
+                <button
+                    className="w-10 h-10 transition-transform border rounded-md hover:scale-105 center bg-violet-600 border-violet-800 drop-shadow-md"
                     onClick={() => setTurn(turn + 1)}
-                />
+                >
+                    <ArrowUturnRightIcon className="w-6 h-6 fill-violet-200" />
+                </button>
             </div>
         </div>
     );
