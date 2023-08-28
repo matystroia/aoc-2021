@@ -2,8 +2,8 @@
 
 import { useContext, useState } from "react";
 import clsx from "clsx";
-import { motion } from "framer-motion";
 import { useImmer } from "use-immer";
+import { ArrowPathRoundedSquareIcon } from "@heroicons/react/24/solid";
 
 import { ChallengeContext } from "../ChallengeWrapper";
 
@@ -64,7 +64,7 @@ function Amphipod({ i, j, color, onMove }) {
             onDragOver={(e) => e.preventDefault()}
             onDrop={handleDrop}
             className={clsx(
-                "rounded-md w-10 h-10 center",
+                "rounded-md w-16 h-16 center cursor-pointer  font-mono text-3xl font-black",
                 color === "A" && "bg-orange-500 border-orange-600 text-white",
                 color === "B" && "bg-red-500 border-red-600 text-white",
                 color === "C" && "bg-cyan-500 border-cyan-600 text-white",
@@ -82,13 +82,6 @@ function AmphipodMap({ initialMap }) {
     const [amphipodMap, updateAmphipodMap] = useImmer(initialMap);
     const [cost, setCost] = useState(0);
 
-    // const dependencies = new Map();
-    // for (let color = 0; color < 4; color++) {
-    //     const [iTop, iBottom] = [color * 2, color * 2 + 1];
-    //     console.log("Position", iTop, "deps:", getDependencies(array, iTop));
-    //     console.log("Position", iBottom, "deps:", getDependencies(array, iBottom));
-    // }
-
     const handleMove = (from, to) => {
         const distance = Math.abs(from[0] - to[0]) + Math.abs(from[1] - to[1]);
         setCost(cost + distance * Math.pow(10, "ABCD".indexOf(amphipodMap[from[0]][from[1]])));
@@ -97,6 +90,10 @@ function AmphipodMap({ initialMap }) {
             draft[from[0]][from[1]] = draft[to[0]][to[1]];
             draft[to[0]][to[1]] = x;
         });
+    };
+    const handleReset = () => {
+        updateAmphipodMap(initialMap);
+        setCost(0);
     };
 
     return (
@@ -112,8 +109,16 @@ function AmphipodMap({ initialMap }) {
                     </div>
                 ))}
             </div>
-            <div className="px-8 py-2 font-mono rounded-lg bg-zinc-200 drop-shadow-md text-zinc-900">
-                {cost}
+            <div className="flex gap-2">
+                <div className="px-12 py-2 font-mono text-2xl rounded-lg bg-zinc-200 drop-shadow-md text-zinc-900">
+                    {cost}
+                </div>
+                <button
+                    className="px-6 py-2 font-mono rounded-lg bg-zinc-200 drop-shadow-md center"
+                    onClick={handleReset}
+                >
+                    <ArrowPathRoundedSquareIcon className="w-8 h-8 fill-zinc-900" />
+                </button>
             </div>
         </div>
     );

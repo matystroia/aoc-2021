@@ -1,0 +1,19 @@
+### Soul Eater
+
+<Tutorial>
+You can drag and drop the amphipods on empty spaces. And you can restart by pressing the button. You'll have to excuse the rudimentary implementation; the movement rules aren't actually enforced, so you'll have to keep them in mind. Sorry!
+</Tutorial>
+ 
+Not going to sugar-coat it, this one was really painful. I tried to avoid backtracking for as long as possible but couldn't find any other solution sadly.
+
+If you look at the source code for this one you'll find a graveyard of half-baked and wholly-wrong attempts. Some ideas (as I remember them):
+
+- Dependency graph (easy to construct)
+- 2SAT (too hard I thought)
+- I don't think there's a solution that involves a greedy or DP algorithm
+
+Like all of these challenges, my ego did not let me look up solutions, so I eventually settled on just grinding the backtracking algorithm I mentioned previously. But that was not so trivial either.
+
+Sort of wish I had written some of these notes when I was in the middle of solving these, as most of the details escape me now. One weird property of my solution is that it runs almost instantly on the real input, but takes its sweet time (~15s) for the example.
+
+You can see the solutions it finds in the developer console if you click on the Part 2 button. But pe prepared to wait a while :)
