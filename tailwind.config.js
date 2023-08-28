@@ -38,6 +38,35 @@ module.exports = {
                     "100%": { transform: "rotateX(360deg)" },
                 },
             },
+            typography: (theme) => ({
+                notes: {
+                    css: {
+                        color: theme("colors.slate.200"),
+                        "h1,h2,h3,h4,h5,h6": {
+                            color: theme("colors.amber.300"),
+                        },
+                        strong: {
+                            color: theme("colors.slate.50"),
+                        },
+                        a: {
+                            color: theme("colors.amber.300"),
+                        },
+                        ":not(pre)>code": {
+                            color: theme("colors.slate.50"),
+                            backgroundColor: theme("colors.slate.900"),
+                            borderRadius: "0.5rem",
+                            padding: "0.25rem 0.5rem",
+                            "&:before,&:after": { display: "none" },
+                        },
+                        "pre>code": {
+                            display: "grid",
+                        },
+                        blockquote: {
+                            color: theme("colors.slate.500"),
+                        },
+                    },
+                },
+            }),
         },
     },
     plugins: [
