@@ -4,6 +4,7 @@ import "./globals.css";
 import { Inter } from "next/font/google";
 import { ErrorBoundary } from "react-error-boundary";
 import { useEffect } from "react";
+import Script from "next/script";
 
 import { MobileFallback } from "./MobileFallback";
 
@@ -36,6 +37,15 @@ export default function RootLayout({ children }) {
                     {children}
                 </ErrorBoundary>
             </body>
+            <Script src="https://scripts.simpleanalyticscdn.com/latest.js" />
+            <noscript>
+                {/* eslint-disable @next/next/no-img-element */}
+                <img
+                    src="https://queue.simpleanalyticscdn.com/noscript.gif"
+                    alt=""
+                    referrerPolicy="no-referrer-when-downgrade"
+                />
+            </noscript>
         </html>
     );
 }
