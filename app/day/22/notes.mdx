@@ -1,0 +1,114 @@
+export const Square = ({ empty, value, className="w-10 h-10" }) => <div className={ `text-rose-950 center ${empty ? "border-rose-600 border-2 border-dashed" : "bg-rose-600"} ${className}` }>{!empty && value}</div>
+
+export const CubeCenter = ({ gap }) => {
+    return (
+        <div className={ `flex flex-col gap-${gap && 1}` }>
+            <div className={ `flex gap-${gap && 1}` }>
+                <Square value={gap && 1}/>
+                <Square value={gap && 2}/>
+                <Square value={gap && 3}/>
+            </div>
+            <div className={ `flex gap-${gap && 1}` }>
+                <Square value={gap && 4}/>
+                <Square empty />
+                <Square value={gap && 5}/>
+            </div>
+            <div className={ `flex gap-${gap && 1}` }>
+                <Square value={gap && 6}/>
+                <Square value={gap && 7}/>
+                <Square value={gap && 8}/>
+            </div>
+        </div>
+    )
+} 
+
+export const CubeTopLeft = ({ gap }) => {
+    return (
+        <div className="flex flex-col">
+            <div className="flex">
+                <Square empty className={`w-10 h-10 ${gap && 'mr-1 mb-1'}`}/>
+                <Square className="w-20 h-10" value={gap && 5}/>
+            </div>
+            <div className="flex">
+                <Square className={`w-10 h-20 ${gap && 'mr-1'}`}value={gap && 7} />
+                <Square className="w-20 h-20" value={gap && 8} />
+            </div>
+        </div>
+    )
+} 
+
+export const CubeLeft = ({ gap }) => {
+    return (
+        <div className="flex">
+            <Square empty className={`w-10 h-[7.5rem] ${gap && 'mr-1'}`}/>
+            <Square className="w-20 h-[7.5rem]" value={gap && 5} />
+        </div>
+    )
+} 
+
+## Take On Me
+
+<Tutorial>
+    You can use the buttons at the bottom to step through the instructions and change the zoom level
+    respectively. You can also rotate the shape around by clicking and dragging on the page.
+</Tutorial>
+
+An embarassing amount of time was spent trying to wrap my head around how to subtract one cube from another without the code becoming obtuse and impenetrable.
+
+When I finally figured it out, however, it turned out to be quite elegant. Finally had the ["a-ha" moment](https://www.youtube.com/watch?v=-xKM3mGt2pE) after drawing a sketch. Here's what I came up with:
+
+First, let's talk about _intersecting_ two cubes. That's fairly straightforward. Here's a simple way of computing the intersection of two line segments (credit goes to [spektr](https://scicomp.stackexchange.com/a/26260)):
+
+```javascript
+const intersect = ([a, b], [c, d]) => {
+    if (a > d || c > b) return null;
+    return [Math.max(a, c), Math.min(b, d)];
+};
+```
+
+The intersection of the two cubes, then, is just the intersection of all 3 pairs of axes. Next, we observe the cases for subtracting one square from another (see below). By extending the sides of the smaller square, we end up with _at most_ 8 squares that, together, form the result of the subtraction.
+
+Note that this works for all cases, regardless of where we place the square or how big it is. For cubes, the same idea applies, but instead of 8, we have _at most_ 26 cubes. Here's what that looks like in code (where product is the cartesian product of the three arays):
+```javascript
+product(
+    [
+        [-Infinity, other.x[0] - 1],
+        [other.x[0], other.x[1]],
+        [other.x[1] + 1, Infinity],
+    ],
+    [
+        [-Infinity, other.y[0] - 1],
+        [other.y[0], other.y[1]],
+        [other.y[1] + 1, Infinity],
+    ],
+    [
+        [-Infinity, other.z[0] - 1],
+        [other.z[0], other.z[1]],
+        [other.z[1] + 1, Infinity],
+    ]
+)
+```
+
+<div className="flex flex-col w-full gap-16">
+    <div className="flex gap-8 justify-center w-full items-center"> 
+        <span className="absolute left-16 font-mono text-xs italic">i)</span>
+        <CubeCenter/>
+        <span>---></span>
+        <CubeCenter gap />
+    </div>
+
+    <div className="flex gap-8 justify-center w-full items-center">
+        <span className="absolute left-16 font-mono text-xs italic">ii)</span>
+        <CubeTopLeft />
+        <span>---></span>
+        <CubeTopLeft gap />
+    </div>
+
+    <div className="flex gap-8 justify-center w-full items-center">
+        <span className="absolute left-16 font-mono text-xs italic">iii)</span>
+        <CubeLeft />
+        <span>---></span>
+        <CubeLeft gap />
+    </div>
+
+</div>
