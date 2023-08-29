@@ -62,7 +62,7 @@ export default function Day20() {
     const ans = sumBy(rows, (row) => sumBy(row));
 
     return (
-        <div className={clsx("h-full flex flex-col center", isExample && "gap-2")}>
+        <div className={clsx("h-full flex flex-col center relative", isExample && "gap-2")}>
             {rows.map((row, i) => (
                 <div key={i} className={clsx("flex", isExample && "gap-2")}>
                     {row.map((tile, j) => (
@@ -76,7 +76,7 @@ export default function Day20() {
             ))}
             <div className="font-mono text-2xl">{ans}</div>
             <button
-                className="absolute p-4 font-mono text-xl font-bold transition-transform border-4 rounded-md text-zinc-800 top-4 right-4 bg-zinc-400 border-zinc-300 hover:rotate-6"
+                className="absolute p-4 font-mono text-xl font-bold transition-transform border-4 rounded-md bottom-4 text-zinc-800 bg-zinc-300 border-zinc-400 hover:rotate-6"
                 onClick={handleSharpen}
             >
                 ENHANCE!

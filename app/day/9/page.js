@@ -68,6 +68,25 @@ function isLowPoint(map, i, j) {
     );
 }
 
+const heightToColor = {
+    0: "bg-amber-950",
+    1: "bg-amber-900",
+    2: "bg-amber-800",
+    3: "bg-amber-700",
+    4: "bg-amber-600",
+    5: "bg-amber-500",
+    6: "bg-amber-400",
+    7: "bg-amber-300",
+    8: "bg-amber-200",
+    9: "bg-amber-100",
+};
+
+const gradient = ([r1, g1, b1], [r2, g2, b2], i) => [
+    r1 + i * (r2 - r1),
+    g1 + i * (g2 - g1),
+    b1 + i * (b2 - b1),
+];
+
 function Tile({ map, i, j }) {
     const height = map[i][j];
     const isLow = isLowPoint(map, i, j);
@@ -81,14 +100,19 @@ function Tile({ map, i, j }) {
         <>
             <div
                 className={clsx(
-                    "h-10 w-10 center absolute",
-                    isLow ? "bg-amber-900" : "bg-amber-500"
+                    "h-10 w-10 center absolute"
+                    // heightToColor[height]
+                    // isLow ? "bg-amber-900" : "bg-amber-500"
                 )}
                 style={{
                     top: `calc(${i} * 3.5rem + 0.5rem)`,
                     left: `calc(${j} * 3.5rem + 0.5rem)`,
                     transformStyle: "preserve-3d",
                     transform: `translateZ(${height * heightScale}px)`,
+                    backgroundColor:
+                        "rgb(" +
+                        gradient([245, 180, 11], [159, 50, 12], (1 / 9) * height).join(",") +
+                        ")",
                 }}
             >
                 {height}

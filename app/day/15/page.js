@@ -154,6 +154,17 @@ function Matrix({ height, width, render, className, style }) {
     );
 }
 
+const riskToColor = {
+    1: "bg-rose-100",
+    2: "bg-rose-200",
+    3: "bg-rose-300",
+    4: "bg-rose-400",
+    5: "bg-rose-500",
+    6: "bg-rose-600",
+    7: "bg-rose-700",
+    8: "bg-rose-800",
+    9: "bg-rose-900",
+};
 function MatrixNavigation({
     risk,
     distance,
@@ -198,7 +209,7 @@ function MatrixNavigation({
                                         {r}
                                     </span>
                                 }
-                                className={`bg-rose-${100 * r} border-rose-900`}
+                                className={clsx(riskToColor[r], "border-rose-900")}
                             />
                         );
                     }}
@@ -246,8 +257,6 @@ function MatrixNavigation({
                 position="down"
                 onClick={!isPartOne && metaY < 4 && (() => setMetaY(metaY + 1))}
             />
-            {/* Otherwise classes don't get loaded */}
-            <span className="bg-rose-100 bg-rose-200 bg-rose-300 bg-rose-400 bg-rose-500 bg-rose-600 bg-rose-700 bg-rose-800 bg-rose-900" />
         </div>
     );
 }

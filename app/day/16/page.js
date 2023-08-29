@@ -18,8 +18,6 @@ import { v4 as uuid } from "uuid";
 
 import { getSegmentIntersection } from "../../utils";
 import { useMutationObserver } from "../../hooks/useMutationObserver";
-import { useMouse } from "../../hooks/useMouse";
-import { ObjectInspector } from "../../components/ObjectInspector";
 import { ChallengeContext } from "../ChallengeWrapper";
 
 function hexToBits(hex) {
@@ -129,11 +127,18 @@ class Packet {
 
 function BitsGroup({ bits, name, className, children }) {
     const ref = useRef();
-    const { windowId } = useContext(WindowContext);
+    const { windowId, x, y } = useContext(WindowContext);
     const { onWindowAdd } = useContext(TerminalContext);
 
     const handleClick = () => {
-        onWindowAdd(windowId, children, ref.current, className);
+        onWindowAdd(
+            windowId,
+            children,
+            ref.current,
+            className,
+            x + random(-100, 100),
+            y + random(-100, 100)
+        );
     };
 
     return (
@@ -144,9 +149,9 @@ function BitsGroup({ bits, name, className, children }) {
                 className
             )}
             onClick={handleClick}
+            title={name}
         >
             <div className="">{bits}</div>
-            {/* <div className="absolute left-0 -top-6">{name}</div> */}
         </div>
     );
 }
@@ -166,8 +171,12 @@ function PacketOperatorContent({
     const secondGroup = lengthTypeId === "0" ? bits.slice(1, 16) : bits.slice(1, 12);
     return (
         <div className="flex items-center gap-2">
-            <BitsGroup bits={[lengthTypeId]} className="border-violet-700" />
-            <BitsGroup bits={secondGroup} className="border-cyan-700" />
+            <BitsGroup bits={[lengthTypeId]} name="Length Type ID" className="border-violet-700">
+                {{ title: "Length Type ID", content: lengthTypeId }}
+            </BitsGroup>
+            <BitsGroup bits={secondGroup} name="Bits Length" className="border-cyan-700">
+                {{ title: "Bits Length", content: bitsLength }}
+            </BitsGroup>
             {subPackets.map((packet, i) => (
                 <BitsGroup key={i} bits={packet.bits} className="border-rose-700">
                     {{ title: "Packet", content: <PacketVisualizer packet={packet} /> }}
@@ -210,6 +219,7 @@ function Link({ fromWindowNode, toWindowNode, parentNode, className }) {
     }, [rootBox, parentNode]);
 
     const handleUpdateToNode = useCallback(() => {
+        console.log("here");
         if (!toWindowNode || !rootBox) return;
         const box = toWindowNode.getBoundingClientRect();
         setToBox({
@@ -339,15 +349,10 @@ const TerminalWindow = forwardRef(function TerminalWindow(
         onWindowDown(id);
     };
 
-    // useLayoutEffect(() => {
-    //     const { width, height } = ref.current.getBoundingClientRect();
-    //     onWindowResize(id, width, height);
-    // }, [id, onWindowResize]);
-
     return (
         <div
             ref={ref}
-            className="absolute flex flex-col font-mono border-4 border-neutral-900 bg-neutral-950 text-neutral-50 terminal"
+            className="absolute flex flex-col items-stretch font-mono border-4 border-neutral-900 bg-neutral-950 text-neutral-50 terminal"
             style={{ transform: `translate(${x}px, ${y}px)` }}
         >
             <div
@@ -355,7 +360,6 @@ const TerminalWindow = forwardRef(function TerminalWindow(
                 onPointerDown={handleDown}
             >
                 <div className="mr-4">{title}</div>
-                <span className="text-xs">{id}</span>
                 <div className="flex gap-2 ml-auto">
                     <div className="w-4 h-3 bg-neutral-800"></div>
                     <button
@@ -365,7 +369,9 @@ const TerminalWindow = forwardRef(function TerminalWindow(
                 </div>
             </div>
             <div className="p-4">
-                <WindowContext.Provider value={{ windowId: id }}>{children}</WindowContext.Provider>
+                <WindowContext.Provider value={{ windowId: id, x, y }}>
+                    {children}
+                </WindowContext.Provider>
             </div>
         </div>
     );
@@ -373,22 +379,22 @@ const TerminalWindow = forwardRef(function TerminalWindow(
 
 const TerminalContext = createContext();
 function TerminalScreen({ children }) {
-    const createWindow = (window, parentId, parentNode, linkClass) => ({
+    const createWindow = (window, parentId, parentNode, linkClass, x = 100, y = 100) => ({
         ...window,
         parentId,
         parentNode,
         linkClass,
         id: uuid(),
-        x: 100,
-        y: 100,
+        x,
+        y,
     });
     const [windows, updateWindows] = useImmer([createWindow(children)]);
     const windowRefs = useRef(new Map());
 
     const handleWindowAdd = useCallback(
-        (parentId, window, parentNode, linkClass) => {
+        (parentId, window, parentNode, linkClass, x, y) => {
             updateWindows((draft) => {
-                draft.push(createWindow(window, parentId, parentNode, linkClass));
+                draft.push(createWindow(window, parentId, parentNode, linkClass, x, y));
             });
         },
         [updateWindows]
@@ -440,28 +446,6 @@ function TerminalScreen({ children }) {
             window.y += e.movementY;
         });
     };
-
-    // const handleWindowResize = useCallback(
-    //     (windowId, width, height) => {
-    //         updateWindows((draft) => {
-    //             const window = draft.find((w) => w.id === windowId);
-    //             window.width = width;
-    //             window.height = height;
-    //         });
-    //     },
-    //     [updateWindows]
-    // );
-
-    // const handleGroupResize = useCallback(
-    //     (windowId, groupName, width, height) => {
-    //         updateWindows((draft) => {
-    //             const window = draft.find((w) => w.id === windowId);
-    //             console.log({ windowId, groupName, width, height, x: window.x, y: window.y });
-    //             window.groups[groupName] = { width, height, x: window.x, y: window.y };
-    //         });
-    //     },
-    //     [updateWindows]
-    // );
 
     return (
         <div
@@ -515,10 +499,10 @@ function PacketVisualizer({ packet }) {
 
     return (
         <div className="flex items-center gap-2">
-            <BitsGroup bits={versionBits} name="V" className="border-amber-700">
+            <BitsGroup bits={versionBits} name="Version" className="border-amber-700">
                 {{ title: "Version", content: packet.header.version }}
             </BitsGroup>
-            <BitsGroup bits={typeIdBits} name="T" className="border-fuchsia-700">
+            <BitsGroup bits={typeIdBits} name="Type ID" className="border-fuchsia-700">
                 {{ title: "Type ID", content: packet.header.typeId }}
             </BitsGroup>
             <BitsGroup bits={contentBits} name="Content" className="border-emerald-700">

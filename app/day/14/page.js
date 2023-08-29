@@ -100,8 +100,6 @@ function pairCounts2(left, right, rules, steps, reverse = false) {
             }
         }
     }
-    console.log("pairCounts");
-    console.log({ left, right, steps, ret });
     return ret;
 }
 
@@ -190,12 +188,12 @@ export default function Day14() {
                 return (
                     <div key={i} className="flex py-10">
                         <button
-                            className="w-10 h-10 mr-4 font-mono text-lg font-bold border-2 rounded-lg center border-emerald-500 group"
+                            className="relative w-10 h-10 mr-4 font-mono text-lg font-bold border-2 rounded-lg center border-emerald-500 group shrink-0"
                             onClick={isLast && handleNext}
                         >
                             <span>{i}</span>
                             {isLast && (
-                                <div className="absolute invisible w-10 h-10 border-2 rounded-lg bg-emerald-700 border-emerald-500 group-hover:visible center">
+                                <div className="absolute inset-0 invisible rounded-md bg-emerald-700 group-hover:visible center">
                                     <ArrowDownIcon className="w-6 h-6 bg-emerald-700" />
                                 </div>
                             )}
@@ -204,7 +202,6 @@ export default function Day14() {
                     </div>
                 );
             })}
-            <ObjectInspector>{{ qDiff: 0 }}</ObjectInspector>
         </div>
     );
 }

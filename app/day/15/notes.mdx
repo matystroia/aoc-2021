@@ -1,0 +1,11 @@
+## Your Matrix Is So Fat
+
+<Tutorial>
+You can press the arrow button in the bottom right to overlay the DP matrix on top, and to view the solution (in green). You can also toggle the cell values using the eye button.
+
+In Part 2, you can use the buttons adjacent to the matrix to navigate.
+</Tutorial>
+
+For some reason the full matrix (500x500) was too big for JS and values were getting lost, so I had to write my own Matrix class that is actually just multiple smaller matrices.
+
+That also meant I had an excuse to try Proxies, so I could write code like `bigMatrix[[i, j]]` (keeping regular `[i][j]` indexing would have been way too complicated).

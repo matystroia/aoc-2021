@@ -97,14 +97,37 @@ const isMatch = (s1, s2) => {
                 const delta = ["x", "y", "z"].map((a) => rotatedBeacon[a] - b1[a]);
 
                 if (s1.isTranslation(rotatedBeacons, delta)) {
-                    // s2.transform = transform;
-                    // for (let i = 0; i < s2.beacons.length; i++) {
-                    //     s2.beacons[i].x = rotatedBeacons[i].x;
-                    //     s2.beacons[i].y = rotatedBeacons[i].y;
-                    //     s2.beacons[i].z = rotatedBeacons[i].z;
-                    // }
-                    // s2.translate(delta);
-                    // return true;
+                    s2.transform = transform;
+                    for (let i = 0; i < s2.beacons.length; i++) {
+                        s2.beacons[i].x = rotatedBeacons[i].x;
+                        s2.beacons[i].y = rotatedBeacons[i].y;
+                        s2.beacons[i].z = rotatedBeacons[i].z;
+                    }
+                    s2.translate(delta);
+                    return true;
+                }
+            }
+        }
+    }
+    return false;
+};
+
+const getMatch = (s1, s2) => {
+    for (const [b1, b2, length1] of s1.lines) {
+        for (const [b3, b4, length2] of s2.lines) {
+            if (length1 === length2) {
+                const deltas1 = ["x", "y", "z"].map((a) => b2[a] - b1[a]);
+                const deltas2 = ["x", "y", "z"].map((a) => b4[a] - b3[a]);
+
+                const transform = getAxes(deltas1, deltas2);
+                if (transform === null) continue;
+
+                const rotatedBeacons = s2.beacons.map((s) => s.rotateToMatch(transform));
+                const rotatedBeacon = b3.rotateToMatch(transform);
+
+                const delta = ["x", "y", "z"].map((a) => rotatedBeacon[a] - b1[a]);
+
+                if (s1.isTranslation(rotatedBeacons, delta)) {
                     return s1.getIntersection(rotatedBeacons, delta);
                 }
             }
@@ -373,7 +396,7 @@ export default function Day19() {
         const first = cloneDeep(scanners[matchingIds[0]]);
         const second = cloneDeep(scanners[matchingIds[1]]);
 
-        const intersectionBeacons = isMatch(first, second);
+        const intersectionBeacons = getMatch(first, second);
         if (intersectionBeacons) {
             matchingBeacons = intersectionBeacons;
         }
@@ -387,7 +410,8 @@ export default function Day19() {
             onPointerUp={() => setIsDown(false)}
             onPointerLeave={() => setIsDown(false)}
         >
-            <div className="flex mt-[512px] gap-4 preserve-3d">
+            <div className="flex mt-[512px] gap-4 preserve-3d relative">
+                <div className="absolute rounded-2xl bg-zinc-900 -inset-10 rotate-x-90" />
                 {optionScanners.map((scanner, i) => {
                     let highlightedBeacons = [];
                     if (scanner.i === matchingIds[0]) highlightedBeacons = matchingBeacons[0];

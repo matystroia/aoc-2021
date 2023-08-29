@@ -1,0 +1,23 @@
+## Packet Windows
+
+<Tutorial>
+You can drag the windows to move them and you can close them using the button in the top right. By clicking on the bit groups (the bordered elements) the content will open in a new window.
+</Tutorial>
+
+### On reading variable-length input
+Here's the `Packet` generator field:
+```javascript
+this.generator = function* () {
+    for (const bit of bits) {
+        this.length += 1;
+        this.bits.push(bit);
+        yield bit;
+    }
+}.bind(this)();
+```
+And to get the next bit(s) I use these methods:
+```javascript
+this.nextBit = () => this.generator.next().value;
+this.nextBits = (n) => Array.from({ length: n }, () => this.nextBit());
+```
+I found this worked better than an iterative index-based approach.
