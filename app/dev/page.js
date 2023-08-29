@@ -14,7 +14,7 @@ function Page({ href, name, children }) {
     return (
         <Link
             href={href}
-            className="p-10 prose border-2 border-orange-950 rounded-lg bg-orange-300"
+            className="p-10 prose bg-orange-300 border-2 rounded-lg border-orange-950"
         >
             <h1 className="text-orange-950">{name}</h1>
             <div className="text-orange-950">{children}</div>
@@ -24,13 +24,17 @@ function Page({ href, name, children }) {
 
 export default function Dev() {
     return (
-        <div className="bg-orange-200 h-screen w-screen relative overflow-auto">
+        <div className="relative w-screen h-screen overflow-auto bg-orange-200">
             <div className="flex flex-col items-start gap-8 m-4">
+                <Page href="dev/toy" name="Toy">
+                    A fun little idea I had to showcase the different types of 3D objects my last
+                    iteration of ExtrudedPolygonPath is able to create :)
+                </Page>
                 <Page href="dev/nintendo-ds" name="Nintendo DS">
                     After <Link href="day/17">Day 17</Link>, I wanted to see how difficult it would
                     be to model a real-world object using only my Box and RegularPolygon components.
                     I ended up creating the (now obsolete) ShearedBox component because I wanted the
-                    corners to be rounded. Cutting corners.
+                    corners to be rounded.
                 </Page>
                 <Page href="dev/computer" name="Computer">
                     Another modeling exercise, but this time making clever use of the angle prop. I
@@ -48,10 +52,6 @@ export default function Dev() {
                 </Page>
                 <Page href="dev/polygon" name="Polygon Testing">
                     Just a page for debugging the regular polygon component.
-                </Page>
-                <Page href="dev/toy" name="Toy">
-                    A fun little idea I had to showcase the different types of 3D objects my last
-                    iteration of ExtrudedPolygonPath is able to create :)
                 </Page>
             </div>
         </div>
