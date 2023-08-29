@@ -7,7 +7,6 @@ import { sumBy, inRange, times } from "lodash";
 import { ChallengeContext } from "../ChallengeWrapper";
 import { product } from "../../utils";
 
-
 function Tile({ isLight, className }) {
     return (
         <div
@@ -77,9 +76,11 @@ export default function Day20() {
             ))}
             <div className="font-mono text-2xl">{ans}</div>
             <button
-                className="absolute w-20 h-20 transition-transform border-4 rounded-lg top-4 right-4 bg-amber-700 border-amber-800 hover:rotate-6"
+                className="absolute p-4 font-mono text-xl font-bold transition-transform border-4 rounded-md text-zinc-800 top-4 right-4 bg-zinc-400 border-zinc-300 hover:rotate-6"
                 onClick={handleSharpen}
-            />
+            >
+                ENHANCE!
+            </button>
         </div>
     );
 }
