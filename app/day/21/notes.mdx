@@ -1,0 +1,16 @@
+## AoC Party
+
+<Tutorial>
+You can press the die (center) button to roll one dice at a time, and then to combine their values and move the pawn. You can restart using the left button and fast-forward using the button on the right. You'll see the scores of both players at the top.
+</Tutorial>
+
+Another solution that uses memoization. The track and movement of pawns was pretty easy, but the complex animations on the right side were where I spent most of the time.
+
+I have to show you how I get the coordinates of the spaces, because I think it's really cool:
+```javascript
+export const coords = (i) => [
+    Math.cos(((2 * Math.PI) / 10) * i) * 150,
+    Math.sin(((2 * Math.PI) / 10) * i) * 150,
+];
+```
+The die animation are heavily inspired by [Mario Party](https://www.youtube.com/watch?v=UdmV7Vbi4nM).
