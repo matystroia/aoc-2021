@@ -1,11 +1,21 @@
 "use client";
-
-import { useEffect, useContext } from "react";
+import { motion, useMotionValue, useMotionValueEvent } from "framer-motion";
+import { useEffect, useContext, useState, useRef } from "react";
+import {
+    ChevronUpIcon,
+    ChevronDownIcon,
+    ChevronLeftIcon,
+    ChevronRightIcon,
+} from "@heroicons/react/24/solid";
+import { maxBy } from "lodash";
 
 import { useCanvas } from "../../hooks/useCanvas";
 import { ObjectInspector } from "../../components/ObjectInspector";
 import { Canvas, CanvasContext } from "../../components/Canvas";
 import { ChallengeContext } from "../ChallengeWrapper";
+
+import { SeaFloor } from "./SeaFloor";
+import { SeaFloorRamp } from "./SeaFloorRamp";
 
 function part1(values) {
     let ans = 0;
@@ -29,90 +39,110 @@ function part2(values) {
     return ans;
 }
 
+const N_BUFFER = 12;
+const WIDTH = 50 * 2;
+const START_OFFSET = (-N_BUFFER * WIDTH) / 2;
 export default function Day1() {
     const { lines } = useContext(ChallengeContext);
-    const values = lines.map((s) => parseInt(s));
+    let values = lines.map((s) => parseInt(s));
 
-    const increases = part1(values);
-    const windowIncreases = part2(values);
+    const maxDepth = maxBy(values) + 50;
+    values = values.map((depth) => ({ depth, height: maxDepth - depth }));
 
-    // TODO: Should probably include size in dependency array
-    // useEffect(() => {
-    //     const { width, height } = canvasProps;
+    const x = useMotionValue(0);
+    const y = useMotionValue(values[0].height - 200);
+    const velocity = useMotionValue(1);
 
-    //     const [minValue, maxValue] = [values[0], values[values.length - 1]];
-    //     const [minY, maxY, minX, maxX] = [50, height - 50, 50, width - 50];
+    const [offsetIndex, setOffsetIndex] = useState(0);
+    useMotionValueEvent(x, "change", (latest) => {
+        setOffsetIndex(Math.floor(Math.abs(latest / WIDTH)));
+    });
 
-    //     const normalizedValues = values
-    //         .map((v) => v - minValue)
-    //         .map((v) => minY + (v / (maxValue - minValue)) * (maxY - minY));
+    const slice = values.slice(offsetIndex, offsetIndex + N_BUFFER);
 
-    //     const coords = normalizedValues.map((y, x) => ({
-    //         x: minX + (x / normalizedValues.length) * (maxX - minX),
-    //         y,
-    //     }));
-
-    //     const ctx = canvasRef.current.getContext("2d");
-    //     coords.forEach(({ x, y }, i) => {
-    //         const prevCoords = i == 0 ? { x: minX, y: minY } : coords[i - 1];
-    //         ctx.beginPath();
-    //         ctx.moveTo(prevCoords.x, prevCoords.y);
-
-    //         ctx.strokeStyle = i > 0 && y > coords[i - 1].y ? "green" : "red";
-
-    //         ctx.lineTo(x, y);
-    //         ctx.stroke();
-    //     });
-
-    //     return () => ctx.reset();
-    // });
-
-    const draw = (ctx, { width, height }) => {
-        const canvasContext = new CanvasContext(ctx, width, height);
-
-        // const [minValue, maxValue] = [values[0], values[values.length - 1]];
-        // const [minY, maxY, minX, maxX] = [50, height - 50, 50, width - 50];
-
-        // const normalizedValues = values
-        //     .map((v) => v - minValue)
-        //     .map((v) => minY + (v / (maxValue - minValue)) * (maxY - minY));
-
-        const coords = values.map((y, x) => ({ x, y }));
-        canvasContext.fit(coords, 20);
-
-        for (let i = 0; i < coords.length - 1; i++) {
-            const curr = coords[i];
-            const next = coords[i + 1];
-
-            canvasContext.ctx.lineWidth = 2;
-            canvasContext.ctx.strokeStyle = next.y > curr.y ? "green" : "red";
-            canvasContext.line(curr, next);
+    const intervalRef = useRef(null);
+    const handleUp = () => {
+        intervalRef.current = setInterval(() => {
+            y.set(y.get() + velocity.get());
+            velocity.set(Math.max(3, velocity.get() + 0.1));
+        }, 10);
+    };
+    const handleDown = () => {
+        intervalRef.current = setInterval(() => {
+            y.set(y.get() - velocity.get());
+            velocity.set(Math.max(3, velocity.get() + 0.1));
+        }, 10);
+    };
+    const handleLeft = () => {
+        intervalRef.current = setInterval(() => {
+            x.set(x.get() + velocity.get());
+            velocity.set(Math.max(3, velocity.get() + 0.1));
+        }, 10);
+    };
+    const handleRight = () => {
+        intervalRef.current = setInterval(() => {
+            x.set(x.get() - velocity.get());
+            velocity.set(Math.max(3, velocity.get() + 0.1));
+        }, 10);
+    };
+    const handleCenter = () => {
+        if (intervalRef.current) {
+            clearInterval(intervalRef.current);
         }
+        velocity.set(1);
     };
 
-    // TODO: Add zoom and pan
     return (
-        <div className="flex flex-col h-full gap-4">
-            <div className="flex gap-4 basis-1/4">
-                <div className="flex-grow p-2 border-2 rounded-xl border-slate-500 bg-zinc-900">
-                    <h1 className="font-mono text-lg text-center">Part One</h1>
-                    <ObjectInspector>
-                        {{
-                            increases,
-                        }}
-                    </ObjectInspector>
-                </div>
-                <div className="flex-grow p-2 border-2 rounded-xl border-slate-500 bg-zinc-900">
-                    <h1 className="font-mono text-lg text-center">Part Two</h1>
-                    <ObjectInspector>
-                        {{
-                            windowIncreases,
-                        }}
-                    </ObjectInspector>
-                </div>
-            </div>
+        <div className="absolute inset-0 [perspective:1000px] bg-stone-950 overflow-hidden">
+            <motion.div
+                className="absolute bottom-0 w-full preserve-3d"
+                initial={false}
+                style={{ x, y }}
+                transition={{ type: "tween", ease: "linear" }}
+            >
+                <motion.div className="relative flex justify-center w-full preserve-3d">
+                    {slice.map(({ depth, height }, i) => (
+                        <SeaFloor
+                            className="absolute bottom-0"
+                            key={offsetIndex + i}
+                            depth={depth}
+                            height={height}
+                            prevHeight={i > 0 && slice[i - 1].height}
+                            style={{ x: START_OFFSET + (offsetIndex + i) * WIDTH, rotateX: 90 }}
+                            width={WIDTH / 2}
+                        />
+                    ))}
+                </motion.div>
+            </motion.div>
 
-            <Canvas onDraw={draw} className="flex-grow" />
+            <div
+                className="absolute inset-x-0 top-0 transition-colors h-14 hover:bg-stone-800 center"
+                onMouseEnter={handleUp}
+                onMouseLeave={handleCenter}
+            >
+                <ChevronUpIcon className="w-12 h-12" />
+            </div>
+            <div
+                className="absolute inset-x-0 bottom-0 transition-colors h-14 hover:bg-stone-800 center"
+                onMouseEnter={handleDown}
+                onMouseLeave={handleCenter}
+            >
+                <ChevronDownIcon className="w-12 h-12" />
+            </div>
+            <div
+                className="absolute inset-y-0 left-0 transition-colors w-14 hover:bg-stone-800 center"
+                onMouseEnter={handleLeft}
+                onMouseLeave={handleCenter}
+            >
+                <ChevronLeftIcon className="w-12 h-12" />
+            </div>
+            <div
+                className="absolute inset-y-0 right-0 transition-colors w-14 hover:bg-stone-800 center"
+                onMouseEnter={handleRight}
+                onMouseLeave={handleCenter}
+            >
+                <ChevronRightIcon className="w-12 h-12" />
+            </div>
         </div>
     );
 }

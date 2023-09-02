@@ -107,7 +107,7 @@ export function ChallengeWrapper({ children }) {
             {isLoading && <Loading />}
             <div className="flex flex-col w-full h-full">
                 <ChallengeContext.Provider value={contextValue}>
-                    <div className="flex-grow p-4 overflow-auto">
+                    <div className="relative flex-grow p-4 overflow-auto">
                         {!error && !isLoading && <Fragment key={isExample}>{children}</Fragment>}
                     </div>
                     <OptionsBar

@@ -36,16 +36,16 @@ export default function RootLayout({ children }) {
                     <AssertDesktop />
                     {children}
                 </ErrorBoundary>
+                <Script src="https://scripts.simpleanalyticscdn.com/latest.js" />
+                <noscript>
+                    {/* eslint-disable @next/next/no-img-element */}
+                    <img
+                        src="https://queue.simpleanalyticscdn.com/noscript.gif"
+                        alt=""
+                        referrerPolicy="no-referrer-when-downgrade"
+                    />
+                </noscript>
             </body>
-            <Script src="https://scripts.simpleanalyticscdn.com/latest.js" />
-            <noscript>
-                {/* eslint-disable @next/next/no-img-element */}
-                <img
-                    src="https://queue.simpleanalyticscdn.com/noscript.gif"
-                    alt=""
-                    referrerPolicy="no-referrer-when-downgrade"
-                />
-            </noscript>
         </html>
     );
 }
