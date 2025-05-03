@@ -6,7 +6,7 @@ import clsx from "clsx";
 import { AcademicCapIcon, BookOpenIcon, XMarkIcon } from "@heroicons/react/24/solid";
 import { dynamic } from "next/dynamic";
 
-import { useFile } from "../hooks/useFile";
+import { useInputFile } from "../hooks/useInputFile";
 import { useNotes } from "../hooks/useNotes";
 import { ChallengeConfig } from "../input/config";
 
@@ -85,7 +85,7 @@ export function ChallengeWrapper({ children }) {
     const day = useSelectedLayoutSegment();
     const [isExampleToggled, setIsExampleToggled] = useState(true);
     const [isPartOne, setIsPartOne] = useState(true);
-    const { rawText, lines, isExample, error, isLoading } = useFile(`day${day}`, isExampleToggled);
+    const { rawText, lines, isExample, error, isLoading } = useInputFile(`day${day}`, isExampleToggled);
     const { Component: NotesComponent } = useNotes(day);
 
     const contextValue = {
