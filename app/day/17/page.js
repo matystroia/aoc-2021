@@ -7,7 +7,7 @@ import {
     useLayoutEffect,
     useRef,
     useState,
-    experimental_useEffectEvent as useEffectEvent,
+    useEffectEvent,
 } from "react";
 import { clamp, flatMap, inRange, intersection, isEqual, range, uniqWith } from "lodash";
 import clsx from "clsx";

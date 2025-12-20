@@ -4,7 +4,7 @@ import {
     useContext,
     useEffect,
     useState,
-    experimental_useEffectEvent as useEffectEvent,
+    useEffectEvent,
 } from "react";
 import { ArrowUturnLeftIcon, ArrowUturnRightIcon, ForwardIcon } from "@heroicons/react/24/solid";
 import { useImmer } from "use-immer";

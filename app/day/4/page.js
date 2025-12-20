@@ -6,7 +6,7 @@ import {
     useEffect,
     useRef,
     useState,
-    experimental_useEffectEvent as useEffectEvent,
+    useEffectEvent,
 } from "react";
 import { compact, every, filter, flatten, includes, range, sum } from "lodash";
 import clsx from "clsx";

@@ -4,7 +4,7 @@ import {
     useContext,
     useState,
     useEffect,
-    experimental_useEffectEvent as useEffectEvent,
+    useEffectEvent,
 } from "react";
 
 import { ChallengeContext } from "../ChallengeWrapper";
