@@ -1,22 +1,18 @@
-/* eslint-disable import/order */
-const rehypePrettyCode = require("rehype-pretty-code");
-
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-    webpack: (config) => {
-        config.experiments = { ...config.experiments, topLevelAwait: true };
-        return config;
-    },
-    experimental: {
-        serverActions: true,
-        // mdxRs: true,
-    },
+    // webpack: (config) => {
+    //     config.experiments = { ...config.experiments, topLevelAwait: true };
+    //     return config;
+    // },
+    turbopack: {},
     basePath: "",
 };
 
 const withMDX = require("@next/mdx")({
+    extension: /\.mdx?$/,
     options: {
-        rehypePlugins: [[rehypePrettyCode, []]],
+        remarkPlugins: [],
+        rehypePlugins: [['rehype-pretty-code', {}]],
     },
 });
 
