@@ -6,8 +6,8 @@ export function useSize(ref) {
 
     useEffect(() => {
         const observer = new ResizeObserver(() => {
-            setWidth(ref.current.clientWidth);
-            setHeight(ref.current.clientHeight);
+            setWidth(ref.current?.clientWidth ?? 0);
+            setHeight(ref.current?.clientHeight ?? 0);
         });
 
         observer.observe(ref.current);
