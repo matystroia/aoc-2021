@@ -16,7 +16,7 @@ type Point = {
 
 type Side = {
     index: number;
-    side: JSX.Element;
+    side: React.ReactElement;
 };
 
 const toAbsolute = (p: Point, width: number, height: number) => ({
@@ -108,9 +108,9 @@ export const ExtrudedPolygonPath = memo(
         sideClass: string;
         topBorder?: { width: number; borderClass?: string };
         sideBorder?: { width: number; borderClass?: string };
-        renderBase?: ({ className, style }) => JSX.Element;
-        children?: JSX.Element;
-        side: JSX.Element;
+        renderBase?: ({ className, style }) => React.ReactElement;
+        children?: React.ReactElement;
+        side: React.ReactElement;
         sides: Side[];
     }) {
         console.log("RERENDER");

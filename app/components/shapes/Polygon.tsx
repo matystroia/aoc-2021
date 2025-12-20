@@ -32,7 +32,7 @@ export const Polygon = memo(
         topBorder?: { width: number; borderClass?: string };
         sideBorder?: { width: number; borderClass?: string };
         offset?: { x: number; y: number };
-        renderBase?: ({ className, style }) => JSX.Element;
+        renderBase?: ({ className, style }) => React.ReactElement;
     }) {
         // TODO: Offset!!!
 
