@@ -3,7 +3,7 @@ import { useMemo } from "react";
 
 const fetcher = async ([url, isExample]) => {
     const res = await fetch(url);
-    const rawText = await res.text()
+    const rawText = (await res.text()).trimEnd();
     if (!res.ok) throw Error(data.error || "File not found");
 
     return { rawText, isExample };
