@@ -6,6 +6,8 @@ const nextConfig = {
     // },
     turbopack: {},
     basePath: "",
+    output: "standalone",
+    images: { unoptimized: true },
 };
 
 const withMDX = require("@next/mdx")({

@@ -1,7 +1,7 @@
 "use client";
 
 import "./globals.css";
-import { Inter } from "next/font/google";
+import localFont from "next/font/local";
 import { ErrorBoundary } from "react-error-boundary";
 import { useEffect } from "react";
 import Script from "next/script";
@@ -17,7 +17,7 @@ function AssertDesktop() {
     }, []);
     return "";
 }
-const inter = Inter({ subsets: ["latin"] });
+const inter = localFont({ src: "./fonts/InterVariable.woff2", display: "swap" });
 
 function fallbackRender({ error }) {
     if (error instanceof MobileError) return <MobileFallback />;
