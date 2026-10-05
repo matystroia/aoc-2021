@@ -12,7 +12,7 @@
         version = "0.1.0";
         src = self;
         nodejs = pkgs.nodejs_22;
-        npmDepsHash = "sha256-TLwbUHSIOYTokRIoFwfSAhlx9wcfVH1k+Xv7rOI5948=";
+        npmDepsHash = "sha256-qCtv5/HkF5PthGk/tguAMIFfcDeQUokxwX60zDcJDns=";
 
         npmFlags = [ "--ignore-scripts" ];
 
