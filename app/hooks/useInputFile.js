@@ -1,6 +1,7 @@
 import useSWR from "swr";
 import { useMemo } from "react";
-import { basePath } from "@/next.config";
+
+const basePath = process.env.NEXT_PUBLIC_BASE_PATH || "";
 
 const fetcher = async ([url, isExample]) => {
     const res = await fetch(url);
