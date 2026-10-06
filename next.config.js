@@ -1,3 +1,5 @@
+const basePath = process.env.NEXT_PUBLIC_BASE_PATH || "";
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
     // webpack: (config) => {
@@ -5,7 +7,7 @@ const nextConfig = {
     //     return config;
     // },
     turbopack: {},
-    basePath: "",
+    basePath,
     output: "standalone",
     images: { unoptimized: true },
 };
