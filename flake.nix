@@ -16,7 +16,10 @@
 
         npmFlags = [ "--ignore-scripts" ];
 
-        env.NEXT_TELEMETRY_DISABLED = "1";
+        env = {
+          NEXT_TELEMETRY_DISABLED = "1";
+          NEXT_PUBLIC_BASE_PATH = "";
+        };
 
         installPhase = ''
           runHook preInstall
