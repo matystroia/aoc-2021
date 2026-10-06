@@ -1,5 +1,6 @@
 import useSWR from "swr";
 import { useMemo } from "react";
+import { basePath } from "@/next.config";
 
 const fetcher = async ([url, isExample]) => {
     const res = await fetch(url);
@@ -10,10 +11,8 @@ const fetcher = async ([url, isExample]) => {
 };
 
 export function useInputFile(day, example = false) {
-    const { data, error, isLoading } = useSWR(
-        ["/input/" + day + (example ? "example" : "") + ".txt", example],
-        fetcher
-    );
+    const url = `${basePath}/input/${day}${example ? "example" : ""}.txt`;
+    const { data, error, isLoading } = useSWR([url, example], fetcher);
 
     const isExample = useMemo(() => (data ? data.isExample : false), [data]);
     const rawText = useMemo(() => (data ? data.rawText : null), [data]);
